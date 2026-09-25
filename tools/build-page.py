@@ -256,7 +256,23 @@ _REASONS_INTRO_NEW = (
 )
 
 
+# The header was a two-column grid: heading left, intro right. It is the only
+# section on the page laid out that way, and with the safety text folded in the
+# intro is now long enough that the two columns fall out of balance. Stack them
+# so the section reads heading, then content, then the panel, full width.
+_REASONS_GRID_TPL = ('<div style="display:grid;grid-template-columns:'
+                     'repeat(auto-fit,minmax(min(100%,420px),1fr));gap:40px;'
+                     'align-items:end">')
+_REASONS_GRID_SNAP = ('<div data-dc-tpl="430" style="display: grid; '
+                      'grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), '
+                      '1fr)); gap: 40px; align-items: end;">')
+_REASONS_STACK = ('<div style="display:flex;flex-direction:column;gap:16px;'
+                  'max-width:900px">')
+
+
 def fix_reasons(html: str) -> str:
+    html = html.replace(_REASONS_GRID_TPL, _REASONS_STACK)
+    html = html.replace(_REASONS_GRID_SNAP, _REASONS_STACK)
     html = html.replace(_REASONS_INTRO_OLD, _REASONS_INTRO_NEW)
     # the empty image beside the reason list
     html = re.sub(

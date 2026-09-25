@@ -236,7 +236,8 @@ IV drip is a wellness service and is not treatment for heat exhaustion or heat
 stroke: confusion, a temperature above 103F, fainting, hot dry skin or a seizure
 are emergencies that need 911 or an emergency department.
 
-No image in this section. Reason cards run full width.
+Layout: heading, then intro, then the tab panel. All full width, stacked.
+No image in this section.
 
 ### [TAB: Heat & Outdoors]
 1. **Record Phoenix heat** — Triple-digit days now start in March, and callers book hydration bags the same afternoon.

@@ -358,48 +358,47 @@ def resources_to_info(html: str) -> str:
 # claim about this business, so nothing here needs a business fact to stand it
 # up. The brand appears once, in the last line, where the section hands off to
 # the booking CTA that follows it.
+# Each item opens on a positive predicate (Optimized, Reduced, Controlled) so
+# the benefit is the first word read, and each body is a single sentence.
 _BENEFIT_ITEMS = [
-    ("Nothing is lost to digestion",
-     "Fluids and nutrients enter the bloodstream directly. Taken by mouth, the same "
-     "ingredients pass through the gut first, where how much is absorbed varies by "
-     "person, by nutrient and by what else is in the stomach."),
-    ("Rehydration is measured, not estimated",
-     "A litre delivered by line is a known volume going in at a known rate. A litre "
-     "drunk over an hour depends on how fast the stomach empties, which slows down in "
-     "exactly the conditions that caused the deficit."),
-    ("It works when swallowing does not",
-     "Nausea, vomiting and stomach upset make oral fluids impractical, and they are "
-     "common reasons people are short of fluid to begin with. A line bypasses the "
-     "problem entirely."),
-    ("The dose is set before the session starts",
-     "The bag, the additions and the volume are fixed by the order rather than guessed "
-     "at, so two sessions of the same drip deliver the same thing."),
-    ("A clinician stays for the whole infusion",
-     "Vitals are taken before and after, the site is watched throughout, and anything "
-     "unexpected is caught while someone qualified is still in the room."),
-    ("The time cost is known",
-     "Most sessions run 45 to 60 minutes from line placement to removal, which makes "
-     "the appointment straightforward to plan around."),
-    ("A mobile visit removes the journey",
-     "No drive, no car park, no waiting room and no sitting among other people who are "
-     "unwell. For someone already depleted, the trip is often the hardest part."),
+    ("Optimized absorption",
+     "Fluids and nutrients enter the bloodstream directly, so none of the dose is lost "
+     "to digestion."),
+    ("Accelerated rehydration",
+     "A litre by line goes in at a known rate, instead of waiting on a stomach that "
+     "empties slowly when you are already short of fluid."),
+    ("Reliable delivery during nausea",
+     "A line still works when vomiting or stomach upset has made oral fluids "
+     "impractical."),
+    ("Controlled dosing",
+     "The bag, the additions and the volume are fixed by the prescriber's order, so "
+     "repeat sessions deliver the same thing."),
+    ("Supervised administration",
+     "Vitals are taken before and after, and a clinician watches the site for the whole "
+     "infusion."),
+    ("Predictable session length",
+     "Most sessions run 45 to 60 minutes from line placement to removal."),
+    ("Reduced travel",
+     "A mobile visit removes the drive, the waiting room and the exposure to other "
+     "unwell patients."),
 ]
 
-_BENEFIT_LIMITS = (
-    "IV therapy also has clear limits, and they matter as much as the benefits. It does "
-    "not treat an infection, replace a medication a doctor has prescribed, or substitute "
-    "for emergency care. Vitamin infusions are a wellness service rather than a "
-    "treatment for a diagnosed deficiency, which is a conversation for your own "
-    "physician. Anyone with a kidney, heart or blood pressure condition, and anyone who "
-    "is pregnant, should be screened by the prescriber before a first session."
+# The limits used to sit in a separate block below the list, which split the
+# section in two. Folded into the opening paragraph instead, where it also
+# previews the benefits the list then expands.
+_BENEFIT_INTRO = (
+    "IV therapy puts fluid and nutrients straight into the bloodstream, which produces "
+    "optimized absorption, accelerated rehydration, controlled dosing and supervised "
+    "delivery. It does not treat infection, replace a prescribed medication or "
+    "substitute for emergency care, and anyone pregnant or managing a kidney, heart or "
+    "blood pressure condition is screened by the prescriber first. "
+    "<strong>7 benefits of IV therapy are listed below.</strong>"
 )
 
 _BENEFIT_CLOSE = (
-    "Those benefits belong to the method, not to any one provider. What separates "
-    "providers is who holds the needle, how fast they arrive and whether the order "
-    "behind the bag is a real one. At The Drip IV Infusion a licensed registered nurse "
-    "runs every Phoenix session, under a valid prescriber's order, usually within 60 "
-    "minutes of a confirmed booking."
+    "Those benefits belong to the method rather than to any one provider. At The Drip "
+    "IV Infusion a licensed registered nurse runs every Phoenix session under a valid "
+    "prescriber's order, usually within 60 minutes of a confirmed booking."
 )
 
 
@@ -418,28 +417,25 @@ def _benefits_html() -> str:
             '<p style="margin:0;font-size:16px;line-height:1.6;color:#3a4150">%s</p>'
             '</div></div>' % (i, title, body)
         )
-    return (
+    head = (
         '<section id="benefits" data-screen-label="12b Benefits" '
-        'style="padding:96px 24px;background:#F6F6F6">'
-        '<div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:32px">'
-        '<div style="display:flex;flex-direction:column;gap:12px;max-width:760px">'
+        'style="padding:88px 24px;background:#F6F6F6">'
+        '<div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:28px">'
+        '<div style="display:flex;flex-direction:column;gap:12px;max-width:820px">'
         '<div style="font:600 13px \'Source Sans 3\',sans-serif;letter-spacing:1px;'
         'text-transform:uppercase;color:#5A79AD">WHY PEOPLE CHOOSE AN IV</div>'
         '<h2 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
         'font-size:clamp(28px,3.2vw,40px);color:#153060">'
         'What Are the Benefits of IV Therapy?</h2>'
         '<p style="margin:0;font-size:18px;line-height:1.65;color:#2b3140">'
-        'The benefits of IV therapy come from the route itself, which puts fluid and '
-        'nutrients into the bloodstream instead of the stomach. '
-        '<strong>7 benefits of IV therapy are listed below.</strong></p></div>'
-        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%%,340px),1fr));'
-        'gap:20px">' + "".join(cards) + '</div>'
-        '<div style="background:#fff;border-left:4px solid #13646D;border-radius:10px;'
-        'padding:24px 26px;display:flex;flex-direction:column;gap:12px">'
-        '<p style="margin:0;font-size:16px;line-height:1.65;color:#3a4150">%s</p>'
-        '<p style="margin:0;font-size:16px;line-height:1.65;color:#2b3140">%s</p>'
-        '</div></div></section>' % (_BENEFIT_LIMITS, _BENEFIT_CLOSE)
+        + _BENEFIT_INTRO + '</p></div>'
     )
+    grid = ('<div style="display:grid;grid-template-columns:'
+            'repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px">'
+            + "".join(cards) + '</div>')
+    tail = ('<p style="margin:0;max-width:860px;font-size:16px;line-height:1.65;'
+            'color:#2b3140">' + _BENEFIT_CLOSE + '</p></div></section>')
+    return head + grid + tail
 
 
 _CTA_ANCHOR_TPL = '<section data-screen-label="13 Reserve CTA"'

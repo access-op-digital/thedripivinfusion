@@ -462,14 +462,11 @@ _BENEFIT_INTRO = (
     "optimized absorption, accelerated rehydration, controlled dosing and supervised "
     "delivery. It does not treat infection, replace a prescribed medication or "
     "substitute for emergency care, and anyone pregnant or managing a kidney, heart or "
-    "blood pressure condition is screened by the prescriber first. "
-    "<strong>7 benefits of IV therapy are listed below.</strong>"
-)
-
-_BENEFIT_CLOSE = (
-    "Those benefits belong to the method rather than to any one provider. At The Drip "
-    "IV Infusion a licensed registered nurse runs every Phoenix session under a valid "
-    "prescriber's order, usually within 60 minutes of a confirmed booking."
+    "blood pressure condition is screened by the prescriber first. Those benefits "
+    "belong to the method rather than to any one provider: at The Drip IV Infusion a "
+    "licensed registered nurse runs every Phoenix session under a valid prescriber's "
+    "order, usually within 60 minutes of a confirmed booking. 7 benefits of IV therapy "
+    "are listed below."
 )
 
 
@@ -492,9 +489,7 @@ def _benefits_html() -> str:
         '<section id="benefits" data-screen-label="12b Benefits" '
         'style="padding:88px 24px;background:#F6F6F6">'
         '<div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:28px">'
-        '<div style="display:flex;flex-direction:column;gap:12px;max-width:820px">'
-        '<div style="font:600 13px \'Source Sans 3\',sans-serif;letter-spacing:1px;'
-        'text-transform:uppercase;color:#5A79AD">WHY PEOPLE CHOOSE AN IV</div>'
+        '<div style="display:flex;flex-direction:column;gap:12px;max-width:900px">'
         '<h2 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
         'font-size:clamp(28px,3.2vw,40px);color:#153060">'
         'What Are the Benefits of IV Therapy?</h2>'
@@ -504,9 +499,7 @@ def _benefits_html() -> str:
     grid = ('<div style="display:grid;grid-template-columns:'
             'repeat(auto-fit,minmax(min(100%,340px),1fr));gap:20px">'
             + "".join(cards) + '</div>')
-    tail = ('<p style="margin:0;max-width:860px;font-size:16px;line-height:1.65;'
-            'color:#2b3140">' + _BENEFIT_CLOSE + '</p></div></section>')
-    return head + grid + tail
+    return head + grid + '</div></section>'
 
 
 _CTA_ANCHOR_TPL = '<section data-screen-label="13 Reserve CTA"'

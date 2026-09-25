@@ -257,14 +257,15 @@ No image in this section.
 
 ## H2 — What Are the Benefits of IV Therapy?
 
-*Eyebrow: WHY PEOPLE CHOOSE AN IV*
-
 IV therapy puts fluid and nutrients straight into the bloodstream, which produces
 optimized absorption, accelerated rehydration, controlled dosing and supervised
 delivery. It does not treat infection, replace a prescribed medication or
 substitute for emergency care, and anyone pregnant or managing a kidney, heart or
-blood pressure condition is screened by the prescriber first. **7 benefits of IV
-therapy are listed below.**
+blood pressure condition is screened by the prescriber first. Those benefits
+belong to the method rather than to any one provider: at The Drip IV Infusion a
+licensed registered nurse runs every Phoenix session under a valid prescriber's
+order, usually within 60 minutes of a confirmed booking. 7 benefits of IV therapy
+are listed below.
 
 | # | Benefit | |
 |---|---|---|
@@ -275,10 +276,6 @@ therapy are listed below.**
 | 05 | **Supervised administration** | Vitals are taken before and after, and a clinician watches the site for the whole infusion. |
 | 06 | **Predictable session length** | Most sessions run 45 to 60 minutes from line placement to removal. |
 | 07 | **Reduced travel** | A mobile visit removes the drive, the waiting room and the exposure to other unwell patients. |
-
-Those benefits belong to the method rather than to any one provider. At The Drip
-IV Infusion a licensed registered nurse runs every Phoenix session under a valid
-prescriber's order, usually within 60 minutes of a confirmed booking.
 
 ---
 

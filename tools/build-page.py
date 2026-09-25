@@ -194,6 +194,71 @@ CONTENT_FIXES = [
     (_WHY_TAIL_OLD, _WHY_TAIL_NEW),
 ]
 
+# ---- 5e. trailing "read more" link lines ----------------------------------
+# The client wants the see-also sentences gone: they send a reader away from a
+# money page at the exact moment the section has finished making its case, and
+# every one of them pointed at href="#" anyway. Whole paragraphs go where the
+# paragraph exists only to link. Where a link sits inside a real sentence, the
+# link goes and the sentence stays.
+_A = r'<a href="#"[^>]*>(.*?)</a>'
+
+_DROP_PARAGRAPHS = [
+    ('<p style="font-size:15px;color:#3a4150">Read more on <a href="#" '
+     'style="text-decoration:underline">sterile IV safety</a> and <a href="#" '
+     'style="text-decoration:underline">whether IV drips are safe</a>.</p>'),
+    ('<p style="font-size:16px;line-height:1.6;color:#3a4150">Further local reading: '
+     '<a href="#" style="text-decoration:underline">how Arizona dry heat causes '
+     'dehydration</a> and <a href="#" style="text-decoration:underline">reasons to get '
+     'IV therapy in Phoenix</a>.</p>'),
+    ('<p style="font-size:15px;color:#3a4150">Related: <a href="#" '
+     'style="text-decoration:underline">prescription requirements</a>, <a href="#" '
+     'style="text-decoration:underline">who can administer IV therapy</a>, <a href="#" '
+     'style="text-decoration:underline">IV therapy regulations</a>.</p>'),
+]
+
+_TRIM_SENTENCES = [
+    # cost: keep the first and last sentences, drop the see-also in the middle
+    ('which is why the menu is priced directly. See <a href="#" '
+     'style="text-decoration:underline">what an IV costs at urgent care</a> and '
+     '<a href="#" style="text-decoration:underline">does insurance cover IV vitamin '
+     'therapy</a>. The full menu includes',
+     'which is why the menu is priced directly. The full menu includes'),
+    # service area: the coverage sentence stands on its own
+    ('Queen Creek and San Tan Valley — see <a href="#" '
+     'style="text-decoration:underline">service areas</a>.',
+     'Queen Creek and San Tan Valley.'),
+    # about: keep the phone and email, drop the about-page pointer
+    ('hello@thedripivinfusion.com</a>, and read the founders\' story on the '
+     '<a href="#" style="color:#5A79AD">about page</a>.',
+     'hello@thedripivinfusion.com</a>.'),
+]
+
+
+def strip_readmore(html: str) -> str:
+    """Remove see-also lines from both sources.
+
+    Matched on paragraph TEXT, not on the inline styles, because the template
+    writes them as `color:#3a4150` and the rendered snapshot as `rgb(58,65,80)`.
+    """
+    # whole paragraphs that exist only to link out
+    html = re.sub(
+        r'<p[^>]*>\s*(?:Read more on|Further local reading:|Related:)\s'
+        r'(?:(?!</p>).)*?</p>', "", html, flags=re.S)
+
+    # a link inside a real sentence: drop the link, keep the sentence
+    html = re.sub(
+        r'\.\s*See\s*<a [^>]*href="#"(?:(?!</a>).)*?</a>\s*and\s*<a [^>]*href="#"'
+        r'(?:(?!</a>).)*?</a>\.\s*The full menu',
+        ". The full menu", html, flags=re.S)
+    html = re.sub(
+        r'Queen Creek and San Tan Valley[^<]*<a [^>]*href="#"(?:(?!</a>).)*?</a>\.',
+        "Queen Creek and San Tan Valley.", html, flags=re.S)
+    html = re.sub(
+        r',?\s*and read the founders(?:&#39;|’|\')? story on the\s*'
+        r'<a [^>]*href="#"(?:(?!</a>).)*?</a>\.',
+        ".", html, flags=re.S)
+    return html
+
 # ---- 5c. the map, and the resources block --------------------------------
 # The design leaves a dashed "Embedded Google map" box. The Phoenix office is a
 # real address with a real listing, so the box becomes the actual embed. No API
@@ -392,6 +457,80 @@ def insert_benefits(html: str) -> str:
     return html
 
 
+
+
+# ---- 5f. the Safety section's board heading -------------------------------
+# It was a <p> styled to look like a heading, so the section had no heading of
+# its own and the three tab panels each opened at H2. Make it a real H2 that
+# covers all three tabs, and demote the panels to H3 underneath it.
+_BOARD_OLD_TPL = ('<p style="font-family:Questrial,sans-serif;'
+                  'font-size:clamp(28px,3.2vw,38px);line-height:1.2">Every line at a '
+                  'Phoenix address is placed by a licensed RN, <span '
+                  'style="color:#5A79AD">under a valid prescriber\'s order.</span></p>')
+_BOARD_NEW_TPL = ('<h2 style="font-family:Questrial,sans-serif;font-weight:400;'
+                  'font-size:clamp(28px,3.2vw,38px);line-height:1.2;margin:0">IV Therapy '
+                  'Safety <span style="color:#5A79AD">and Arizona Requirements</span></h2>')
+
+_BOARD_OLD_SNAP = ('<p data-dc-tpl="327" style="font-family: Questrial, sans-serif; '
+                   'font-size: clamp(28px, 3.2vw, 38px); line-height: 1.2;">Every line at '
+                   'a Phoenix address is placed by a licensed RN, <span data-dc-tpl="328" '
+                   'style="color: rgb(90, 121, 173);">under a valid prescriber\'s order.'
+                   '</span></p>')
+_BOARD_NEW_SNAP = ('<h2 data-dc-tpl="327" style="font-family: Questrial, sans-serif; '
+                   'font-weight: 400; font-size: clamp(28px, 3.2vw, 38px); '
+                   'line-height: 1.2; margin: 0;">IV Therapy Safety <span '
+                   'data-dc-tpl="328" style="color: rgb(90, 121, 173);">and Arizona '
+                   'Requirements</span></h2>')
+
+_PANEL_DEMOTE = [
+    "Our Clinical Credentials and Safety Standards",
+    "Do You Need a Prescription for IV Therapy in Arizona?",
+]
+
+
+def board_heading(html: str) -> str:
+    html = html.replace(_BOARD_OLD_TPL, _BOARD_NEW_TPL)
+    html = html.replace(_BOARD_OLD_SNAP, _BOARD_NEW_SNAP)
+    # the two tab panels now sit under the board heading, so H2 -> H3
+    for title in _PANEL_DEMOTE:
+        html = re.sub(r"<h2([^>]*)>(\s*" + re.escape(title) + r"\s*)</h2>",
+                      r"<h3\1>\2</h3>", html)
+    return html
+
+
+# ---- 5g. one image per process step ---------------------------------------
+# The stepper had a single static slot, so all eight steps showed the same
+# photo. The slot id now follows the active step, and each step gets the shot
+# that actually depicts it. Steps with no honest match stay empty rather than
+# borrowing a picture of something else.
+_STEP_IMG_OLD = ('<div style="position:relative;height:300px;border-radius:10px;'
+                 'overflow:hidden"><image-slot id="process-visual" shape="rect" '
+                 'placeholder="Nurse checking vitals before a Phoenix home infusion">'
+                 '</image-slot></div>')
+_STEP_IMG_NEW = ('<div style="position:relative;height:300px;border-radius:10px;'
+                 'overflow:hidden"><image-slot id="{{ stepSlot }}" shape="rect" '
+                 'placeholder="{{ stepAlt }}"></image-slot></div>')
+
+_STEP_SLOTS = ("['step-book','step-intake','step-arrive','step-vitals',"
+               "'step-select','step-infusion','step-postcare','step-followup'][s.step]")
+_STEP_ALTS = ("['Booking a Phoenix mobile IV visit by phone',"
+              "'Health intake before an infusion',"
+              "'Nurse arriving at a Phoenix address with the IV kit',"
+              "'Nurse checking vitals before a Phoenix infusion',"
+              "'Nurse selecting the drip and add-ons',"
+              "'Infusion running while the client works',"
+              "'Post-care check before the nurse leaves',"
+              "'Follow-up after a Phoenix infusion'][s.step]")
+
+
+def step_images(html: str) -> str:
+    html = html.replace(_STEP_IMG_OLD, _STEP_IMG_NEW)
+    html = html.replace("...stepVals,",
+                        "...stepVals, stepSlot: " + _STEP_SLOTS +
+                        ", stepAlt: " + _STEP_ALTS + ",", 1)
+    return html
+
+
 # ---- 6. real photography from the client's own media library ---------------
 # Every URL below was opened and looked at; the alt text says what the photo
 # ACTUALLY shows, not what the design slot wished for. A slot with no honest
@@ -444,6 +583,12 @@ SLOT_IMAGES = {
     "drip-energy": "injection",
     "drip-nad": "injection",
     "res-team": "team",
+    # one shot per process step; steps with no honest match stay empty
+    "step-arrive": "at-home",
+    "step-vitals": "vein-check",
+    "step-select": "vial-check",
+    "step-infusion": "workplace",
+    "step-postcare": "cannulation",
     "safety-kit": "vial-check",
     "process-visual": "vein-check",
     "reserve-img": "at-home",
@@ -773,6 +918,9 @@ def clean_text(html, label):
     html = html.replace(_MAP_RENDERED, _MAP_EMBED).replace(_MAP_TEMPLATE, _MAP_EMBED)
     html = resources_to_info(html)
     html = insert_benefits(html)
+    html = strip_readmore(html)
+    html = board_heading(html)
+    html = step_images(html)
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
     html = html.replace("\u2013", "-")          # en dash -> hyphen

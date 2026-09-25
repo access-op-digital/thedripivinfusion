@@ -163,12 +163,11 @@ Martinez credits Kris with arriving inside the hour.
 
 ---
 
-## H2 — Our Clinical Credentials and Safety Standards
+## H2 — IV Therapy Safety and Arizona Requirements
 
-Every line at a Phoenix address is placed by a licensed RN, under a valid
-prescriber's order.
+Board heading over three tabs. The panel headings below it are H3.
 
-### [TAB: Credentials & Safety]
+### H3 [TAB: Credentials & Safety] — Our Clinical Credentials and Safety Standards
 
 100% of administering clinicians are licensed RNs. The practice is fully licensed
 and insured, and treatments run under MD-supervised protocols. Nurses hold current
@@ -180,7 +179,6 @@ sharps disposal come in the kit and leave with it.
 Chips: Licensed & insured · MD-supervised protocols · Single-use sterile kit ·
 Nurse stays full infusion
 
-Links: sterile IV safety · whether IV drips are safe
 
 ### [TAB: Do I Need a Prescription?]
 
@@ -196,7 +194,6 @@ A good faith exam comes before the order; blanket standing orders don't meet the
 standard. For you, paperwork happens before the needle: intake, exam, order, then
 infusion.
 
-Related: prescription requirements · who can administer IV therapy · IV therapy
 regulations
 
 ### [TAB: Nurse Scope & Oversight]
@@ -214,7 +211,9 @@ authority as its medical director.
 ## H2 — What Happens During Your Phoenix IV Appointment
 
 Eight steps from booking call to follow-up. About 45 to 60 minutes once the nurse
-arrives. Stepper, 01 to 08.
+arrives. Stepper, 01 to 08. Each step now carries its own photo where an honest
+match exists: arrive, vitals, drip selection, infusion and post-care. Book,
+health intake and follow-up stay empty.
 
 1. **Book** — Call or text (602) 341-3511, email hello@thedripivinfusion.com, or book online. Lines are staffed 7:00AM to 9:00PM, seven days a week.
 2. **Health intake** — A health history covering medications, allergies, pregnancy status and prior reactions. Arizona's required good faith exam and individualised order are set up here.
@@ -261,7 +260,6 @@ stroke. Confusion, a body temperature above 103F, fainting, hot dry skin or a
 seizure are emergencies: call 911 or go to an emergency department. Book a drip
 for routine rehydration and recovery, never as a substitute for emergency care.
 
-Further local reading: how Arizona dry heat causes dehydration · reasons to get IV
 therapy in Phoenix
 
 ---

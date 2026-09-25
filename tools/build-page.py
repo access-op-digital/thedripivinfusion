@@ -754,8 +754,9 @@ def _addons_html() -> str:
     cards = []
     for name, body in _ADDONS:
         cards.append(
-            '<div style="background:#fff;border:1px solid #e3e7ee;border-radius:12px;'
-            'padding:22px;display:flex;flex-direction:column;gap:10px">'
+            '<div style="scroll-snap-align:start;flex:0 0 250px;background:#fff;'
+            'border:1px solid #e3e7ee;border-radius:12px;padding:22px;display:flex;'
+            'flex-direction:column;gap:10px">'
             + _DROP_SVG +
             '<h4 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
             'font-size:17px;color:#153060">' + name + '</h4>'
@@ -773,9 +774,9 @@ def _addons_html() -> str:
         'Sixteen add-on ingredients attach to any cocktail on the menu at a flat $30 '
         'each, so a bag can be adjusted to what your intake and the prescriber\'s order '
         'call for on the day.</p></div>'
-        '<div style="display:grid;grid-template-columns:'
-        'repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">' + "".join(cards) +
-        '</div></div>'
+        '<div style="display:flex;gap:16px;overflow-x:auto;padding-bottom:14px;'
+        'scroll-snap-type:x mandatory;scrollbar-width:thin;'
+        'scrollbar-color:#5A79AD #F6F6F6">' + "".join(cards) + '</div></div>'
     )
 
 
@@ -787,10 +788,7 @@ def _menu_footer_html() -> str:
         'color:#fff;text-decoration:none;padding:16px 34px;border-radius:10px;'
         'font:600 15px \'Source Sans 3\',sans-serif;letter-spacing:1px;'
         'text-transform:uppercase">View the Full Menu</a>'
-        '<p style="margin:0;font-size:14px;color:#5a6070">Payment methods accepted: '
-        'major credit cards, debit cards, HSA and FSA. Fluids* are included in every '
-        'cocktail, and every infusion runs under a valid order from a licensed '
-        'prescriber.</p></div>'
+        '</div>'
     )
 
 
@@ -870,6 +868,45 @@ _USES_NEW = (
     "home, working through it at the office or travelling through Sky Harbor. Our IV "
     "therapy uses in Phoenix cover the treatments below."
 )
+
+
+# ---- 5k. the gallery slider ------------------------------------------------
+# Was a five-cell CSS grid with the slot ids baked into the markup, so adding a
+# sixth photo meant editing the layout. It is a list now: append a line here and
+# a card appears in the slider. Map the new slot in SLOT_IMAGES and it fills.
+_GALLERY = [
+    ("gal-1", "Nurse setting up a sterile field on a Central Phoenix kitchen counter"),
+    ("gal-2", "Hydration line running in an Arcadia living-room chair"),
+    ("gal-3", "In-office suite at 4531 N 16th St, Phoenix"),
+    ("gal-4", "RE:VIVE drip in a hotel near Sky Harbor"),
+    ("gal-5", "GOAT recovery drip after a Camelback hike"),
+]
+
+
+def _gallery_slider() -> str:
+    cards = []
+    for slot, alt in _GALLERY:
+        cards.append(
+            '<div style="scroll-snap-align:start;flex:0 0 330px;height:250px;'
+            'position:relative;border-radius:10px;overflow:hidden">'
+            '<image-slot id="' + slot + '" shape="rect" placeholder="' + alt + '">'
+            '</image-slot></div>'
+        )
+    return ('<div style="display:flex;gap:16px;overflow-x:auto;padding-bottom:14px;'
+            'scroll-snap-type:x mandatory;scrollbar-width:thin;'
+            'scrollbar-color:#5A79AD #F6F6F6">' + "".join(cards) + '</div>')
+
+
+_GAL_GRID_TPL_OPEN = ('<div style="display:grid;grid-template-columns:'
+                      'repeat(auto-fit,minmax(min(100%,260px),1fr));'
+                      'grid-auto-rows:230px;gap:16px">')
+
+
+def gallery_slider(html: str) -> str:
+    """Swap the gallery grid, in either source, for the slider."""
+    pat = (r'<div[^>]*(?:grid-auto-rows:\s*230px|grid-auto-rows: 230px)[^>]*>'
+           r'(?:(?!</section>).)*?</div>\s*(?=</div>)')
+    return re.sub(pat, _gallery_slider(), html, count=1, flags=re.S)
 
 
 # ---- 6. real photography from the client's own media library ---------------
@@ -1306,6 +1343,7 @@ def clean_text(html, label):
     html = resources_to_info(html)
     html = insert_benefits(html)
     html = insert_menu(html)
+    html = gallery_slider(html)
     html = rewrite_uses_intro(html)
     html = why_choose_align(html)
     html = founder_headshots(html)

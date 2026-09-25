@@ -121,13 +121,12 @@ NAC · Vitamin C · Lipo-C / Lipo-plus · Vitamin B12 · B-Complex Vitamins · T
 · Glutathione · Zofran · Zinc · Pepcid · Magnesium · Benadryl · Taurine · Amino
 Blend · Pyridoxine (B6) · L-Carnitine
 
-Each card carries the client's own description, verbatim from the /menu page.
+Horizontal slider. Each card carries the client's own description, verbatim
+from the /menu page.
 
 **Button:** VIEW THE FULL MENU, linking to https://thedripivinfusion.com/menu
 
-Payment methods accepted: major credit cards, debit cards, HSA and FSA. Fluids*
-are included in every cocktail, and every infusion runs under a valid order from
-a licensed prescriber.
+
 
 ---
 
@@ -185,7 +184,7 @@ Scheduler embed.
 The infusion as it actually runs in Phoenix: a sterile field on a kitchen
 counter, a line in a living-room chair, and the in-office suite at 4531 N 16th St.
 
-Image gallery, five slots.
+Horizontal slider, five slots. Adding a sixth is one line in `_GALLERY`.
 
 ---
 

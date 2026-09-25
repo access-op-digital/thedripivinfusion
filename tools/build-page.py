@@ -33,6 +33,7 @@ import io, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "design", "IV Therapy Phoenix.dc.html")
+RENDERED = os.path.join(ROOT, "design", "IV Therapy Phoenix.rendered.html")
 OUT_DIR = os.path.join(ROOT, "site", "mobile-iv-therapy-phoenix-az")
 OUT = os.path.join(OUT_DIR, "index.html")
 ASSET_DIR = os.path.join(OUT_DIR, "assets")
@@ -283,10 +284,12 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
     this._root.appendChild(frag);
     fillImages(this._root);
   };
-  window.DCLogic.prototype.mount = function (root) {
+  window.DCLogic.prototype.mount = function (root, tplEl) {
     this._root = root;
     this._tpl = document.createElement('div');
-    this._tpl.innerHTML = root.innerHTML;
+    // Hydrate from the design template. #page already holds the design's own
+    // rendered output, which is what a crawler and the first paint get.
+    this._tpl.innerHTML = tplEl ? tplEl.innerHTML : root.innerHTML;
     this.paint();
   };
 })();
@@ -294,7 +297,8 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
 
 BOOT = """<script>
 document.addEventListener('DOMContentLoaded', function () {
-  new Component().mount(document.getElementById('page'));
+  new Component().mount(document.getElementById('page'),
+                        document.getElementById('dc-tpl'));
 });
 </script>"""
 
@@ -396,29 +400,50 @@ def head_block(faqs=()) -> str:
 <script type="application/ld+json" id="faq-ld">{faq_ld}</script>'''
 
 
-def main() -> int:
-    html = io.open(SRC, encoding="utf-8").read()
-
-    html = strip_editor_runtime(html)
-
+def clean_text(html, label):
+    """Apply the house punctuation rule, refusing to build on anything unhandled."""
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
-    html = html.replace("–", "-")          # en dash -> hyphen
-
-    left = html.count("—")
+    html = html.replace("\u2013", "-")          # en dash -> hyphen
+    left = html.count("\u2014")
     if left:
-        ctx = [html[max(0, m.start() - 60):m.start() + 60]
-               for m in re.finditer("—", html)]
-        print("REFUSING TO BUILD: %d em dash(es) left, each needs its own rewrite:" % left)
-        for c in ctx:
-            print("   ...", c.replace("\n", " "))
-        return 1
+        print("REFUSING TO BUILD: %d em dash(es) left in %s, each needs its own rewrite:"
+              % (left, label))
+        for m in re.finditer("\u2014", html):
+            print("   ...", html[max(0, m.start() - 60):m.start() + 60].replace("\n", " "))
+        raise SystemExit(1)
+    return html
 
+
+def main() -> int:
+    html = strip_editor_runtime(io.open(SRC, encoding="utf-8").read())
+    html = clean_text(html, "the design template")
     html = convert_image_slots(html)
+    html = re.sub(r"</?x-dc[^>]*>", "", html)   # same unwrap as the snapshot
 
-    # page's own <style>
-    styles = re.findall(r'<style>(.*?)</style>', html, flags=re.S)
-    page_css = "\n".join(styles)
+    # The design's OWN rendering, captured from the standalone bundle after its
+    # runtime finished. This ships as the static markup: faithful to the design,
+    # and unlike the bundle it is real HTML rather than an "Unpacking..." shell
+    # that rebuilds itself from blob URLs at runtime.
+    snap = io.open(RENDERED, encoding="utf-8").read()
+    snap_css = [c for c in re.findall(r"<style[^>]*>(.*?)</style>", snap, flags=re.S)
+                if "@font-face" not in c]          # drop 904KB of base64 fonts
+    # Strip CSS comments: they carry Anthropic's internal build notes (and an
+    # em dash), which have no business on a client page.
+    snap_css = [re.sub(r"/\*.*?\*/", "", c, flags=re.S) for c in snap_css]
+    snap_css = [c.replace("x-dc{display:none!important}", "") for c in snap_css]
+    snap_body = re.search(r"<body[^>]*>(.*?)</body>", snap, flags=re.S).group(1)
+    snap_body = re.sub(r"<script.*?</script>", "", snap_body, flags=re.S)
+    snap_body = re.sub(r"<style.*?</style>", "", snap_body, flags=re.S)
+    snap_body = clean_text(snap_body, "the rendered snapshot")
+    snap_body = convert_image_slots(snap_body)
+    # The snapshot's content sits inside an <x-dc> wrapper that the design CSS
+    # hides with `x-dc{display:none!important}` until its own runtime upgrades
+    # the element. Unwrap it and drop the rule, rather than depend on a custom
+    # element we are deliberately not shipping.
+    snap_body = re.sub(r"</?x-dc[^>]*>", "", snap_body)
+
+    page_css = "\n".join(snap_css)
     page_css += """
 .img-slot-note{display:none}
 .img-slot.is-empty{outline:1px dashed #B5DEF5}
@@ -446,8 +471,11 @@ def main() -> int:
 </head>
 <body>
 <div id="page">
-{body.strip()}
+{snap_body.strip()}
 </div>
+<template id="dc-tpl">
+{body.strip()}
+</template>
 {crawlable_panels(component)}
 <script>
 {image_map_js()}

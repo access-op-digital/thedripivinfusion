@@ -834,8 +834,10 @@ def _menu_html() -> str:
     )
 
 
-_MENU_ANCHOR_TPL = '<section data-screen-label="03 Trusted"'
-_MENU_ANCHOR_SNAP = '<section data-dc-tpl="130" data-screen-label="03 Trusted"'
+# Sits after the Trusted block rather than before it, so the reader meets who
+# runs the service before they meet the price list.
+_MENU_ANCHOR_TPL = '<section id="menu" data-screen-label="04 Drip Menu"'
+_MENU_ANCHOR_SNAP = '<section data-dc-tpl="145" id="menu" data-screen-label="04 Drip Menu"'
 
 
 def rewrite_uses_intro(html: str) -> str:

@@ -229,38 +229,30 @@ health intake and follow-up stay empty.
 ## H2 — Common Reasons Phoenix Residents Book IV Therapy
 
 Phoenix recorded 100F earlier in 2026 than at any point in its history, during an
-eight-day triple-digit run from 18 to 25 March, three consecutive days at 105F.
-March 2026 finished as the hottest March on record.
+eight-day triple-digit run from 18 to 25 March with three consecutive days at
+105F, and March finished as the hottest on record. Maricopa County confirmed 81
+heat-related deaths by late September, against 35 at the same point in 2025. An
+IV drip is a wellness service and is not treatment for heat exhaustion or heat
+stroke: confusion, a temperature above 103F, fainting, hot dry skin or a seizure
+are emergencies that need 911 or an emergency department.
+
+No image in this section. Reason cards run full width.
 
 ### [TAB: Heat & Outdoors]
-
 1. **Record Phoenix heat** — Triple-digit days now start in March, and callers book hydration bags the same afternoon.
 2. **Dry desert air** — Sweat evaporates in low humidity before it is felt, so fluid loss goes unnoticed until the headache starts.
 3. **Camelback Mountain and Piestewa Peak** — Exposed rock, no shade and no water source put summit hikers on the 7:00AM call list.
 4. **South Mountain Park rides and runs** — Long morning sessions on the south side finish into full sun.
 
 ### [TAB: Events & Travel]
-
 1. **Sky Harbor arrivals** — Cabin air, a connecting flight and a step into desert heat stack in one afternoon.
 2. **Phoenix Convention Center weeks** — Conference schedules compress meals, sleep and water intake into three days.
 3. **Chase Field and Footprint Center crowds** — Evening games in summer heat produce next-morning recovery calls between 7:00AM and 10:00AM.
 4. **Roosevelt Row and ASU Downtown** — Late downtown nights generate the same morning pattern.
 
 ### [TAB: Seasonal]
-
 1. **Monsoon season, 15 June to 30 September** — Roughly 2.4 to 2.6 inches of rain, plus dust and pollen spikes that drive immune and sinus bookings.
 2. **Winter respiratory season** — Immune drips and vitamin C add-ons peak ahead of holiday travel out of Sky Harbor.
-
-### Safety callout (always visible)
-
-Safety matters more in Phoenix than almost anywhere. Maricopa County confirmed 81
-heat-related deaths by late September 2026, against 35 at the same point in 2025.
-An IV drip is a wellness service and is not treatment for heat exhaustion or heat
-stroke. Confusion, a body temperature above 103F, fainting, hot dry skin or a
-seizure are emergencies: call 911 or go to an emergency department. Book a drip
-for routine rehydration and recovery, never as a substitute for emergency care.
-
-therapy in Phoenix
 
 ---
 

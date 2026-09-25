@@ -234,6 +234,40 @@ _TRIM_SENTENCES = [
 ]
 
 
+# ---- 5h. Common Reasons: merge the safety text up, drop the image ---------
+# Same split as the Benefits section had. The safety paragraph sat below the
+# tab panel, stranded after the box, and the image slot beside the list was
+# empty because there is no Phoenix monsoon or trailhead photography. The
+# safety text moves into the opening paragraph, where it is read rather than
+# scrolled past, and the empty slot goes so the reasons take the full width.
+_REASONS_INTRO_OLD = (
+    "Phoenix recorded 100F earlier in 2026 than at any point in its history — an "
+    "eight-day triple-digit run from 18 to 25 March, three consecutive days at 105F. "
+    "March 2026 finished as the hottest March on record."
+)
+_REASONS_INTRO_NEW = (
+    "Phoenix recorded 100F earlier in 2026 than at any point in its history, during an "
+    "eight-day triple-digit run from 18 to 25 March with three consecutive days at "
+    "105F, and March finished as the hottest on record. Maricopa County confirmed 81 "
+    "heat-related deaths by late September, against 35 at the same point in 2025. An IV "
+    "drip is a wellness service and is not treatment for heat exhaustion or heat "
+    "stroke: confusion, a temperature above 103F, fainting, hot dry skin or a seizure "
+    "are emergencies that need 911 or an emergency department."
+)
+
+
+def fix_reasons(html: str) -> str:
+    html = html.replace(_REASONS_INTRO_OLD, _REASONS_INTRO_NEW)
+    # the empty image beside the reason list
+    html = re.sub(
+        r'<div[^>]*>\s*<image-slot[^>]*id="(?:\{\{ reasonSlot \}\}|reason-[a-z]+)"'
+        r'[^>]*>\s*</image-slot>\s*</div>', "", html, flags=re.S)
+    # the safety paragraph that used to sit under the panel
+    html = re.sub(r'<p[^>]*>\s*Safety matters more in Phoenix(?:(?!</p>).)*?</p>',
+                  "", html, flags=re.S)
+    return html
+
+
 def strip_readmore(html: str) -> str:
     """Remove see-also lines from both sources.
 
@@ -914,6 +948,7 @@ def clean_text(html, label):
     html = html.replace(_MAP_RENDERED, _MAP_EMBED).replace(_MAP_TEMPLATE, _MAP_EMBED)
     html = resources_to_info(html)
     html = insert_benefits(html)
+    html = fix_reasons(html)
     html = strip_readmore(html)
     html = board_heading(html)
     html = step_images(html)

@@ -256,6 +256,39 @@ therapy in Phoenix
 
 ---
 
+## H2 — What Are the Benefits of IV Therapy?
+
+*Eyebrow: WHY PEOPLE CHOOSE AN IV*
+
+The benefits of IV therapy come from the route itself, which puts fluid and
+nutrients into the bloodstream instead of the stomach. **7 benefits of IV
+therapy are listed below.**
+
+1. **Nothing is lost to digestion.** Fluids and nutrients enter the bloodstream directly. Taken by mouth, the same ingredients pass through the gut first, where how much is absorbed varies by person, by nutrient and by what else is in the stomach.
+2. **Rehydration is measured, not estimated.** A litre delivered by line is a known volume going in at a known rate. A litre drunk over an hour depends on how fast the stomach empties, which slows down in exactly the conditions that caused the deficit.
+3. **It works when swallowing does not.** Nausea, vomiting and stomach upset make oral fluids impractical, and they are common reasons people are short of fluid to begin with. A line bypasses the problem entirely.
+4. **The dose is set before the session starts.** The bag, the additions and the volume are fixed by the order rather than guessed at, so two sessions of the same drip deliver the same thing.
+5. **A clinician stays for the whole infusion.** Vitals are taken before and after, the site is watched throughout, and anything unexpected is caught while someone qualified is still in the room.
+6. **The time cost is known.** Most sessions run 45 to 60 minutes from line placement to removal, which makes the appointment straightforward to plan around.
+7. **A mobile visit removes the journey.** No drive, no car park, no waiting room and no sitting among other people who are unwell. For someone already depleted, the trip is often the hardest part.
+
+**Limits callout.** IV therapy also has clear limits, and they matter as much as
+the benefits. It does not treat an infection, replace a medication a doctor has
+prescribed, or substitute for emergency care. Vitamin infusions are a wellness
+service rather than a treatment for a diagnosed deficiency, which is a
+conversation for your own physician. Anyone with a kidney, heart or blood
+pressure condition, and anyone who is pregnant, should be screened by the
+prescriber before a first session.
+
+**Brand hand-off (the only brand mention in this section).** Those benefits
+belong to the method, not to any one provider. What separates providers is who
+holds the needle, how fast they arrive and whether the order behind the bag is a
+real one. At The Drip IV Infusion a licensed registered nurse runs every Phoenix
+session, under a valid prescriber's order, usually within 60 minutes of a
+confirmed booking.
+
+---
+
 ## H2 — Reserve a Phoenix Nurse Visit Today
 
 A nurse can reach most Phoenix addresses inside 60 minutes, seven days a week

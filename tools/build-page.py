@@ -225,6 +225,114 @@ def resources_to_info(html: str) -> str:
 
 
 
+
+
+# ---- 5d. the Benefits section ---------------------------------------------
+# Written to the client's reference page: a question heading, a counted list
+# intro, short declarative items, and a problem/consequence/solution close.
+# The benefits themselves stay CATEGORY-LEVEL on purpose. Nothing here is a
+# claim about this business, so nothing here needs a business fact to stand it
+# up. The brand appears once, in the last line, where the section hands off to
+# the booking CTA that follows it.
+_BENEFIT_ITEMS = [
+    ("Nothing is lost to digestion",
+     "Fluids and nutrients enter the bloodstream directly. Taken by mouth, the same "
+     "ingredients pass through the gut first, where how much is absorbed varies by "
+     "person, by nutrient and by what else is in the stomach."),
+    ("Rehydration is measured, not estimated",
+     "A litre delivered by line is a known volume going in at a known rate. A litre "
+     "drunk over an hour depends on how fast the stomach empties, which slows down in "
+     "exactly the conditions that caused the deficit."),
+    ("It works when swallowing does not",
+     "Nausea, vomiting and stomach upset make oral fluids impractical, and they are "
+     "common reasons people are short of fluid to begin with. A line bypasses the "
+     "problem entirely."),
+    ("The dose is set before the session starts",
+     "The bag, the additions and the volume are fixed by the order rather than guessed "
+     "at, so two sessions of the same drip deliver the same thing."),
+    ("A clinician stays for the whole infusion",
+     "Vitals are taken before and after, the site is watched throughout, and anything "
+     "unexpected is caught while someone qualified is still in the room."),
+    ("The time cost is known",
+     "Most sessions run 45 to 60 minutes from line placement to removal, which makes "
+     "the appointment straightforward to plan around."),
+    ("A mobile visit removes the journey",
+     "No drive, no car park, no waiting room and no sitting among other people who are "
+     "unwell. For someone already depleted, the trip is often the hardest part."),
+]
+
+_BENEFIT_LIMITS = (
+    "IV therapy also has clear limits, and they matter as much as the benefits. It does "
+    "not treat an infection, replace a medication a doctor has prescribed, or substitute "
+    "for emergency care. Vitamin infusions are a wellness service rather than a "
+    "treatment for a diagnosed deficiency, which is a conversation for your own "
+    "physician. Anyone with a kidney, heart or blood pressure condition, and anyone who "
+    "is pregnant, should be screened by the prescriber before a first session."
+)
+
+_BENEFIT_CLOSE = (
+    "Those benefits belong to the method, not to any one provider. What separates "
+    "providers is who holds the needle, how fast they arrive and whether the order "
+    "behind the bag is a real one. At The Drip IV Infusion a licensed registered nurse "
+    "runs every Phoenix session, under a valid prescriber's order, usually within 60 "
+    "minutes of a confirmed booking."
+)
+
+
+def _benefits_html() -> str:
+    cards = []
+    for i, (title, body) in enumerate(_BENEFIT_ITEMS, 1):
+        cards.append(
+            '<div style="background:#fff;border-radius:10px;padding:22px 24px;display:flex;'
+            'gap:16px;align-items:flex-start">'
+            '<div style="flex:none;width:34px;height:34px;border-radius:50%%;background:#B5DEF5;'
+            'color:#153060;display:flex;align-items:center;justify-content:center;'
+            'font-family:Questrial,sans-serif;font-size:15px">%02d</div>'
+            '<div style="display:flex;flex-direction:column;gap:6px">'
+            '<h3 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
+            'font-size:20px;color:#153060">%s</h3>'
+            '<p style="margin:0;font-size:16px;line-height:1.6;color:#3a4150">%s</p>'
+            '</div></div>' % (i, title, body)
+        )
+    return (
+        '<section id="benefits" data-screen-label="12b Benefits" '
+        'style="padding:96px 24px;background:#F6F6F6">'
+        '<div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;gap:32px">'
+        '<div style="display:flex;flex-direction:column;gap:12px;max-width:760px">'
+        '<div style="font:600 13px \'Source Sans 3\',sans-serif;letter-spacing:1px;'
+        'text-transform:uppercase;color:#5A79AD">WHY PEOPLE CHOOSE AN IV</div>'
+        '<h2 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
+        'font-size:clamp(28px,3.2vw,40px);color:#153060">'
+        'What Are the Benefits of IV Therapy?</h2>'
+        '<p style="margin:0;font-size:18px;line-height:1.65;color:#2b3140">'
+        'The benefits of IV therapy come from the route itself, which puts fluid and '
+        'nutrients into the bloodstream instead of the stomach. '
+        '<strong>7 benefits of IV therapy are listed below.</strong></p></div>'
+        '<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%%,340px),1fr));'
+        'gap:20px">' + "".join(cards) + '</div>'
+        '<div style="background:#fff;border-left:4px solid #13646D;border-radius:10px;'
+        'padding:24px 26px;display:flex;flex-direction:column;gap:12px">'
+        '<p style="margin:0;font-size:16px;line-height:1.65;color:#3a4150">%s</p>'
+        '<p style="margin:0;font-size:16px;line-height:1.65;color:#2b3140">%s</p>'
+        '</div></div></section>' % (_BENEFIT_LIMITS, _BENEFIT_CLOSE)
+    )
+
+
+_CTA_ANCHOR_TPL = '<section data-screen-label="13 Reserve CTA"'
+_CTA_ANCHOR_SNAP = '<section data-dc-tpl="453" data-screen-label="13 Reserve CTA"'
+
+
+def insert_benefits(html: str) -> str:
+    """Place the Benefits section immediately before the Reserve CTA."""
+    block = _benefits_html()
+    if "id=\"benefits\"" in html:
+        return html
+    for anchor in (_CTA_ANCHOR_SNAP, _CTA_ANCHOR_TPL):
+        if anchor in html:
+            return html.replace(anchor, block + anchor, 1)
+    return html
+
+
 # ---- 6. real photography from the client's own media library ---------------
 # Every URL below was opened and looked at; the alt text says what the photo
 # ACTUALLY shows, not what the design slot wished for. A slot with no honest
@@ -605,6 +713,7 @@ def clean_text(html, label):
         html = html.replace(a, b)
     html = html.replace(_MAP_RENDERED, _MAP_EMBED).replace(_MAP_TEMPLATE, _MAP_EMBED)
     html = resources_to_info(html)
+    html = insert_benefits(html)
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
     html = html.replace("\u2013", "-")          # en dash -> hyphen

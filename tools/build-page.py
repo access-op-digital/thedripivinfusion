@@ -109,7 +109,31 @@ _FAQ_IMG_OLD = ('<div style="position:relative;height:400px;border-radius:10px;'
 _FAQ_IMG_NEW = ('<sc-if value="{{ res0 }}" hint-placeholder-val="{{ true }}">'
                 + _FAQ_IMG_OLD + '</sc-if>')
 
-CONTENT_FIXES = [(_OLD_NOTICE, _NEW_NOTICE), (_FAQ_IMG_OLD, _FAQ_IMG_NEW)]
+# The design condensed the hero to two sentences and lost the menu size, the
+# price range and the coverage. The client wants the fuller opening back: it is
+# the only place above the fold that answers what it costs and where they go.
+_HERO_OLD = (
+    "IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion to "
+    "your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix "
+    "addresses within 60 minutes of a confirmed booking. Arizona law requires a valid "
+    "prescriber's order before any elective infusion, and it's arranged as part of your "
+    "intake."
+)
+_HERO_NEW = (
+    "IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion to "
+    "your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix "
+    "addresses within 60 minutes of a confirmed booking. Eight drips make up the menu, "
+    "priced from $195 to $495, and a nurse places every line. Mobile visits run 7:00AM "
+    "to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, Desert "
+    "Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber before "
+    "any elective infusion, and that order is arranged as part of your intake."
+)
+
+CONTENT_FIXES = [
+    (_OLD_NOTICE, _NEW_NOTICE),
+    (_FAQ_IMG_OLD, _FAQ_IMG_NEW),
+    (_HERO_OLD, _HERO_NEW),
+]
 
 # ---- 5c. the map, and the resources block --------------------------------
 # The design leaves a dashed "Embedded Google map" box. The Phoenix office is a

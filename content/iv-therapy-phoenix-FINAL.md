@@ -23,9 +23,11 @@ Pill: Google · 5.0 · ★★★★★ · Google reviews
 
 IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion
 to your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix
-addresses within 60 minutes of a confirmed booking. Arizona law requires a valid
-prescriber's order before any elective infusion, and it's arranged as part of
-your intake.
+addresses within 60 minutes of a confirmed booking. Eight drips make up the menu,
+priced from $195 to $495, and a nurse places every line. Mobile visits run 7:00AM
+to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, Desert
+Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber before
+any elective infusion, and that order is arranged as part of your intake.
 
 CTAs: **BOOK A PHOENIX NURSE VISIT** · **CALL (602) 341-3511**
 

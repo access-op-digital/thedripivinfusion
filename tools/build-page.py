@@ -114,10 +114,9 @@ SLOT_IMAGES = {
     "process-visual": "vein-check",
     "reserve-img": "at-home",
     "final-img": "team",
-    # cocktail carousel, indexed as the component builds them
-    "bag-0": "bag-myers",
-    "bag-1": "bag-revive",
-    "bag-5": "bag-defender",
+    # The cocktail carousel was removed in the 25 Sep design, so bag-0/1/5 are
+    # gone. The Defender render now has no home; the remaining drip-* cards have
+    # no matching product shot in the media library and stay empty.
 }
 
 
@@ -217,7 +216,18 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
 
       if (tag === 'sc-if') {
         var cond = get(scope, soleBinding(n.getAttribute('value') || '') || '');
-        if (cond) render(n, scope, out);
+        if (cond) {
+          render(n, scope, out);
+        } else {
+          // Inactive tab panels stay in the DOM, hidden. Dropping them would put
+          // the FAQ answers, the drip cards, the cost tables and the Arizona
+          // scope detail behind a click and out of the served markup entirely.
+          var keep = document.createElement('div');
+          keep.hidden = true;
+          keep.setAttribute('data-inactive-panel', '');
+          render(n, scope, keep);
+          out.appendChild(keep);
+        }
         continue;
       }
 
@@ -289,10 +299,74 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>"""
 
 
-def head_block() -> str:
-    faq_ld = (
-        '{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[]}'
-    )
+def extract_faqs(component: str) -> list:
+    """Read the component's own FAQ pairs so the schema cannot drift from the page."""
+    block = re.search(r"const F = \[(.*?)\n    \];", component, re.S)
+    if not block:
+        return []
+    pairs = re.findall(r"\[\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*\]",
+                       block.group(1), re.S)
+    out = []
+    for q, a in pairs:
+        q = q.replace("\\'", "'").strip()
+        a = a.replace("\\'", "'").strip()
+        if q.endswith("?"):
+            out.append((q, a))
+    return out
+
+
+def crawlable_panels(component: str) -> str:
+    """Static, hidden markup for tab panels that swap a DATA ARRAY.
+
+    `sc-if` panels are handled in the runtime (rendered hidden). But the Reasons
+    and Why tabs swap `reasonSets[i]` / `whySets[i]` wholesale, so only the
+    default slice ever reaches the DOM. That silently hides two thirds of the
+    local Phoenix section, which is the part that earns this URL. Sets after the
+    default are emitted here as static hidden markup: no JS, always in the
+    served HTML, and no duplication of the slice that is already visible.
+    """
+    out = []
+
+    m = re.search(r"const reasonSets = \[(.*?)\n    \];", component, re.S)
+    if m:
+        items = re.findall(r"\[\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*\]",
+                           m.group(1), re.S)
+        blocks = re.split(r"\{\s*slot:", m.group(1))[1:]
+        seen = 0
+        for bi, blk in enumerate(blocks):
+            pairs = re.findall(r"\[\s*'((?:[^'\\]|\\.)*)'\s*,\s*'((?:[^'\\]|\\.)*)'\s*\]",
+                               blk, re.S)
+            if bi == 0:                      # default tab, already rendered
+                seen += len(pairs)
+                continue
+            for t, d in pairs:
+                out.append("<h3>%s</h3><p>%s</p>" % (t.replace("\\'", "'"),
+                                                     d.replace("\\'", "'")))
+
+    m = re.search(r"const whySets = \[(.*?)\n    \];", component, re.S)
+    if m:
+        groups = re.findall(r"\[((?:\s*'(?:[^'\\]|\\.)*'\s*,?)+)\]", m.group(1), re.S)
+        for gi, g in enumerate(groups):
+            if gi == 0:
+                continue
+            vals = re.findall(r"'((?:[^'\\]|\\.)*)'", g)
+            out.append("<ul>" + "".join("<li>%s</li>" % v.replace("\\'", "'")
+                                        for v in vals) + "</ul>")
+
+    if not out:
+        return ""
+    return ('\n<div hidden data-crawlable-panels aria-hidden="true">\n'
+            + "\n".join(out) + "\n</div>\n")
+
+
+def head_block(faqs=()) -> str:
+    faq_ld = json.dumps({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [{"@type": "Question", "name": q,
+                        "acceptedAnswer": {"@type": "Answer", "text": a}}
+                       for q, a in faqs],
+    }, ensure_ascii=False)
     biz_ld = (
         '{"@context":"https://schema.org","@type":"MedicalBusiness",'
         '"name":"The Drip IV Infusion",'
@@ -355,6 +429,7 @@ def main() -> int:
     body = re.sub(r'<style>.*?</style>', '', body, flags=re.S)
     logic = re.search(r'<script type="text/x-dc"[^>]*>(.*?)</script>', body, flags=re.S)
     component = logic.group(1).strip() if logic else ""
+    faqs = extract_faqs(component)
     body = re.sub(r'<script type="text/x-dc".*?</script>', '', body, flags=re.S)
     fonts = ('<link rel="preconnect" href="https://fonts.googleapis.com">'
              '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?'
@@ -363,7 +438,7 @@ def main() -> int:
     out = f"""<!doctype html>
 <html lang="en">
 <head>
-{head_block()}
+{head_block(faqs)}
 {fonts}
 <style>
 {page_css.strip()}
@@ -373,6 +448,7 @@ def main() -> int:
 <div id="page">
 {body.strip()}
 </div>
+{crawlable_panels(component)}
 <script>
 {image_map_js()}
 </script>

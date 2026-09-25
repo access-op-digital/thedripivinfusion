@@ -66,13 +66,23 @@ Badge: **Fall 2022** — Founded by two registered nurses
 
 ## H2 — Trusted Mobile IV Therapy in Phoenix, Maricopa County
 
-The Drip IV Infusion has treated Maricopa County patients since Fall 2022. The
-mobile service covers Phoenix and seven neighbouring cities, with an office at
-4531 N 16th St, Suite 102 (85016) and three more in Gilbert.
+The Drip IV Infusion has treated Maricopa County patients since Fall 2022, when
+two registered nurses founded the practice. The mobile service covers Phoenix
+and seven neighbouring cities: Gilbert, Queen Creek, Mesa, Chandler, San Tan
+Valley, Scottsdale and Tempe. A Phoenix office at 4531 N 16th St, Suite 102, in
+the 85016 ZIP, handles in-office appointments, and three further offices operate
+in Gilbert.
 
-A licensed registered nurse administers every infusion under MD-supervised
-protocols. Nurses carry hospital-grade supplies, so the drip that runs in a
-Biltmore living room matches the drip that runs in the Gilbert office.
+A licensed registered nurse administers every infusion. The company states that
+100% of the clinicians who place lines are licensed RNs, that the business is
+fully licensed and insured, and that treatments follow MD-supervised protocols.
+Nurses carry hospital-grade supplies to the address you give, so the drip that
+runs in a Biltmore living room matches the drip that runs in the Gilbert office.
+
+Response time is the metric the practice publishes: 60 minutes from confirmed
+booking to a nurse at the door, within the Phoenix service area. Mobile hours
+run 7:00AM to 9:00PM every day of the week, which covers early-morning trailhead
+recovery and late-evening calls after a downtown event.
 
 ---
 

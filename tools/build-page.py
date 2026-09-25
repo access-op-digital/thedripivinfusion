@@ -154,10 +154,41 @@ _WHY_INTRO_NEW = (
     "clinically supervised hydration whenever it is needed."
 )
 
+# Same story as the hero: the design cut three approved paragraphs down to two
+# shorter ones and lost the city list, the licence and insurance wording, and
+# the whole response-time paragraph. Restored verbatim from the approved copy.
+_TRUST_P1_OLD = ("The Drip IV Infusion has treated Maricopa County patients since Fall 2022. "
+                 "The mobile service covers Phoenix and seven neighbouring cities, with an "
+                 "office at 4531 N 16th St, Suite 102 (85016) and three more in Gilbert.")
+_TRUST_P1_NEW = ("The Drip IV Infusion has treated Maricopa County patients since Fall 2022, "
+                 "when two registered nurses founded the practice. The mobile service covers "
+                 "Phoenix and seven neighbouring cities: Gilbert, Queen Creek, Mesa, "
+                 "Chandler, San Tan Valley, Scottsdale and Tempe. A Phoenix office at 4531 N "
+                 "16th St, Suite 102, in the 85016 ZIP, handles in-office appointments, and "
+                 "three further offices operate in Gilbert.")
+
+_TRUST_P2_OLD = ("A licensed registered nurse administers every infusion under MD-supervised "
+                 "protocols. Nurses carry hospital-grade supplies, so the drip that runs in a "
+                 "Biltmore living room matches the drip that runs in the Gilbert office.")
+_TRUST_P2_NEW = ("A licensed registered nurse administers every infusion. The company states "
+                 "that 100% of the clinicians who place lines are licensed RNs, that the "
+                 "business is fully licensed and insured, and that treatments follow "
+                 "MD-supervised protocols. Nurses carry hospital-grade supplies to the "
+                 "address you give, so the drip that runs in a Biltmore living room matches "
+                 "the drip that runs in the Gilbert office.</p>"
+                 '<p style="font-size:18px;line-height:1.6;color:#2b3140;text-wrap:pretty">'
+                 "Response time is the metric the practice publishes: 60 minutes from "
+                 "confirmed booking to a nurse at the door, within the Phoenix service area. "
+                 "Mobile hours run 7:00AM to 9:00PM every day of the week, which covers "
+                 "early-morning trailhead recovery and late-evening calls after a downtown "
+                 "event.")
+
 CONTENT_FIXES = [
     (_OLD_NOTICE, _NEW_NOTICE),
     (_FAQ_IMG_OLD, _FAQ_IMG_NEW),
     (_HERO_OLD, _HERO_NEW),
+    (_TRUST_P1_OLD, _TRUST_P1_NEW),
+    (_TRUST_P2_OLD, _TRUST_P2_NEW),
     (_WHY_INTRO_OLD, _WHY_INTRO_NEW),
     (_WHY_HEAD_OLD, _WHY_HEAD_NEW),
     (_WHY_TAIL_OLD, _WHY_TAIL_NEW),

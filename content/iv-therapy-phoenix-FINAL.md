@@ -89,8 +89,23 @@ add-on ingredients at a flat $30. Fluids* are included in every cocktail.
 | The GOAT | $375 | peak performance | Vitamin C, B12, Zinc, Taurine, NAC, B6, Fluids*, plus NAD+ injection |
 | The Skinny | $350 | weight loss support | B12, B-Complex, Glutathione, L-Carnitine, Amino Blend, Fluids* |
 
-*Fluids are included in every cocktail. Every infusion runs under a valid order
-from a licensed prescriber.
+### H3 — Add-Ons and Ingredients
+
+Sixteen add-on ingredients attach to any cocktail on the menu at a flat $30 each,
+so a bag can be adjusted to what your intake and the prescriber's order call for
+on the day.
+
+NAC · Vitamin C · Lipo-C / Lipo-plus · Vitamin B12 · B-Complex Vitamins · Toradol
+· Glutathione · Zofran · Zinc · Pepcid · Magnesium · Benadryl · Taurine · Amino
+Blend · Pyridoxine (B6) · L-Carnitine
+
+Each card carries the client's own description, verbatim from the /menu page.
+
+**Button:** VIEW THE FULL MENU, linking to https://thedripivinfusion.com/menu
+
+Payment methods accepted: major credit cards, debit cards, HSA and FSA. Fluids*
+are included in every cocktail, and every infusion runs under a valid order from
+a licensed prescriber.
 
 ---
 
@@ -526,6 +541,6 @@ THE DRIP iv infusion
 | Medical director | Site claims MD-supervised protocols but names no director. Arizona expects one for a business outside a private medical office |
 | Nurse credentials | Surnames, Arizona licence numbers and headshots for Jenna, Karena and Kris |
 | Review sources | Star rating per reviewer and the Google Business Profile URL |
-| Pricing gaps | Travel fee, group/party pricing and HSA/FSA eligibility are unpublished, so none is stated |
+| Pricing gaps | Travel fee and group/party pricing are still unpublished. HSA/FSA is now resolved: the menu page states major credit cards, debit cards, HSA and FSA |
 | Images | 20 slots filled from the client media library. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
 | Links | Several placeholder `href="#"` targets still to be pointed at real URLs |

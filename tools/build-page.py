@@ -684,6 +684,114 @@ _MENU_OVERVIEW = (
 )
 
 
+# Add-on ingredients, verbatim from the client's own /menu page. These are the
+# client's published product claims, so they ship in their own wording under
+# the claim-precedence rule. Several read as treatment claims rather than
+# wellness ones, which is flagged in the run notes for their sign-off.
+_ADDONS = [
+    ("N-Acetyl Cysteine (NAC)",
+     "Is used to treat many conditions, which may include flu, dry eye, cough and "
+     "other lung conditions."),
+    ("Vitamin C", "Boosts immune function and fights off illnesses."),
+    ("Lipo-C / Lipo-plus",
+     "Lipo-C injections have shown to target fatty deposits of the stomach, hips, "
+     "inner thighs, buttocks and neck area. The mix of ingredients works to boost the "
+     "body's metabolic function, therefore burning fat in concentrated areas."),
+    ("Vitamin B12",
+     "For morning sickness relief. Increases energy levels, boosts immune function, "
+     "helps improve mood and depression, improves sleep patterns, and keeps the body's "
+     "nerve and blood cells healthy."),
+    ("B-Complex Vitamins",
+     "Improves liver function and memory. Protects the body's immune system and aids "
+     "in the breakdown of fats and carbohydrates into energy. It can have positive "
+     "effects on hair, skin and nails."),
+    ("Toradol",
+     "Toradol is a nonsteroidal anti-inflammatory medication (NSAID). It works to "
+     "reduce the hormones that cause inflammation and pain."),
+    ("Glutathione",
+     "Master antioxidant that aids in the detoxification process in the body and helps "
+     "the body create energy."),
+    ("Zofran",
+     "A medication that is able to block the actions of chemicals in the body that can "
+     "trigger nausea and vomiting."),
+    ("Zinc",
+     "Boosts immune function and fights off illnesses, aids in wound healing, provides "
+     "added skin hydration, and increases the sense of taste and smell."),
+    ("Pepcid",
+     "A histamine-2 blocker medication that decreases the amount of stomach acids "
+     "produced."),
+    ("Magnesium",
+     "Helps relax smooth muscles and can help with anxiety, stress, insomnia, "
+     "inflammation and constipation."),
+    ("Benadryl",
+     "An antihistamine medication that reduces the effect of the natural chemical "
+     "histamine in the body."),
+    ("Taurine",
+     "Promotes healthy metabolism, balances electrolytes, aids in lowering mild "
+     "hypertension, reduces inflammation and anxiety."),
+    ("Amino Blend",
+     "Prevents breakdown of muscle. Aids in conversion of fatty acids into energy. "
+     "Used for fat metabolism and energy, performance recovery time, and muscle "
+     "building."),
+    ("Pyridoxine (B6)",
+     "Important for brain development, helps keep the nervous system and immune system "
+     "healthy. A vital piece in assisting with morning sickness."),
+    ("L-Carnitine", "Helps the body turn fat into energy."),
+]
+
+_MENU_URL = "https://thedripivinfusion.com/menu"
+
+_DROP_SVG = (
+    '<svg width="34" height="34" viewBox="0 0 24 24" fill="#13646D" aria-hidden="true">'
+    '<path d="M12 2.5c3.6 4.4 6.5 8 6.5 11.3a6.5 6.5 0 0 1-13 0C5.5 10.5 8.4 6.9 12 2.5z"'
+    '></path></svg>'
+)
+
+
+def _addons_html() -> str:
+    cards = []
+    for name, body in _ADDONS:
+        cards.append(
+            '<div style="background:#fff;border:1px solid #e3e7ee;border-radius:12px;'
+            'padding:22px;display:flex;flex-direction:column;gap:10px">'
+            + _DROP_SVG +
+            '<h4 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
+            'font-size:17px;color:#153060">' + name + '</h4>'
+            '<div style="font-size:14px;font-weight:600;color:#5A79AD">'
+            '$30 Add-On to IV Infusion</div>'
+            '<p style="margin:0;font-size:14px;line-height:1.55;color:#3a4150">'
+            + body + '</p></div>'
+        )
+    return (
+        '<div style="display:flex;flex-direction:column;gap:22px;margin-top:8px">'
+        '<div style="display:flex;flex-direction:column;gap:8px;max-width:900px">'
+        '<h3 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
+        'font-size:clamp(24px,2.6vw,32px);color:#153060">Add-Ons and Ingredients</h3>'
+        '<p style="margin:0;font-size:17px;line-height:1.6;color:#2b3140">'
+        'Sixteen add-on ingredients attach to any cocktail on the menu at a flat $30 '
+        'each, so a bag can be adjusted to what your intake and the prescriber\'s order '
+        'call for on the day.</p></div>'
+        '<div style="display:grid;grid-template-columns:'
+        'repeat(auto-fit,minmax(min(100%,240px),1fr));gap:16px">' + "".join(cards) +
+        '</div></div>'
+    )
+
+
+def _menu_footer_html() -> str:
+    return (
+        '<div style="display:flex;flex-direction:column;gap:14px;align-items:flex-start;'
+        'margin-top:8px">'
+        '<a href="' + _MENU_URL + '" style="display:inline-block;background:#153060;'
+        'color:#fff;text-decoration:none;padding:16px 34px;border-radius:10px;'
+        'font:600 15px \'Source Sans 3\',sans-serif;letter-spacing:1px;'
+        'text-transform:uppercase">View the Full Menu</a>'
+        '<p style="margin:0;font-size:14px;color:#5a6070">Payment methods accepted: '
+        'major credit cards, debit cards, HSA and FSA. Fluids* are included in every '
+        'cocktail, and every infusion runs under a valid order from a licensed '
+        'prescriber.</p></div>'
+    )
+
+
 def _menu_html() -> str:
     cards = []
     for name, price, purpose, key, ingr, desc in _MENU_ITEMS:
@@ -722,9 +830,7 @@ def _menu_html() -> str:
         '<div style="display:flex;gap:20px;overflow-x:auto;padding-bottom:14px;'
         'scroll-snap-type:x mandatory;scrollbar-width:thin;'
         'scrollbar-color:#5A79AD #F6F6F6">' + "".join(cards) + '</div>'
-        '<p style="margin:0;font-size:14px;color:#5a6070">*Fluids are included in every '
-        'cocktail. Every infusion runs under a valid order from a licensed prescriber.'
-        '</p></div></section>'
+        + _addons_html() + _menu_footer_html() + '</div></section>'
     )
 
 

@@ -29,7 +29,7 @@ What it does, and why:
    canonical, Open Graph, and FAQPage + MedicalBusiness JSON-LD.
 """
 from __future__ import annotations
-import io, os, re, sys
+import io, json, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "design", "IV Therapy Phoenix.dc.html")
@@ -68,6 +68,69 @@ for _n in range(1, 9):
     DASH_FIXES.append((f"Step {_n} — ", f"Step {_n} - "))
 
 
+# ---- 6. real photography from the client's own media library ---------------
+# Every URL below was opened and looked at; the alt text says what the photo
+# ACTUALLY shows, not what the design slot wished for. A slot with no honest
+# match is left empty on purpose and renders as a labelled placeholder. There
+# is no Phoenix outdoor, landmark, monsoon or hotel photography on the site,
+# so those slots stay empty rather than captioning an office photo as a hiker.
+U = "https://thedripivinfusion.com/wp-content/uploads"
+PHOTOS = {
+    "cannulation": (f"{U}/2026/05/DSC01345-6-scaled.jpg",
+                    "Registered nurse from The Drip IV Infusion placing an IV line in a client's arm"),
+    "workplace":   (f"{U}/2026/05/DSC01289-2-scaled.jpg",
+                    "Nurse hanging an IV bag while a client keeps working through the infusion"),
+    "vein-check":  (f"{U}/2026/05/DSC01489-1-scaled.jpg",
+                    "Nurse assessing a vein before placing the line in the treatment room"),
+    "vial-check":  (f"{U}/2026/05/DSC01438-3-scaled.jpg",
+                    "Nurse checking a sealed medication vial before preparing an infusion"),
+    "at-home":     (f"{U}/2024/11/screen_JGP-TheDrip-Dec22_Corbin_009-1024x683.jpg",
+                    "Client receiving an IV infusion in an armchair at home"),
+    "team":        (f"{U}/2026/04/IMG_0646-1-1-scaled.jpeg",
+                    "The Drip IV Infusion nursing team in branded scrubs at the office"),
+    "founders":    (f"{U}/2024/11/thedripivinfusion-brandonandcorbin-retina.webp",
+                    "Brandon Lang and Corbin King, the registered nurses who founded The Drip IV Infusion"),
+    "bag-myers":   (f"{U}/2024/11/thedripivinfusion-ivbag-myers-retina.webp",
+                    "The Classic Myers IV bag"),
+    "bag-revive":  (f"{U}/2024/11/thedripivinfusion-ivbag-revive@2X.webp",
+                    "The RE:VIVE IV bag"),
+    "bag-defender": (f"{U}/2024/11/thedripivinfusion-ivbag-defender-@2X.webp",
+                     "The Defender IV bag"),
+}
+# slot id -> photo key. Slots absent from this map stay empty by design.
+SLOT_IMAGES = {
+    "hero-nurse": "cannulation",
+    "trust-a": "workplace",
+    "trust-b": "vein-check",
+    "drip-myers": "bag-myers",
+    "drip-hangover": "bag-revive",
+    "gal-1": "cannulation",
+    "gal-2": "at-home",
+    "gal-3": "vein-check",
+    "gal-4": "workplace",
+    "gal-5": "team",
+    "team-brandon": "founders",
+    "safety-kit": "vial-check",
+    "process-visual": "vein-check",
+    "reserve-img": "at-home",
+    "final-img": "team",
+    # cocktail carousel, indexed as the component builds them
+    "bag-0": "bag-myers",
+    "bag-1": "bag-revive",
+    "bag-5": "bag-defender",
+}
+
+
+def image_map_js() -> str:
+    pairs = []
+    for slot, key in SLOT_IMAGES.items():
+        src, alt = PHOTOS[key]
+        pairs.append('  %s: { src: %s, alt: %s%s }' % (
+            json.dumps(slot), json.dumps(src), json.dumps(alt),
+            ', eager: true' if slot == 'hero-nurse' else ''))
+    return "window.DRIP_IMAGES = {\n" + ",\n".join(pairs) + "\n};"
+
+
 def strip_editor_runtime(html: str) -> str:
     html = re.sub(r'<script data-omelette-injected>.*?</script>', '', html, flags=re.S)
     html = re.sub(r'<style data-omelette-injected>.*?</style>', '', html, flags=re.S)
@@ -89,7 +152,7 @@ def convert_image_slots(html: str) -> str:
             f'<figure class="img-slot" data-slot="{slot}" '
             f'style="margin:0;width:100%;height:100%;border-radius:{radius};overflow:hidden;'
             f'background:#F6F6F6;display:flex;align-items:center;justify-content:center">'
-            f'<img src="" alt="{alt}" loading="lazy" decoding="async" '
+            f'<img alt="{alt}" loading="lazy" decoding="async" '
             f'style="width:100%;height:100%;object-fit:cover;display:block" '
             f'onerror="this.style.display=\'none\';this.parentNode.classList.add(\'is-empty\')">'
             f'<figcaption class="img-slot-note">{alt}</figcaption></figure>'
@@ -180,12 +243,35 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
     for (var key in next) this.state[key] = next[key];
     this.paint();
   };
+  function fillImages(root) {
+    var map = window.DRIP_IMAGES || {};
+    var slots = root.querySelectorAll('figure.img-slot[data-slot]');
+    for (var i = 0; i < slots.length; i++) {
+      var fig = slots[i], hit = map[fig.getAttribute('data-slot')];
+      var img = fig.querySelector('img');
+      if (!img) continue;
+      if (hit) {
+        if (hit.eager) { img.loading = 'eager'; img.setAttribute('fetchpriority', 'high'); }
+        img.style.display = 'block';
+        img.src = hit.src;
+        if (hit.alt) img.alt = hit.alt;
+        fig.classList.remove('is-empty');
+      } else {
+        img.removeAttribute('src');
+        img.style.display = 'none';
+        fig.classList.add('is-empty');
+      }
+    }
+  }
+  window.__dripFillImages = fillImages;
+
   window.DCLogic.prototype.paint = function () {
     var vals = this.renderVals();
     var frag = document.createDocumentFragment();
     render(this._tpl, vals, frag);
     this._root.textContent = '';
     this._root.appendChild(frag);
+    fillImages(this._root);
   };
   window.DCLogic.prototype.mount = function (root) {
     this._root = root;
@@ -287,6 +373,9 @@ def main() -> int:
 <div id="page">
 {body.strip()}
 </div>
+<script>
+{image_map_js()}
+</script>
 <script>
 {RUNTIME}
 </script>

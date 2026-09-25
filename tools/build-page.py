@@ -270,6 +270,30 @@ _REASONS_STACK = ('<div style="display:flex;flex-direction:column;gap:16px;'
                   'max-width:900px">')
 
 
+# The Why Choose header and its tab row were centred, the only section on the
+# page that is. Left-align both so it sits flush with the heading above and the
+# cost heading below it.
+_WHY_ALIGN = [
+    ("display:flex;flex-direction:column;gap:14px;align-items:center;"
+     "text-align:center;max-width:760px;margin:0 auto",
+     "display:flex;flex-direction:column;gap:14px;max-width:900px"),
+    ("display: flex; flex-direction: column; gap: 14px; align-items: center; "
+     "text-align: center; max-width: 760px; margin: 0px auto;",
+     "display: flex; flex-direction: column; gap: 14px; max-width: 900px;"),
+    ("border-bottom:1px solid #d9dfe8;flex-wrap:wrap;justify-content:center",
+     "border-bottom:1px solid #d9dfe8;flex-wrap:wrap"),
+    ("border-bottom: 1px solid rgb(217, 223, 232); flex-wrap: wrap; "
+     "justify-content: center;",
+     "border-bottom: 1px solid rgb(217, 223, 232); flex-wrap: wrap;"),
+]
+
+
+def why_choose_align(html: str) -> str:
+    for a, b in _WHY_ALIGN:
+        html = html.replace(a, b)
+    return html
+
+
 def founder_headshots(html: str) -> str:
     """Square off the two founder slots and give them room.
 
@@ -991,6 +1015,7 @@ def clean_text(html, label):
     html = html.replace(_MAP_RENDERED, _MAP_EMBED).replace(_MAP_TEMPLATE, _MAP_EMBED)
     html = resources_to_info(html)
     html = insert_benefits(html)
+    html = why_choose_align(html)
     html = founder_headshots(html)
     html = fix_reasons(html)
     html = strip_readmore(html)

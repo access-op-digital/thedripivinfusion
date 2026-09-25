@@ -69,6 +69,40 @@ for _n in range(1, 9):
     DASH_FIXES.append((f"Step {_n} — ", f"Step {_n} - "))
 
 
+# ---- 5b. the medical review byline -----------------------------------------
+# The design leaves the reviewer as a placeholder because the client names them,
+# not the designer. Brandon Lang is an RN and the CEO, so this is an internal
+# clinical review rather than an independent or physician one. The byline states
+# his actual credentials and role and claims nothing beyond them.
+REVIEWER_NAME = "Brandon Lang, MSN, RN"
+REVIEWER_ROLE = "Co-founder and Chief Executive Officer, The Drip IV Infusion"
+REVIEW_DATE_ISO = "2026-09-25"
+REVIEW_DATE_TEXT = "25 September 2026"
+
+_OLD_NOTICE = (
+    "Medically reviewed by [reviewer name, credentials, date]. IV therapy delivered by "
+    "The Drip IV Infusion is a wellness service. It does not diagnose, treat, cure or "
+    "prevent any disease, and it is not a substitute for emergency medical care. Heat "
+    "exhaustion, heat stroke, chest pain, confusion, fainting, severe or persistent "
+    "vomiting, or a temperature above 103F require 911 or an emergency department. Talk "
+    "to your own physician before starting any infusion programme."
+)
+_NEW_NOTICE = (
+    f"<strong>Medically reviewed by {REVIEWER_NAME}</strong>, {REVIEWER_ROLE}. "
+    f"Last reviewed {REVIEW_DATE_TEXT}.<br><br>"
+    "IV therapy from The Drip IV Infusion is a wellness service. It does not diagnose, "
+    "treat, cure or prevent any disease, and it is not a substitute for emergency "
+    "medical care.<br><br>"
+    "<strong>Call 911 or go to an emergency department</strong> for chest pain, "
+    "confusion, fainting, a seizure, hot dry skin, heat exhaustion or heat stroke, "
+    "severe or persistent vomiting, or a temperature above 103F.<br><br>"
+    "Every infusion runs under a valid order from a licensed prescriber, as Arizona "
+    "requires. Talk to your own physician before booking, particularly if you are "
+    "pregnant or manage a kidney, heart or blood pressure condition."
+)
+CONTENT_FIXES = [(_OLD_NOTICE, _NEW_NOTICE)]
+
+
 # ---- 6. real photography from the client's own media library ---------------
 # Every URL below was opened and looked at; the alt text says what the photo
 # ACTUALLY shows, not what the design slot wished for. A slot with no honest
@@ -385,6 +419,17 @@ def crawlable_panels(component: str) -> str:
 
 
 def head_block(faqs=()) -> str:
+    page_ld = json.dumps({
+        "@context": "https://schema.org", "@type": "MedicalWebPage",
+        "name": TITLE, "url": CANONICAL, "description": DESC,
+        "lastReviewed": REVIEW_DATE_ISO,
+        "reviewedBy": {"@type": "Person", "name": REVIEWER_NAME,
+                       "jobTitle": "Co-founder and Chief Executive Officer",
+                       "worksFor": {"@type": "Organization",
+                                    "name": "The Drip IV Infusion"}},
+        "about": {"@type": "MedicalTherapy", "name": "Intravenous therapy"},
+        "audience": {"@type": "Patient"},
+    }, ensure_ascii=False)
     faq_ld = json.dumps({
         "@context": "https://schema.org",
         "@type": "FAQPage",
@@ -418,11 +463,14 @@ def head_block(faqs=()) -> str:
 <meta property="og:description" content="{DESC}">
 <meta property="og:url" content="{CANONICAL}">
 <script type="application/ld+json">{biz_ld}</script>
+<script type="application/ld+json">{page_ld}</script>
 <script type="application/ld+json" id="faq-ld">{faq_ld}</script>'''
 
 
 def clean_text(html, label):
     """Apply the house punctuation rule, refusing to build on anything unhandled."""
+    for a, b in CONTENT_FIXES:
+        html = html.replace(a, b)
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
     html = html.replace("\u2013", "-")          # en dash -> hyphen

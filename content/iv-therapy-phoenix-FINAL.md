@@ -428,14 +428,22 @@ CTAs: **BOOK A PHOENIX IV APPOINTMENT** · **CALL (602) 341-3511**
 
 ## Medical review and safety notice
 
-Medically reviewed by **[VERIFY: reviewer name, credentials, date]**.
+**Medically reviewed by Brandon Lang, MSN, RN**, Co-founder and Chief Executive
+Officer, The Drip IV Infusion. Last reviewed 25 September 2026.
 
-IV therapy delivered by The Drip IV Infusion is a wellness service. It does not
-diagnose, treat, cure or prevent any disease, and it is not a substitute for
-emergency medical care. Heat exhaustion, heat stroke, chest pain, confusion,
-fainting, severe or persistent vomiting, or a temperature above 103F require 911
-or an emergency department. Talk to your own physician before starting any
-infusion programme.
+IV therapy from The Drip IV Infusion is a wellness service. It does not diagnose,
+treat, cure or prevent any disease, and it is not a substitute for emergency
+medical care.
+
+**Call 911 or go to an emergency department** for chest pain, confusion, fainting,
+a seizure, hot dry skin, heat exhaustion or heat stroke, severe or persistent
+vomiting, or a temperature above 103F.
+
+Every infusion runs under a valid order from a licensed prescriber, as Arizona
+requires. Talk to your own physician before booking, particularly if you are
+pregnant or manage a kidney, heart or blood pressure condition.
+
+Shipped as `MedicalWebPage` JSON-LD with `lastReviewed` and `reviewedBy`.
 
 ---
 
@@ -450,7 +458,7 @@ THE DRIP iv infusion
 
 | Item | Detail |
 |---|---|
-| Medical reviewer | Name, credentials and review date are not on the site |
+| ~~Medical reviewer~~ | Resolved: Brandon Lang, MSN, RN, reviewed 25 September 2026. Confirm the date matches his actual sign-off |
 | Medical director | Site claims MD-supervised protocols but names no director. Arizona expects one for a business outside a private medical office |
 | Nurse credentials | Surnames, Arizona licence numbers and headshots for Jenna, Karena and Kris |
 | Review sources | Star rating per reviewer and the Google Business Profile URL |

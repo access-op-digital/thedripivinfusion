@@ -129,10 +129,38 @@ _HERO_NEW = (
     "any elective infusion, and that order is arranged as part of your intake."
 )
 
+# The client's reference page writes Why Choose as a two-sentence prose block,
+# not a list: "Choose [brand] for [place] [service] to benefit from A, B, C and
+# a D approach designed to E. Our team emphasises F, G, H and I, ensuring
+# [audience] receive [benefit] whenever [condition]." Same shape here, with the
+# noun phrases swapped for facts this business can stand behind. The tab groups
+# below it keep all thirty USPs.
+# CPI's heading is "Why Choose [brand] For [place] [service]?". Match it. The
+# brand sits in a coloured span, so the trailing question mark moves out of it.
+_WHY_HEAD_OLD = "Why Do Phoenix Residents Choose "
+_WHY_HEAD_NEW = "Why Choose "
+_WHY_TAIL_OLD = "The Drip IV Infusion?</span>"
+_WHY_TAIL_NEW = "The Drip IV Infusion</span> for Phoenix IV Therapy?"
+_WHY_INTRO_OLD = ("Thirty points separate this practice from the Phoenix field, covering "
+                  "response, clinical staffing, oversight, coverage, pricing and the "
+                  "visit itself.")
+_WHY_INTRO_NEW = (
+    "Choose The Drip IV Infusion for Phoenix IV therapy to benefit from registered "
+    "nurse administration, 60-minute metro coverage, published menu pricing, and a "
+    "seven-day mobile service approach designed to deliver a supervised infusion "
+    "wherever you already are. Our team emphasises prescriber-ordered treatment, "
+    "single-use sterile technique, full-session nurse presence, and post-care "
+    "verification, ensuring homes, offices and hotel rooms across the Valley receive "
+    "clinically supervised hydration whenever it is needed."
+)
+
 CONTENT_FIXES = [
     (_OLD_NOTICE, _NEW_NOTICE),
     (_FAQ_IMG_OLD, _FAQ_IMG_NEW),
     (_HERO_OLD, _HERO_NEW),
+    (_WHY_INTRO_OLD, _WHY_INTRO_NEW),
+    (_WHY_HEAD_OLD, _WHY_HEAD_NEW),
+    (_WHY_TAIL_OLD, _WHY_TAIL_NEW),
 ]
 
 # ---- 5c. the map, and the resources block --------------------------------

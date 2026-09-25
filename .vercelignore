@@ -1,0 +1,7 @@
+# Client source material. Never upload to a public deployment.
+content/
+design/
+brand/
+tools/
+*.docx
+*.xlsx

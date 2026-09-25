@@ -2,7 +2,7 @@
 """Turn the Claude Design export into a production page.
 
 Input : design/IV Therapy Phoenix.dc.html
-Output: site/iv-therapy-phoenix/index.html
+Output: site/mobile-iv-therapy-phoenix-az/index.html
 
 What it does, and why:
 
@@ -10,8 +10,8 @@ What it does, and why:
    Those are the Claude Design editor runtime (`__dcContentKeyed`, preview
    tokens, postMessage to claude.ai). None of it belongs on a client site.
 
-2. Ships `assets/dc-runtime.js` instead: a ~90 line vanilla reimplementation of
-   the only four directives the design actually uses, so the page keeps its
+2. Inlines a ~90 line vanilla reimplementation of the runtime instead, so the
+   page is self-contained and portable to any path or CMS. It keeps its
    tabs, stepper and accordion with no dependency on Anthropic infrastructure.
        <sc-for list="{{ expr }}" as="x">   repeat
        <sc-if  value="{{ expr }}">         conditional
@@ -33,7 +33,7 @@ import io, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, "design", "IV Therapy Phoenix.dc.html")
-OUT_DIR = os.path.join(ROOT, "site", "iv-therapy-phoenix")
+OUT_DIR = os.path.join(ROOT, "site", "mobile-iv-therapy-phoenix-az")
 OUT = os.path.join(OUT_DIR, "index.html")
 ASSET_DIR = os.path.join(OUT_DIR, "assets")
 
@@ -287,7 +287,9 @@ def main() -> int:
 <div id="page">
 {body.strip()}
 </div>
-<script src="./assets/dc-runtime.js"></script>
+<script>
+{RUNTIME}
+</script>
 <script>
 {component}
 </script>
@@ -295,16 +297,30 @@ def main() -> int:
 </body>
 </html>
 """
-    os.makedirs(ASSET_DIR, exist_ok=True)
-    io.open(os.path.join(ASSET_DIR, "dc-runtime.js"), "w",
-            encoding="utf-8", newline="\n").write(RUNTIME)
+    os.makedirs(OUT_DIR, exist_ok=True)
     io.open(OUT, "w", encoding="utf-8", newline="\n").write(out)
 
     print("built", OUT, os.path.getsize(OUT), "bytes")
-    print("runtime", os.path.getsize(os.path.join(ASSET_DIR, "dc-runtime.js")), "bytes")
-    for bad, label in [("support.js", "editor runtime"), ("image-slot", "slot element"),
-                       ("omelette", "canvas bootstrap"), ("—", "em dash")]:
-        print(f"  {label:<18} remaining: {out.count(bad)}")
+    print("runtime inlined:", len(RUNTIME), "chars (page is self-contained)")
+    checks = [
+        ("editor runtime", len(re.findall(r'src="\./(support|image-slot)\.js"', out))),
+        ("slot element", out.count("<image-slot")),
+        ("canvas bootstrap", out.count("data-omelette-injected")),
+        ("em dash", out.count("—")),
+        ("en dash", out.count("–")),
+        # markup only: the runtime's own source legitimately contains "{{"
+        ("unresolved binding",
+         len(re.findall(r'\{\{(?![^}]*\}\})',
+                        re.search(r'<div id="page">(.*?)\n</div>', out, re.S).group(1)))),
+        ("local file ref", len(re.findall(r'(?:src|href)="\.?/(?!/)', out))),
+    ]
+    bad = [f"{n} ({c})" for n, c in checks if c]
+    for name, count in checks:
+        print(f"  {name:<20} {count}")
+    if bad:
+        print("FAILED:", ", ".join(bad))
+        return 1
+    print("OK: self-contained, no external file dependencies")
     return 0
 
 

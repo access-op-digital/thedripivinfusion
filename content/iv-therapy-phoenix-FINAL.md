@@ -29,7 +29,7 @@ to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, Desert
 Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber before
 any elective infusion, and that order is arranged as part of your intake.
 
-CTAs: **BOOK A PHOENIX NURSE VISIT** · **CALL (602) 341-3511**
+CTAs: **BOOK A NURSE VISIT** · **CALL (602) 341-3511**
 
 ### Trust strip
 
@@ -335,7 +335,7 @@ are listed below.
 A nurse can reach most Phoenix addresses inside 60 minutes, seven days a week
 between 7:00AM and 9:00PM.
 
-CTAs: **RESERVE ONLINE** · **(602) 341-3511**
+CTAs: **BOOK A NURSE VISIT** · **(602) 341-3511**
 
 ---
 
@@ -501,7 +501,7 @@ Book online, or call and text (602) 341-3511. Nurses run mobile visits 7:00AM to
 In-office: 4531 N 16th St, Suite 102, Phoenix, AZ 85016. Mon-Fri by appointment,
 Sat-Sun 8:30AM-5:00PM. Email hello@thedripivinfusion.com.
 
-CTAs: **BOOK A PHOENIX IV APPOINTMENT** · **CALL (602) 341-3511**
+CTAs: **BOOK A NURSE VISIT** · **CALL (602) 341-3511**
 
 ---
 
@@ -542,5 +542,5 @@ THE DRIP iv infusion
 | Nurse credentials | Surnames, Arizona licence numbers and headshots for Jenna, Karena and Kris |
 | Review sources | Star rating per reviewer and the Google Business Profile URL |
 | Pricing gaps | Travel fee and group/party pricing are still unpublished. HSA/FSA is now resolved: the menu page states major credit cards, debit cards, HSA and FSA |
-| Images | 20 slots filled from the client media library. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
+| Images | 32 of 44 slots filled. 9 render as initial avatars, 3 are hidden. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
 | Links | Several placeholder `href="#"` targets still to be pointed at real URLs |

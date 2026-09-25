@@ -70,8 +70,10 @@ h1,h2,h3,p{margin:0}
 *{box-sizing:border-box}
 
 .img-slot-note{display:none}
-.img-slot.is-empty{background:color-mix(in srgb,currentColor 8%,transparent);border:1px solid color-mix(in srgb,currentColor 25%,transparent)}
-.img-slot.is-empty .img-slot-note{display:block;padding:12px 16px;font:400 13px 'Source Sans 3',sans-serif;color:color-mix(in srgb,currentColor 55%,transparent);text-align:center}
+.img-slot.is-initial{background:#153060;border:0}
+.img-slot.is-initial::after{content:attr(data-initial);font:400 1.05rem Questrial,sans-serif;color:#B5DEF5;line-height:1}
+.img-slot.is-initial .img-slot-note{display:none}
+.img-slot.is-blank{display:none!important}
 </style>
 </head>
 <body>
@@ -108,7 +110,7 @@ h1,h2,h3,p{margin:0}
       <h1 data-dc-tpl="44" style="font-family: Questrial, sans-serif; font-weight: 400; font-size: clamp(40px, 5.4vw, 64px); line-height: 1.05; letter-spacing: -0.5px;">IV Therapy in <span data-dc-tpl="45" style="color: rgb(181, 222, 245);">Phoenix, AZ</span></h1>
       <p data-dc-tpl="46" style="font-size: 19px; line-height: 1.6; font-weight: 300; color: rgb(255, 255, 255); text-wrap: pretty; max-width: 560px;">IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion to your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix addresses within 60 minutes of a confirmed booking. Eight drips make up the menu, priced from $195 to $495, and a nurse places every line. Mobile visits run 7:00AM to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, Desert Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber before any elective infusion, and that order is arranged as part of your intake.</p>
       <div data-dc-tpl="47" style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a data-dc-tpl="48" href="#book" style="background: rgb(181, 222, 245); color: rgb(21, 48, 96); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Book a Phoenix Nurse Visit</a>
+        <a data-dc-tpl="48" href="#book" style="background: rgb(181, 222, 245); color: rgb(21, 48, 96); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Book a Nurse Visit</a>
         <a data-dc-tpl="49" href="tel:6023413511" style="border: 1px solid rgba(255, 255, 255, 0.5); color: rgb(255, 255, 255); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Call (602) 341-3511</a>
       </div>
     </div>
@@ -528,7 +530,7 @@ h1,h2,h3,p{margin:0}
       <h2 data-dc-tpl="456" style="font-family: Questrial, sans-serif; font-weight: 400; font-size: clamp(28px, 3.2vw, 38px); line-height: 1.15;">Reserve a Phoenix Nurse Visit Today</h2>
       <p data-dc-tpl="457" style="font-size: 18px; line-height: 1.6; color: rgb(219, 230, 245);">A nurse can reach most Phoenix addresses inside 60 minutes, seven days a week between 7:00AM and 9:00PM.</p>
       <div data-dc-tpl="458" style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <a data-dc-tpl="459" href="#book" style="background: rgb(19, 100, 109); color: rgb(255, 255, 255); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Reserve Online</a>
+        <a data-dc-tpl="459" href="#book" style="background: rgb(19, 100, 109); color: rgb(255, 255, 255); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Book a Nurse Visit</a>
         <a data-dc-tpl="460" href="tel:6023413511" style="background: rgb(181, 222, 245); color: rgb(21, 48, 96); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">(602) 341-3511</a>
       </div>
     </div>
@@ -715,7 +717,7 @@ h1,h2,h3,p{margin:0}
         <p data-dc-tpl="595" style="font-size: 18px; line-height: 1.6; color: rgb(43, 49, 64);">Book online, or call and text (602) 341-3511. Nurses run mobile visits 7:00AM to 9:00PM every day and reach most Phoenix addresses within 60 minutes.</p>
         <p data-dc-tpl="596" style="font-size: 16px; line-height: 1.6; color: rgb(58, 65, 80);">In-office: 4531 N 16th St, Suite 102, Phoenix, AZ 85016. Mon-Fri by appointment, Sat-Sun 8:30AM-5:00PM. Email hello@thedripivinfusion.com.</p>
         <div data-dc-tpl="597" style="display: flex; gap: 12px; flex-wrap: wrap;">
-          <a data-dc-tpl="598" href="#book" style="background: rgb(21, 48, 96); color: rgb(255, 255, 255); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Book a Phoenix IV Appointment</a>
+          <a data-dc-tpl="598" href="#book" style="background: rgb(21, 48, 96); color: rgb(255, 255, 255); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Book a Nurse Visit</a>
           <a data-dc-tpl="599" href="tel:6023413511" style="background: rgb(19, 100, 109); color: rgb(255, 255, 255); padding: 16px 28px; border-radius: 10px; font-size: 14px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; text-decoration: none;">Call (602) 341-3511</a>
         </div>
       </div>
@@ -773,7 +775,7 @@ h1,h2,h3,p{margin:0}
       <h1 style="font-family:Questrial,sans-serif;font-weight:400;font-size:clamp(40px,5.4vw,64px);line-height:1.05;letter-spacing:-0.5px">IV Therapy in <span style="color:#B5DEF5">Phoenix, AZ</span></h1>
       <p style="font-size:19px;line-height:1.6;font-weight:300;color:#fff;text-wrap:pretty;max-width:560px">IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion to your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix addresses within 60 minutes of a confirmed booking. Eight drips make up the menu, priced from $195 to $495, and a nurse places every line. Mobile visits run 7:00AM to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, Desert Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber before any elective infusion, and that order is arranged as part of your intake.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="#book" style="background:#B5DEF5;color:#153060;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Book a Phoenix Nurse Visit</a>
+        <a href="#book" style="background:#B5DEF5;color:#153060;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Book a Nurse Visit</a>
         <a href="tel:6023413511" style="border:1px solid rgba(255,255,255,0.5);color:#fff;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Call (602) 341-3511</a>
       </div>
     </div>
@@ -1183,7 +1185,7 @@ h1,h2,h3,p{margin:0}
       <h2 style="font-family:Questrial,sans-serif;font-weight:400;font-size:clamp(28px,3.2vw,38px);line-height:1.15">Reserve a Phoenix Nurse Visit Today</h2>
       <p style="font-size:18px;line-height:1.6;color:#dbe6f5">A nurse can reach most Phoenix addresses inside 60 minutes, seven days a week between 7:00AM and 9:00PM.</p>
       <div style="display:flex;gap:12px;flex-wrap:wrap">
-        <a href="#book" style="background:#13646D;color:#fff;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Reserve Online</a>
+        <a href="#book" style="background:#13646D;color:#fff;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Book a Nurse Visit</a>
         <a href="tel:6023413511" style="background:#B5DEF5;color:#153060;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">(602) 341-3511</a>
       </div>
     </div>
@@ -1360,7 +1362,7 @@ h1,h2,h3,p{margin:0}
         <p style="font-size:18px;line-height:1.6;color:#2b3140">Book online, or call and text (602) 341-3511. Nurses run mobile visits 7:00AM to 9:00PM every day and reach most Phoenix addresses within 60 minutes.</p>
         <p style="font-size:16px;line-height:1.6;color:#3a4150">In-office: 4531 N 16th St, Suite 102, Phoenix, AZ 85016. Mon-Fri by appointment, Sat-Sun 8:30AM-5:00PM. Email hello@thedripivinfusion.com.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap">
-          <a href="#book" style="background:#153060;color:#fff;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Book a Phoenix IV Appointment</a>
+          <a href="#book" style="background:#153060;color:#fff;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Book a Nurse Visit</a>
           <a href="tel:6023413511" style="background:#13646D;color:#fff;padding:16px 28px;border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;text-transform:uppercase;text-decoration:none">Call (602) 341-3511</a>
         </div>
       </div>
@@ -1399,6 +1401,10 @@ window.DRIP_IMAGES = {
   "trust-b": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01489-1-scaled.jpg", alt: "Nurse assessing a vein before placing the line in the treatment room" },
   "drip-myers": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-ivbag-myers-retina.webp", alt: "The Classic Myers IV bag" },
   "drip-hangover": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-ivbag-revive@2X.webp", alt: "The RE:VIVE IV bag" },
+  "drip-immune": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-ivbag-total-retina.webp", alt: "The Total Prevention IV bag" },
+  "drip-mama": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-ivbag-mama-retina.webp", alt: "The Mama Bear IV bag" },
+  "drip-food": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-ivbag-kitchen-retina.webp", alt: "The Kitchen Sink IV bag" },
+  "drip-skinny": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-ivbag-skinny-retina.webp", alt: "The Skinny IV bag" },
   "gal-1": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01345-6-scaled.jpg", alt: "Registered nurse from The Drip IV Infusion placing an IV line in a client's arm" },
   "gal-2": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/screen_JGP-TheDrip-Dec22_Corbin_009-1024x683.jpg", alt: "Client receiving an IV infusion in an armchair at home" },
   "gal-3": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01489-1-scaled.jpg", alt: "Nurse assessing a vein before placing the line in the treatment room" },
@@ -1557,6 +1563,16 @@ window.DRIP_IMAGES = {
         img.removeAttribute('src');
         img.style.display = 'none';
         fig.classList.add('is-empty');
+        // A single letter or a lone first name is an avatar label, so it
+        // becomes a real initial avatar. Anything with a space was describing
+        // a photograph nobody has, so the figure leaves the layout.
+        var label = (img.getAttribute('alt') || '').trim();
+        if (label && label.indexOf(' ') === -1 && label.length <= 12) {
+          fig.classList.add('is-initial');
+          fig.setAttribute('data-initial', label.charAt(0).toUpperCase());
+        } else {
+          fig.classList.add('is-blank');
+        }
       }
     }
   }

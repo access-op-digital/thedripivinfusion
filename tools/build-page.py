@@ -183,7 +183,9 @@ _TRUST_P2_NEW = ("A licensed registered nurse administers every infusion. The co
                  "early-morning trailhead recovery and late-evening calls after a downtown "
                  "event.")
 
-CONTENT_FIXES = [
+_CTA_FIXES = [('Book a Phoenix nurse visit', 'Book a Nurse Visit'), ('Book a Phoenix Nurse Visit', 'Book a Nurse Visit'), ('BOOK A PHOENIX NURSE VISIT', 'Book a Nurse Visit'), ('Book a Phoenix IV appointment', 'Book a Nurse Visit'), ('Book a Phoenix IV Appointment', 'Book a Nurse Visit'), ('Reserve a slot online', 'Book a Nurse Visit'), ('Reserve Online', 'Book a Nurse Visit'), ('reserve a slot online', 'Book a Nurse Visit')]
+
+CONTENT_FIXES = _CTA_FIXES + [
     (_OLD_NOTICE, _NEW_NOTICE),
     (_FAQ_IMG_OLD, _FAQ_IMG_NEW),
     (_HERO_OLD, _HERO_NEW),
@@ -928,6 +930,10 @@ SLOT_IMAGES = {
     "trust-b": "vein-check",
     "drip-myers": "bag-myers",
     "drip-hangover": "bag-revive",
+    "drip-immune": "bag-total",
+    "drip-mama": "bag-mama",
+    "drip-food": "bag-kitchen",
+    "drip-skinny": "bag-skinny",
     "gal-1": "cannulation",
     "gal-2": "at-home",
     "gal-3": "vein-check",
@@ -1141,6 +1147,16 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
         img.removeAttribute('src');
         img.style.display = 'none';
         fig.classList.add('is-empty');
+        // A single letter or a lone first name is an avatar label, so it
+        // becomes a real initial avatar. Anything with a space was describing
+        // a photograph nobody has, so the figure leaves the layout.
+        var label = (img.getAttribute('alt') || '').trim();
+        if (label && label.indexOf(' ') === -1 && label.length <= 12) {
+          fig.classList.add('is-initial');
+          fig.setAttribute('data-initial', label.charAt(0).toUpperCase());
+        } else {
+          fig.classList.add('is-blank');
+        }
       }
     }
   }
@@ -1341,8 +1357,10 @@ def main() -> int:
     page_css = "\n".join(snap_css)
     page_css += """
 .img-slot-note{display:none}
-.img-slot.is-empty{background:color-mix(in srgb,currentColor 8%,transparent);border:1px solid color-mix(in srgb,currentColor 25%,transparent)}
-.img-slot.is-empty .img-slot-note{display:block;padding:12px 16px;font:400 13px 'Source Sans 3',sans-serif;color:color-mix(in srgb,currentColor 55%,transparent);text-align:center}
+.img-slot.is-initial{background:#153060;border:0}
+.img-slot.is-initial::after{content:attr(data-initial);font:400 1.05rem Questrial,sans-serif;color:#B5DEF5;line-height:1}
+.img-slot.is-initial .img-slot-note{display:none}
+.img-slot.is-blank{display:none!important}
 """
 
     body = re.search(r'<body[^>]*>(.*?)</body>', html, flags=re.S).group(1)

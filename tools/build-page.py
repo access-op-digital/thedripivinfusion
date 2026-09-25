@@ -360,12 +360,23 @@ def strip_readmore(html: str) -> str:
 # The design leaves a dashed "Embedded Google map" box. The Phoenix office is a
 # real address with a real listing, so the box becomes the actual embed. No API
 # key: the classic maps query embed is enough for a location pin.
+# The query embed was a fixed 420px iframe in a grid cell that stretches to the
+# height of the copy column, so the bottom third of the card was white. It fills
+# the cell now, and the src is the client's OWN embed for the Phoenix listing,
+# lifted from their home page, rather than an address query.
+_MAP_SRC = (
+    "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3326.916662148377"
+    "!2d-112.04698499999999!3d33.5035453!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1"
+    "!3m3!1m2!1s0x613525030dbc573d%3A0x1875bd7bd973935e!2sThe%20Drip%20IV%20Infusion"
+    "!5e0!3m2!1sen!2s!4v1775075168815!5m2!1sen!2s"
+)
 _MAP_EMBED = (
-    '<div style="background:#fff;border-radius:10px;min-height:420px;overflow:hidden">'
+    '<div style="background:#fff;border-radius:10px;overflow:hidden;display:flex;'
+    'min-height:520px;box-shadow:0 1px 3px rgba(21,48,96,0.08)">'
     '<iframe title="Map to The Drip IV Infusion, 4531 N 16th St Suite 102, Phoenix, AZ 85016" '
-    'src="https://www.google.com/maps?q=4531+N+16th+St+Ste+102,+Phoenix,+AZ+85016&amp;output=embed" '
-    'width="100%" height="420" style="border:0;display:block" loading="lazy" '
-    'referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>'
+    'src="' + _MAP_SRC + '" '
+    'style="border:0;display:block;width:100%;height:100%;min-height:520px;flex:1 1 auto" '
+    'loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>'
 )
 _MAP_RENDERED = ('<div data-dc-tpl="547" style="background: rgb(255, 255, 255); '
                  'border-radius: 10px; min-height: 420px; border: 1px dashed '
@@ -909,6 +920,101 @@ def gallery_slider(html: str) -> str:
     return re.sub(pat, _gallery_slider(), html, count=1, flags=re.S)
 
 
+# ---- 5l. the four corrections from the 25 Sep review -----------------------
+# Each runs over BOTH sources, so the patterns are written against the text
+# rather than the inline styles: the template writes `color:#3a4150` and the
+# rendered snapshot the same rule as `rgb(58, 65, 80)`.
+
+# (a) The closing band carried one button and a dashed "Scheduler embed" box.
+#     There is no scheduler to embed, so the box goes and the band takes the
+#     same two-button pair as every other CTA on the page. The primary points at
+#     the client's real booking form, which lives at #book-now on their home
+#     page; the on-page #book anchor IS this section.
+_BOOK_PRIMARY = (
+    '<a href="https://thedripivinfusion.com/#book-now" style="background:#fff;'
+    'color:#13646D;padding:16px 28px;border-radius:10px;font-size:14px;'
+    'font-weight:700;letter-spacing:1px;text-transform:uppercase;'
+    'text-decoration:none">Book a Nurse Visit</a>'
+)
+_BOOK_SECONDARY = (
+    '<a href="tel:6023413511" style="background:#153060;color:#fff;padding:16px 28px;'
+    'border-radius:10px;font-size:14px;font-weight:700;letter-spacing:1px;'
+    'text-transform:uppercase;text-decoration:none">Call (602) 341-3511</a>'
+)
+_BOOK_SECTION = (
+    '<section id="book" data-screen-label="05 Book CTA" '
+    'style="background:#13646D;color:#fff;padding:64px 24px">'
+    '<div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:32px;'
+    'align-items:center;justify-content:space-between">'
+    '<div style="display:flex;flex-direction:column;gap:14px;flex:1 1 520px;max-width:720px">'
+    '<h2 style="font-family:Questrial,sans-serif;font-weight:400;'
+    'font-size:clamp(30px,3.6vw,42px);line-height:1.15">'
+    'Book Your Phoenix IV Drip Today</h2>'
+    '<p style="font-size:18px;line-height:1.6;color:#e6f3f4">Call or text '
+    '(602) 341-3511, or book online. A nurse reaches most Phoenix addresses within '
+    '60 minutes, any day between 7:00AM and 9:00PM.</p></div>'
+    '<div style="display:flex;gap:12px;flex-wrap:wrap;flex:0 0 auto">'
+    + _BOOK_PRIMARY + _BOOK_SECONDARY + '</div></div></section>'
+)
+
+
+def book_cta(html: str) -> str:
+    return re.sub(r'<section[^>]*id="book"[^>]*>.*?</section>',
+                  _BOOK_SECTION.replace('\\', '\\\\'), html, count=1, flags=re.S)
+
+
+# (b) The gallery heading carried a second paragraph restating what the
+#     photographs show. The photographs show it.
+def drop_gallery_intro(html: str) -> str:
+    return re.sub(r'<p[^>]*>\s*The infusion as it actually runs in Phoenix'
+                  r'(?:(?!</p>).)*?</p>', "", html, count=1, flags=re.S)
+
+
+# (c) Jenna, Karena and Kris have no headshot anywhere on the client site, so
+#     the three avatar slots rendered as initials in grey discs. Rather than
+#     invent faces, the card names them. The credential is already carried by
+#     the body copy directly below it.
+_NURSE_CHIPS = (
+    '<div style="display:flex;flex-wrap:wrap;gap:8px">'
+    + "".join(
+        '<span style="background:rgba(181,222,245,0.14);border:1px solid #5A79AD;'
+        'border-radius:999px;padding:7px 15px;font-size:14px;font-weight:600;'
+        'color:#B5DEF5">' + n + ', RN</span>'
+        for n in ("Jenna", "Karena", "Kris")
+    ) + '</div>'
+)
+
+
+def nurse_chips(html: str) -> str:
+    return re.sub(
+        r'<div[^>]*>\s*(?:<image-slot[^>]*id="team-(?:jenna|karena|kris)"[^>]*>\s*'
+        r'</image-slot>\s*){3}</div>',
+        _NURSE_CHIPS, html, count=1, flags=re.S)
+
+
+# (d) The service area opened with a paragraph, a ZIP chip row, a neighbourhood
+#     chip row and a second paragraph. The client wants no ZIP codes and one
+#     paragraph, so the neighbourhoods move into the prose, where they read as
+#     places rather than as tags.
+_AREA_PARA = (
+    '<p style="font-size:17px;line-height:1.6;color:#2b3140">Coverage runs across '
+    'central and north-central Phoenix and out to the eastern suburbs, with a '
+    '60-minute response target inside the city. Nurses cover Central Phoenix, '
+    'Arcadia, Biltmore, Desert Ridge and Ahwatukee, and run regularly to hotels '
+    'near Sky Harbor, homes below Camelback Mountain and Piestewa Peak, rentals '
+    'around the Phoenix Convention Center and Footprint Center, and the South '
+    'Mountain side of the city. The same dispatch covers Gilbert, Tempe, '
+    'Scottsdale, Mesa, Chandler, Queen Creek and San Tan Valley.</p>'
+)
+
+
+def service_area(html: str) -> str:
+    return re.sub(
+        r'<p[^>]*>\s*Coverage runs across central.*?'
+        r'Queen Creek and San Tan Valley[^<]*</p>',
+        _AREA_PARA, html, count=1, flags=re.S)
+
+
 # ---- 6. real photography from the client's own media library ---------------
 # Every URL below was opened and looked at; the alt text says what the photo
 # ACTUALLY shows, not what the design slot wished for. A slot with no honest
@@ -959,6 +1065,12 @@ PHOTOS = {
                     "Brandon Lang, MSN, RN, Co-founder and Chief Executive Officer"),
     "corbin":      (f"{U}/2024/11/thedripivinfusion-corbin-retina.webp",
                     "Corbin King, MBA, RN, Co-founder and Chief Operating Officer"),
+    # final-img was the same team portrait as the process and resources slots.
+    # The client's April upload is the in-office suite itself, which is what the
+    # design slot asked for, so the closing CTA gets its own picture.
+    "in-office":   (f"{U}/2026/04/Drip-New-Image-1.jpeg",
+                    "Client resting under a blanket in the infusion chair at The Drip "
+                    "IV Infusion on N 16th St in Phoenix"),
 }
 # slot id -> photo key. Slots absent from this map stay empty by design.
 SLOT_IMAGES = {
@@ -1006,7 +1118,7 @@ SLOT_IMAGES = {
     "safety-kit": "vial-check",
     "process-visual": "vein-check",
     "reserve-img": "at-home",
-    "final-img": "team",
+    "final-img": "in-office",
     # The cocktail carousel was removed in the 25 Sep design, so bag-0/1/5 are
     # gone. The Defender render now has no home; the remaining drip-* cards have
     # no matching product shot in the media library and stay empty.
@@ -1351,6 +1463,10 @@ def clean_text(html, label):
     html = strip_readmore(html)
     html = board_heading(html)
     html = step_images(html)
+    html = book_cta(html)
+    html = drop_gallery_intro(html)
+    html = nurse_chips(html)
+    html = service_area(html)
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
     html = html.replace("\u2013", "-")          # en dash -> hyphen
@@ -1399,6 +1515,7 @@ def main() -> int:
 .img-slot.is-initial::after{content:attr(data-initial);font:400 1.05rem Questrial,sans-serif;color:#B5DEF5;line-height:1}
 .img-slot.is-initial .img-slot-note{display:none}
 .img-slot.is-blank{display:none!important}
+.img-slot[data-slot="final-img"] img{object-position:center 72%}
 """
 
     body = re.search(r'<body[^>]*>(.*?)</body>', html, flags=re.S).group(1)

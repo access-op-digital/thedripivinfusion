@@ -175,14 +175,12 @@ Harbor. Our IV therapy uses in Phoenix cover the treatments below.
 Call or text (602) 341-3511, or book online. A nurse reaches most Phoenix
 addresses within 60 minutes, any day between 7:00AM and 9:00PM.
 
-Scheduler embed.
+Buttons: **Book a Nurse Visit** (thedripivinfusion.com/#book-now) and
+**Call (602) 341-3511**.
 
 ---
 
 ## H2 — Inside a Phoenix IV Infusion Visit
-
-The infusion as it actually runs in Phoenix: a sterile field on a kitchen
-counter, a line in a living-room chair, and the in-office suite at 4531 N 16th St.
 
 Horizontal slider, five slots. Adding a sixth is one line in `_GALLERY`.
 
@@ -207,6 +205,9 @@ operational background sets the dispatch model behind the 60-minute Phoenix
 response.
 
 ### H3 — The Nurses Who Run Your Phoenix Infusion
+
+Name chips: Jenna, RN · Karena, RN · Kris, RN. No headshot exists for any of the three, so the card names them rather than
+showing an empty avatar.
 Jenna, Karena and Kris cover the Phoenix rota, and each is a licensed RN with
 specialised IV training. Your nurse stays for the full 45 to 60 minutes. Claudia
 Martinez credits Kris with arriving inside the hour.
@@ -425,16 +426,12 @@ delivery adds $150.
 ## H2 — Our Phoenix Service Area
 
 Coverage runs across central and north-central Phoenix and out to the eastern
-suburbs, with a 60-minute response target inside the city.
-
-**ZIP codes served:** 85003 · 85004 · 85006 · 85008 · 85012 · 85016 · 85018 · 85020
-
-**Neighbourhoods:** Central Phoenix · Arcadia · Biltmore · Desert Ridge · Ahwatukee
-
-Nurses run regularly to hotels near Sky Harbor, homes below Camelback Mountain and
-Piestewa Peak, rentals around the Phoenix Convention Center and Footprint Center,
-and the South Mountain side of the city. The same dispatch covers Gilbert, Tempe,
-Scottsdale, Mesa, Chandler, Queen Creek and San Tan Valley. See service areas.
+suburbs, with a 60-minute response target inside the city. Nurses cover Central
+Phoenix, Arcadia, Biltmore, Desert Ridge and Ahwatukee, and run regularly to
+hotels near Sky Harbor, homes below Camelback Mountain and Piestewa Peak, rentals
+around the Phoenix Convention Center and Footprint Center, and the South Mountain
+side of the city. The same dispatch covers Gilbert, Tempe, Scottsdale, Mesa,
+Chandler, Queen Creek and San Tan Valley.
 
 **Our offices** · Mon-Fri by appointment, Sat-Sun 8:30AM-5:00PM
 

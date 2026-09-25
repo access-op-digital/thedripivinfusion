@@ -1068,6 +1068,8 @@ PHOTOS = {
     # final-img was the same team portrait as the process and resources slots.
     # The client's April upload is the in-office suite itself, which is what the
     # design slot asked for, so the closing CTA gets its own picture.
+    "headache":    (f"{U}/2024/11/IV-Therapy-for-Dehydration-1.jpg",
+                    "Woman sitting on a sofa holding her head during a headache"),
     "in-office":   (f"{U}/2026/04/Drip-New-Image-1.jpeg",
                     "Client resting under a blanket in the infusion chair at The Drip "
                     "IV Infusion on N 16th St in Phoenix"),
@@ -1083,6 +1085,9 @@ SLOT_IMAGES = {
     "drip-mama": "bag-mama",
     "drip-food": "bag-kitchen",
     "drip-skinny": "bag-skinny",
+    "drip-hydration": "in-office",
+    "drip-migraine": "headache",
+    "drip-glutathione": "vial-check",
     "gal-1": "cannulation",
     "gal-2": "at-home",
     "gal-3": "vein-check",
@@ -1516,6 +1521,7 @@ def main() -> int:
 .img-slot.is-initial .img-slot-note{display:none}
 .img-slot.is-blank{display:none!important}
 .img-slot[data-slot="final-img"] img{object-position:center 72%}
+.img-slot[data-slot="drip-hydration"] img{object-position:center 12%}
 """
 
     body = re.search(r'<body[^>]*>(.*?)</body>', html, flags=re.S).group(1)

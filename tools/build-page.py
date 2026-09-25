@@ -147,11 +147,18 @@ def convert_image_slots(html: str) -> str:
             g = re.search(name + r'="([^"]*)"', attrs)
             return g.group(1) if g else ""
         slot, alt = a("id"), a("placeholder")
-        radius = "10px" if a("shape") != "circle" else "50%"
+        radius = "50%" if a("shape") == "circle" else "10px"
+        # The element carries its OWN sizing, e.g. the 42px review avatars and
+        # the Google mark: style="width:42px;height:42px;flex:0 0 auto". Dropping
+        # it and forcing 100% blew those up to fill their container, which is
+        # what pushed the star row out of the ratings pill. Our defaults go
+        # first so the element's own declarations win the cascade.
+        own = a("style").strip().rstrip(";")
+        base = (f"margin:0;width:100%;height:100%;border-radius:{radius};overflow:hidden;"
+                f"background:#F6F6F6;display:flex;align-items:center;justify-content:center")
+        style = f"{base};{own}" if own else base
         return (
-            f'<figure class="img-slot" data-slot="{slot}" '
-            f'style="margin:0;width:100%;height:100%;border-radius:{radius};overflow:hidden;'
-            f'background:#F6F6F6;display:flex;align-items:center;justify-content:center">'
+            f'<figure class="img-slot" data-slot="{slot}" style="{style}">'
             f'<img alt="{alt}" loading="lazy" decoding="async" '
             f'style="width:100%;height:100%;object-fit:cover;display:block" '
             f'onerror="this.style.display=\'none\';this.parentNode.classList.add(\'is-empty\')">'
@@ -185,7 +192,10 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
     return m ? m[1] : null;
   }
 
-  function render(node, scope, out) {
+  var SVG_NS = 'http://www.w3.org/2000/svg';
+  var XLINK_NS = 'http://www.w3.org/1999/xlink';
+
+  function render(node, scope, out, inSvg) {
     for (var i = 0; i < node.childNodes.length; i++) {
       var n = node.childNodes[i];
 
@@ -209,7 +219,7 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
             var child = Object.create(scope);
             child[as] = list[j];
             child[as + 'Index'] = j;
-            render(n, child, out);
+            render(n, child, out, inSvg);
           }
         }
         continue;
@@ -218,7 +228,7 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
       if (tag === 'sc-if') {
         var cond = get(scope, soleBinding(n.getAttribute('value') || '') || '');
         if (cond) {
-          render(n, scope, out);
+          render(n, scope, out, inSvg);
         } else {
           // Inactive tab panels stay in the DOM, hidden. Dropping them would put
           // the FAQ answers, the drip cards, the cost tables and the Arizona
@@ -226,13 +236,19 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
           var keep = document.createElement('div');
           keep.hidden = true;
           keep.setAttribute('data-inactive-panel', '');
-          render(n, scope, keep);
+          render(n, scope, keep, inSvg);
           out.appendChild(keep);
         }
         continue;
       }
 
-      var el = document.createElement(tag);
+      // document.createElement puts <svg>/<path> in the HTML namespace, where
+      // they have no intrinsic size and render at 0x0. Every icon, star and the
+      // Google mark vanished because of this. Inside an <svg> subtree the
+      // elements and their xlink attributes need the SVG namespace.
+      var svgHere = inSvg || tag === 'svg';
+      var el = svgHere ? document.createElementNS(SVG_NS, tag)
+                       : document.createElement(tag);
       for (var k = 0; k < n.attributes.length; k++) {
         var at = n.attributes[k], name = at.name, val = at.value;
         if (/^hint-/.test(name)) continue;
@@ -241,9 +257,14 @@ RUNTIME = r"""/* Minimal renderer for the four directives the page uses.
           if (typeof fn === 'function') el.addEventListener('click', fn);
           continue;
         }
-        el.setAttribute(name, val.indexOf('{{') > -1 ? interp(val, scope) : val);
+        var resolved = val.indexOf('{{') > -1 ? interp(val, scope) : val;
+        if (svgHere && name.indexOf('xlink:') === 0) {
+          el.setAttributeNS(XLINK_NS, name, resolved);
+        } else {
+          el.setAttribute(name, resolved);
+        }
       }
-      render(n, scope, el);
+      render(n, scope, el, svgHere);
       out.appendChild(el);
     }
   }

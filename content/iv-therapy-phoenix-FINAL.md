@@ -211,9 +211,7 @@ authority as its medical director.
 ## H2 — What Happens During Your Phoenix IV Appointment
 
 Eight steps from booking call to follow-up. About 45 to 60 minutes once the nurse
-arrives. Stepper, 01 to 08. Each step now carries its own photo where an honest
-match exists: arrive, vitals, drip selection, infusion and post-care. Book,
-health intake and follow-up stay empty.
+arrives. Stepper, 01 to 08. All eight steps now carry a distinct photo, no repeats across the sequence.
 
 1. **Book** — Call or text (602) 341-3511, email hello@thedripivinfusion.com, or book online. Lines are staffed 7:00AM to 9:00PM, seven days a week.
 2. **Health intake** — A health history covering medications, allergies, pregnancy status and prior reactions. Arizona's required good faith exam and individualised order are set up here.
@@ -496,5 +494,5 @@ THE DRIP iv infusion
 | Nurse credentials | Surnames, Arizona licence numbers and headshots for Jenna, Karena and Kris |
 | Review sources | Star rating per reviewer and the Google Business Profile URL |
 | Pricing gaps | Travel fee, group/party pricing and HSA/FSA eligibility are unpublished, so none is stated |
-| Images | 18 of 29 slots filled from the client media library. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
+| Images | 20 slots filled from the client media library. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
 | Links | Several placeholder `href="#"` targets still to be pointed at real URLs |

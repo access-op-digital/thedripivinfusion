@@ -270,6 +270,27 @@ _REASONS_STACK = ('<div style="display:flex;flex-direction:column;gap:16px;'
                   'max-width:900px">')
 
 
+def founder_headshots(html: str) -> str:
+    """Square off the two founder slots and give them room.
+
+    Rewrites the whole tag instead of using a backreference. An earlier version
+    used one, the escape was mangled on the way into this file, and the
+    replacement silently deleted the elements it was meant to edit.
+    """
+    def rewrite(m):
+        tag = m.group(0)
+        tag = tag.replace('shape="circle"', 'shape="rect"')
+        tag = tag.replace("width:84px;height:84px",
+                          "width:116px;height:116px;border-radius:12px")
+        tag = tag.replace("width: 84px; height: 84px",
+                          "width: 116px; height: 116px; border-radius: 12px")
+        return tag
+
+    for slot in ("team-brandon", "team-corbin"):
+        html = re.sub(r'<image-slot[^>]*id="' + slot + r'"[^>]*>', rewrite, html)
+    return html
+
+
 def fix_reasons(html: str) -> str:
     html = html.replace(_REASONS_GRID_TPL, _REASONS_STACK)
     html = html.replace(_REASONS_GRID_SNAP, _REASONS_STACK)
@@ -611,6 +632,12 @@ PHOTOS = {
                     "Drip IV Infusion nurse with an athlete at Strict Vision Athletics in Phoenix"),
     "injection":   (f"{U}/2024/11/thedripivinfusion-needle-retina.webp",
                     "Gloved nurse holding a prepared intramuscular injection"),
+    # Individual headshots, from the about page. The first media-library sweep
+    # missed them because the REST pagination returned an incomplete first page.
+    "brandon":     (f"{U}/2024/11/thedripivinfusion-brandon-retina.webp",
+                    "Brandon Lang, MSN, RN, Co-founder and Chief Executive Officer"),
+    "corbin":      (f"{U}/2024/11/thedripivinfusion-corbin-retina.webp",
+                    "Corbin King, MBA, RN, Co-founder and Chief Operating Officer"),
 }
 # slot id -> photo key. Slots absent from this map stay empty by design.
 SLOT_IMAGES = {
@@ -624,17 +651,24 @@ SLOT_IMAGES = {
     "gal-3": "vein-check",
     "gal-4": "workplace",
     "gal-5": "athlete-gym",
-    "team-brandon": "founders",
+    "team-brandon": "brandon",
+    "team-corbin": "corbin",
     "drip-athletic": "athlete-iv",
     "drip-energy": "injection",
     "drip-nad": "injection",
     "res-team": "team",
-    # one shot per process step; steps with no honest match stay empty
+    # One distinct photo per process step, no repeats across the eight. Book,
+    # intake and follow-up have no literal match in the library, so they take
+    # the people involved rather than the action, and the alt text says what
+    # the photograph actually shows rather than restating the step.
+    "step-book": "team",
+    "step-intake": "vein-check",
     "step-arrive": "at-home",
-    "step-vitals": "vein-check",
+    "step-vitals": "cannulation",
     "step-select": "vial-check",
     "step-infusion": "workplace",
-    "step-postcare": "cannulation",
+    "step-postcare": "athlete-iv",
+    "step-followup": "founders",
     "safety-kit": "vial-check",
     "process-visual": "vein-check",
     "reserve-img": "at-home",
@@ -964,6 +998,7 @@ def clean_text(html, label):
     html = html.replace(_MAP_RENDERED, _MAP_EMBED).replace(_MAP_TEMPLATE, _MAP_EMBED)
     html = resources_to_info(html)
     html = insert_benefits(html)
+    html = founder_headshots(html)
     html = fix_reasons(html)
     html = strip_readmore(html)
     html = board_heading(html)

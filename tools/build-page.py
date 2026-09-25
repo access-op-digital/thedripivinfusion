@@ -102,6 +102,95 @@ _NEW_NOTICE = (
 )
 CONTENT_FIXES = [(_OLD_NOTICE, _NEW_NOTICE)]
 
+# ---- 5c. the map, and the resources block --------------------------------
+# The design leaves a dashed "Embedded Google map" box. The Phoenix office is a
+# real address with a real listing, so the box becomes the actual embed. No API
+# key: the classic maps query embed is enough for a location pin.
+_MAP_EMBED = (
+    '<div style="background:#fff;border-radius:10px;min-height:420px;overflow:hidden">'
+    '<iframe title="Map to The Drip IV Infusion, 4531 N 16th St Suite 102, Phoenix, AZ 85016" '
+    'src="https://www.google.com/maps?q=4531+N+16th+St+Ste+102,+Phoenix,+AZ+85016&amp;output=embed" '
+    'width="100%" height="420" style="border:0;display:block" loading="lazy" '
+    'referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>'
+)
+_MAP_RENDERED = ('<div data-dc-tpl="547" style="background: rgb(255, 255, 255); '
+                 'border-radius: 10px; min-height: 420px; border: 1px dashed '
+                 'rgb(185, 196, 214); display: flex; align-items: center; '
+                 'justify-content: center; color: rgb(90, 121, 173); '
+                 'font-size: 15px;">Embedded Google map</div>')
+_MAP_TEMPLATE = ('<div style="background:#fff;border-radius:10px;min-height:420px;'
+                 'border:1px dashed #b9c4d6;display:flex;align-items:center;'
+                 'justify-content:center;color:#5A79AD;font-size:15px">'
+                 'Embedded Google map</div>')
+
+# The client asked for the resources block to carry information rather than a
+# list of blog links. The cards keep the design's grid, stop being <a> elements,
+# and gain a body paragraph.
+_CARD_OLD = ('<a href="#" style="scroll-snap-align:start;display:flex;'
+             'flex-direction:column;border-radius:12px;overflow:hidden;'
+             'background:#F4F8FC;text-decoration:none;'
+             'box-shadow:0 1px 3px rgba(21,48,96,0.06)">')
+_CARD_NEW = ('<div style="scroll-snap-align:start;display:flex;'
+             'flex-direction:column;border-radius:12px;overflow:hidden;'
+             'background:#F4F8FC;box-shadow:0 1px 3px rgba(21,48,96,0.06)">')
+_TITLE_OLD = ('<div style="font-family:Questrial,sans-serif;font-size:20px;'
+              'line-height:1.3;color:#153060">{{ bl.title }}</div>')
+_TITLE_NEW = (_TITLE_OLD + '<p style="font-size:15px;line-height:1.6;'
+              'color:#3a4150;margin:0">{{ bl.body }}</p>')
+
+INFO_CARDS = [
+    ("HYDRATION", "How much water Phoenix actually needs",
+     "In triple-digit heat the eight-glasses rule stops being useful. Losses rise with "
+     "exertion and time outdoors, and thirst lags behind the deficit. Urine colour, "
+     "headache and fatigue tell you more than a glass count."),
+    ("WARNING SIGNS", "When fluids stop being enough",
+     "Dizziness on standing, a dry mouth that water does not fix, dark urine and a "
+     "headache that persists past two glasses are the point at which most people call. "
+     "Confusion, a temperature above 103F or fainting mean 911, not a drip."),
+    ("BEFORE YOUR VISIT", "The hour before the nurse arrives",
+     "Eat something, drink a glass of water, and wear short sleeves or a loose top. Have "
+     "your medication list, allergies and any prior infusion reactions ready for intake."),
+    ("AFTER YOUR VISIT", "The rest of the day",
+     "Keep the dressing on for a few hours and drink normally. Mild tenderness at the "
+     "site is usual. Call us if you see swelling, increasing pain, or redness spreading "
+     "from the site."),
+    ("PHOENIX CALENDAR", "When the Valley runs driest",
+     "March now opens the triple-digit season. Monsoon runs 15 June to 30 September and "
+     "brings dust and pollen alongside the humidity. Winter travel out of Sky Harbor "
+     "drives the immune bookings."),
+    ("COST", "What you will pay",
+     "Drips run $195 to $495, with add-on ingredients at a flat $30. Elective wellness "
+     "infusions are generally not reimbursed by insurance, so expect to pay the menu "
+     "price directly."),
+]
+
+
+def _info_js() -> str:
+    rows = []
+    for tag, title, body in INFO_CARDS:
+        rows.append("['%s', '%s', '%s']"
+                    % (tag, title.replace("'", "\\'"), body.replace("'", "\\'")))
+    return ("  blogs: [" + ", ".join(rows) +
+            "].map(([tag, title, body], i) => ({ tag, title, body, slot: 'blog-' + i })),")
+
+
+def resources_to_info(html: str) -> str:
+    """Swap the blog-link cards for informational ones."""
+    html = re.sub(r"  blogs: \[.*?\}\)\),", _info_js(), html, count=1, flags=re.S)
+    html = html.replace(_CARD_OLD, _CARD_NEW)
+    html = html.replace("</a>\n            </sc-for>", "</div>\n            </sc-for>")
+    html = html.replace(_TITLE_OLD, _TITLE_NEW)
+    # These are information cards now, not article teasers. The image slot only
+    # rendered an empty box echoing the title, so it goes.
+    html = html.replace(
+        '<div style="position:relative;height:200px">'
+        '<image-slot id="{{ bl.slot }}" shape="rect" placeholder="{{ bl.title }}">'
+        '</image-slot></div>', '')
+    html = html.replace("Explore Our Phoenix Guides", "Phoenix Hydration Reference")
+    html = html.replace("'Phoenix and Arizona Guides'", "'Phoenix Hydration Reference'")
+    return html
+
+
 
 # ---- 6. real photography from the client's own media library ---------------
 # Every URL below was opened and looked at; the alt text says what the photo
@@ -131,6 +220,12 @@ PHOTOS = {
                     "The RE:VIVE IV bag"),
     "bag-defender": (f"{U}/2024/11/thedripivinfusion-ivbag-defender-@2X.webp",
                      "The Defender IV bag"),
+    "athlete-iv":  (f"{U}/2024/11/thedrip-strictvision-2-retina.webp",
+                    "Drip IV Infusion nurse placing a recovery IV for an athlete at a Phoenix gym"),
+    "athlete-gym": (f"{U}/2024/11/thedrip-strictvision-1-retina.webp",
+                    "Drip IV Infusion nurse with an athlete at Strict Vision Athletics in Phoenix"),
+    "injection":   (f"{U}/2024/11/thedripivinfusion-needle-retina.webp",
+                    "Gloved nurse holding a prepared intramuscular injection"),
 }
 # slot id -> photo key. Slots absent from this map stay empty by design.
 SLOT_IMAGES = {
@@ -143,8 +238,11 @@ SLOT_IMAGES = {
     "gal-2": "at-home",
     "gal-3": "vein-check",
     "gal-4": "workplace",
-    "gal-5": "team",
+    "gal-5": "athlete-gym",
     "team-brandon": "founders",
+    "drip-athletic": "athlete-iv",
+    "drip-energy": "injection",
+    "drip-nad": "injection",
     "safety-kit": "vial-check",
     "process-visual": "vein-check",
     "reserve-img": "at-home",
@@ -471,6 +569,8 @@ def clean_text(html, label):
     """Apply the house punctuation rule, refusing to build on anything unhandled."""
     for a, b in CONTENT_FIXES:
         html = html.replace(a, b)
+    html = html.replace(_MAP_RENDERED, _MAP_EMBED).replace(_MAP_TEMPLATE, _MAP_EMBED)
+    html = resources_to_info(html)
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
     html = html.replace("\u2013", "-")          # en dash -> hyphen
@@ -515,8 +615,8 @@ def main() -> int:
     page_css = "\n".join(snap_css)
     page_css += """
 .img-slot-note{display:none}
-.img-slot.is-empty{outline:1px dashed #B5DEF5}
-.img-slot.is-empty .img-slot-note{display:block;padding:14px 18px;font:400 14px 'Source Sans 3',sans-serif;color:#5A79AD;text-align:center}
+.img-slot.is-empty{background:color-mix(in srgb,currentColor 8%,transparent);border:1px solid color-mix(in srgb,currentColor 25%,transparent)}
+.img-slot.is-empty .img-slot-note{display:block;padding:12px 16px;font:400 13px 'Source Sans 3',sans-serif;color:color-mix(in srgb,currentColor 55%,transparent);text-align:center}
 """
 
     body = re.search(r'<body[^>]*>(.*?)</body>', html, flags=re.S).group(1)

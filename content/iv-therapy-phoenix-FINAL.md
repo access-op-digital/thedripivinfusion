@@ -361,7 +361,7 @@ Scottsdale, Mesa, Chandler, Queen Creek and San Tan Valley. See service areas.
 - Gilbert — 2964 E Camellia Dr
 - Gilbert — 6348 S Higley Rd
 
-Embedded Google map.
+Live Google Maps embed for 4531 N 16th St, Suite 102, Phoenix, AZ 85016.
 
 ---
 
@@ -397,20 +397,16 @@ Accordion, eight questions. Also shipped as FAQPage JSON-LD.
 
 ### [TAB: Resources]
 
-**Explore Our Phoenix Guides**
+**Phoenix Hydration Reference.** Six information cards, no outbound links.
 
-| Guide | Label |
+| | |
 |---|---|
-| Mobile IV therapy services in downtown Phoenix | Phoenix Guide |
-| IV therapy near downtown Phoenix events and landmarks | Phoenix Guide |
-| Reasons to get IV therapy in Phoenix | Phoenix Guide |
-| How often should you get IV therapy in Phoenix | Phoenix Guide |
-| How to choose the right IV therapy provider in Phoenix | Phoenix Guide |
-| IV therapy near ASU | Phoenix Guide |
-| How Arizona dry heat causes dehydration | Arizona Guide |
-| IV therapy for seasonal allergies in Arizona | Arizona Guide |
-| Low B12 symptoms in Arizona | Arizona Guide |
-| Home IV therapy | Wellness Guide |
+| **HYDRATION** — How much water Phoenix actually needs | In triple-digit heat the eight-glasses rule stops being useful. Losses rise with exertion and time outdoors, and thirst lags behind the deficit. Urine colour, headache and fatigue tell you more than a glass count. |
+| **WARNING SIGNS** — When fluids stop being enough | Dizziness on standing, a dry mouth that water does not fix, dark urine and a headache that persists past two glasses are the point at which most people call. Confusion, a temperature above 103F or fainting mean 911, not a drip. |
+| **BEFORE YOUR VISIT** — The hour before the nurse arrives | Eat something, drink a glass of water, and wear short sleeves or a loose top. Have your medication list, allergies and any prior infusion reactions ready for intake. |
+| **AFTER YOUR VISIT** — The rest of the day | Keep the dressing on for a few hours and drink normally. Mild tenderness at the site is usual. Call us if you see swelling, increasing pain, or redness spreading from the site. |
+| **PHOENIX CALENDAR** — When the Valley runs driest | March now opens the triple-digit season. Monsoon runs 15 June to 30 September and brings dust and pollen alongside the humidity. Winter travel out of Sky Harbor drives the immune bookings. |
+| **COST** — What you will pay | Drips run $195 to $495, with add-on ingredients at a flat $30. Elective wellness infusions are generally not reimbursed by insurance, so expect to pay the menu price directly. |
 
 ---
 
@@ -463,5 +459,5 @@ THE DRIP iv infusion
 | Nurse credentials | Surnames, Arizona licence numbers and headshots for Jenna, Karena and Kris |
 | Review sources | Star rating per reviewer and the Google Business Profile URL |
 | Pricing gaps | Travel fee, group/party pricing and HSA/FSA eligibility are unpublished, so none is stated |
-| Images | 15 of 29 slots filled from the client media library. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
+| Images | 18 of 29 slots filled from the client media library. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
 | Links | Several placeholder `href="#"` targets still to be pointed at real URLs |

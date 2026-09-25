@@ -70,8 +70,8 @@ h1,h2,h3,p{margin:0}
 *{box-sizing:border-box}
 
 .img-slot-note{display:none}
-.img-slot.is-empty{outline:1px dashed #B5DEF5}
-.img-slot.is-empty .img-slot-note{display:block;padding:14px 18px;font:400 14px 'Source Sans 3',sans-serif;color:#5A79AD;text-align:center}
+.img-slot.is-empty{background:color-mix(in srgb,currentColor 8%,transparent);border:1px solid color-mix(in srgb,currentColor 25%,transparent)}
+.img-slot.is-empty .img-slot-note{display:block;padding:12px 16px;font:400 13px 'Source Sans 3',sans-serif;color:color-mix(in srgb,currentColor 55%,transparent);text-align:center}
 </style>
 </head>
 <body>
@@ -674,7 +674,7 @@ h1,h2,h3,p{margin:0}
         </div>
       </div>
     </div>
-    <div data-dc-tpl="547" style="background: rgb(255, 255, 255); border-radius: 10px; min-height: 420px; border: 1px dashed rgb(185, 196, 214); display: flex; align-items: center; justify-content: center; color: rgb(90, 121, 173); font-size: 15px;">Embedded Google map</div>
+    <div style="background:#fff;border-radius:10px;min-height:420px;overflow:hidden"><iframe title="Map to The Drip IV Infusion, 4531 N 16th St Suite 102, Phoenix, AZ 85016" src="https://www.google.com/maps?q=4531+N+16th+St+Ste+102,+Phoenix,+AZ+85016&amp;output=embed" width="100%" height="420" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
   </div></section><section data-dc-tpl="548" id="faq" data-screen-label="17 Resources Hub" style="padding: 96px 24px;">
   <div data-dc-tpl="549" style="max-width: 1200px; margin: 0px auto; display: flex; flex-direction: column; gap: 28px;">
     <div data-dc-tpl="550" style="display: flex; flex-direction: column; align-items: center; gap: 18px; text-align: center;">
@@ -1289,7 +1289,7 @@ h1,h2,h3,p{margin:0}
         </div>
       </div>
     </div>
-    <div style="background:#fff;border-radius:10px;min-height:420px;border:1px dashed #b9c4d6;display:flex;align-items:center;justify-content:center;color:#5A79AD;font-size:15px">Embedded Google map</div>
+    <div style="background:#fff;border-radius:10px;min-height:420px;overflow:hidden"><iframe title="Map to The Drip IV Infusion, 4531 N 16th St Suite 102, Phoenix, AZ 85016" src="https://www.google.com/maps?q=4531+N+16th+St+Ste+102,+Phoenix,+AZ+85016&amp;output=embed" width="100%" height="420" style="border:0;display:block" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div>
   </div>
 </section>
 
@@ -1334,14 +1334,14 @@ h1,h2,h3,p{margin:0}
     </sc-if>
     <sc-if value="{{ res3 }}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;flex-direction:column;gap:24px">
-        <h3 style="font-family:Questrial,sans-serif;font-weight:400;font-size:clamp(26px,2.8vw,34px);color:#153060">Explore Our Phoenix Guides</h3>
+        <h3 style="font-family:Questrial,sans-serif;font-weight:400;font-size:clamp(26px,2.8vw,34px);color:#153060">Phoenix Hydration Reference</h3>
         <div style="display:grid;grid-auto-flow:column;grid-auto-columns:minmax(280px,calc((100% - 40px) / 3));gap:20px;overflow-x:auto;padding-bottom:12px;scroll-snap-type:x mandatory;scrollbar-width:thin;scrollbar-color:#5A79AD #F6F6F6">
           <sc-for list="{{ blogs }}" as="bl" hint-placeholder-count="3">
-            <a href="#" style="scroll-snap-align:start;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:#F4F8FC;text-decoration:none;box-shadow:0 1px 3px rgba(21,48,96,0.06)">
-              <div style="position:relative;height:200px"><figure class="img-slot" data-slot="{{ bl.slot }}" style="margin:0;width:100%;height:100%;border-radius:10px;overflow:hidden;background:#F6F6F6;display:flex;align-items:center;justify-content:center"><img alt="{{ bl.title }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentNode.classList.add('is-empty')"><figcaption class="img-slot-note">{{ bl.title }}</figcaption></figure></div>
+            <div style="scroll-snap-align:start;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;background:#F4F8FC;box-shadow:0 1px 3px rgba(21,48,96,0.06)">
+              
               <div style="padding:20px 20px 26px;display:flex;flex-direction:column;gap:10px">
                 <div style="font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#8a93a3">{{ bl.tag }}</div>
-                <div style="font-family:Questrial,sans-serif;font-size:20px;line-height:1.3;color:#153060">{{ bl.title }}</div>
+                <div style="font-family:Questrial,sans-serif;font-size:20px;line-height:1.3;color:#153060">{{ bl.title }}</div><p style="font-size:15px;line-height:1.6;color:#3a4150;margin:0">{{ bl.body }}</p>
               </div>
             </a>
           </sc-for>
@@ -1403,8 +1403,11 @@ window.DRIP_IMAGES = {
   "gal-2": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/screen_JGP-TheDrip-Dec22_Corbin_009-1024x683.jpg", alt: "Client receiving an IV infusion in an armchair at home" },
   "gal-3": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01489-1-scaled.jpg", alt: "Nurse assessing a vein before placing the line in the treatment room" },
   "gal-4": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01289-2-scaled.jpg", alt: "Nurse hanging an IV bag while a client keeps working through the infusion" },
-  "gal-5": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/04/IMG_0646-1-1-scaled.jpeg", alt: "The Drip IV Infusion nursing team in branded scrubs at the office" },
+  "gal-5": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedrip-strictvision-1-retina.webp", alt: "Drip IV Infusion nurse with an athlete at Strict Vision Athletics in Phoenix" },
   "team-brandon": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-brandonandcorbin-retina.webp", alt: "Brandon Lang and Corbin King, the registered nurses who founded The Drip IV Infusion" },
+  "drip-athletic": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedrip-strictvision-2-retina.webp", alt: "Drip IV Infusion nurse placing a recovery IV for an athlete at a Phoenix gym" },
+  "drip-energy": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-needle-retina.webp", alt: "Gloved nurse holding a prepared intramuscular injection" },
+  "drip-nad": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-needle-retina.webp", alt: "Gloved nurse holding a prepared intramuscular injection" },
   "safety-kit": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01438-3-scaled.jpg", alt: "Nurse checking a sealed medication vial before preparing an infusion" },
   "process-visual": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01489-1-scaled.jpg", alt: "Nurse assessing a vein before placing the line in the treatment room" },
   "reserve-img": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/screen_JGP-TheDrip-Dec22_Corbin_009-1024x683.jpg", alt: "Client receiving an IV infusion in an armchair at home" },
@@ -1633,10 +1636,10 @@ class Component extends DCLogic {
       resources: ['Mobile IV therapy in downtown Phoenix', 'IV therapy near downtown events and landmarks', 'Reasons to get IV therapy in Phoenix', 'How often should you get IV therapy in Phoenix', 'Choosing the right IV provider in Phoenix', 'IV therapy near ASU', 'How Arizona dry heat causes dehydration', 'IV therapy for seasonal allergies in Arizona', 'Low B12 symptoms in Arizona', 'Home IV therapy'],
       resTabs: [['About Us', 0], ['FAQs', 2], ['Resources', 3]].map(([label, i]) => { const on = s.res === i; return { label, click: () => this.setState({ res: i }), rbg: on ? '#153060' : '#F0F2F5', rfg: on ? '#fff' : '#3a4150' }; }),
       res0: s.res === 0, res1: s.res === 1, res2: s.res === 2, res3: s.res === 3, resTwoCol: s.res !== 3,
-      resTitle: ['About The Drip IV Infusion', '', 'FAQs About IV Therapy in Phoenix', 'Phoenix and Arizona Guides'][s.res],
+      resTitle: ['About The Drip IV Infusion', '', 'FAQs About IV Therapy in Phoenix', 'Phoenix Hydration Reference'][s.res],
       resSlot: ['res-team', 'res-office', 'res-faq', 'res-guides'][s.res],
       resAlt: ['Founders Brandon Lang and Corbin King with the Phoenix nursing team', 'Phoenix office at 4531 N 16th St, Suite 102', 'Nurse answering a client\'s questions before a Phoenix infusion', 'Nurse reviewing hydration guidance with a Phoenix client'][s.res],
-      blogs: ['Mobile IV therapy services in downtown Phoenix', 'IV therapy near downtown Phoenix events and landmarks', 'Reasons to get IV therapy in Phoenix', 'How often should you get IV therapy in Phoenix', 'How to choose the right IV therapy provider in Phoenix', 'IV therapy near ASU', 'How Arizona dry heat causes dehydration', 'IV therapy for seasonal allergies in Arizona', 'Low B12 symptoms in Arizona', 'Home IV therapy'].map((t, i) => ({ title: t.replace(/^./, c => c.toUpperCase()).replace(/\b(iv|asu|b12)\b/gi, m => m.toUpperCase()), slot: 'blog-' + i, tag: /Arizona/.test(t) ? 'Arizona Guide' : /Phoenix|ASU/.test(t) ? 'Phoenix Guide' : 'Wellness Guide' })),
+      blogs: [['HYDRATION', 'How much water Phoenix actually needs', 'In triple-digit heat the eight-glasses rule stops being useful. Losses rise with exertion and time outdoors, and thirst lags behind the deficit. Urine colour, headache and fatigue tell you more than a glass count.'], ['WARNING SIGNS', 'When fluids stop being enough', 'Dizziness on standing, a dry mouth that water does not fix, dark urine and a headache that persists past two glasses are the point at which most people call. Confusion, a temperature above 103F or fainting mean 911, not a drip.'], ['BEFORE YOUR VISIT', 'The hour before the nurse arrives', 'Eat something, drink a glass of water, and wear short sleeves or a loose top. Have your medication list, allergies and any prior infusion reactions ready for intake.'], ['AFTER YOUR VISIT', 'The rest of the day', 'Keep the dressing on for a few hours and drink normally. Mild tenderness at the site is usual. Call us if you see swelling, increasing pain, or redness spreading from the site.'], ['PHOENIX CALENDAR', 'When the Valley runs driest', 'March now opens the triple-digit season. Monsoon runs 15 June to 30 September and brings dust and pollen alongside the humidity. Winter travel out of Sky Harbor drives the immune bookings.'], ['COST', 'What you will pay', 'Drips run $195 to $495, with add-on ingredients at a flat $30. Elective wellness infusions are generally not reimbursed by insurance, so expect to pay the menu price directly.']].map(([tag, title, body], i) => ({ tag, title, body, slot: 'blog-' + i })),
       offices: [['Phoenix', '4531 N 16th St, Suite 102, Phoenix, AZ 85016'], ['Gilbert', '633 E Ray Rd'], ['Gilbert', '2964 E Camellia Dr'], ['Gilbert', '6348 S Higley Rd']].map(([city, addr]) => ({ city, addr })),
       faqs: F.map(([q, a], i) => { const open = s.faq === i; return { q, a, open, icon: open ? '−' : '+', toggle: () => this.setState({ faq: open ? -1 : i }) }; })
     };

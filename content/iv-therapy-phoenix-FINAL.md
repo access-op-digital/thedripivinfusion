@@ -64,6 +64,36 @@ Badge: **Fall 2022** — Founded by two registered nurses
 
 ---
 
+## H2 — Our IV Drip Menu in Phoenix
+
+Horizontal slider, eight cards, each with the bag render, price, purpose, full
+ingredient list and the client's own description.
+
+We provide eight IV drip formulations in Phoenix to address dehydration, hangover
+and stomach upset, seasonal illness, morning sickness, immune support, athletic
+recovery and weight-loss support. As a nurse-owned IV provider Phoenix residents
+trust, The Drip IV Infusion matches the bag to your intake, confirms it against
+the prescriber's order, and delivers it at your home, office or hotel for adults
+across the Valley, from expecting mothers and frequent flyers to athletes, shift
+workers and anyone recovering from a long week. Prices run $195 to $495, with
+add-on ingredients at a flat $30. Fluids* are included in every cocktail.
+
+| Drip | Price | For | Ingredients |
+|---|---|---|---|
+| The Classic Myers | $195 | rehydration and replenishment | Vitamin C, B12, B-Complex, Zinc, Glutathione, Magnesium, Fluids* |
+| RE:VIVE | $300 | stomach and headache relief | + Pepcid, Zofran, Toradol |
+| The Kitchen Sink | $495 | ultimate sickness recovery | + Taurine, L-Carnitine, Benadryl |
+| The Mama Bear | $250 | morning sickness relief | Vitamin C, B12, Glutathione, Magnesium, Zofran, Pepcid, B6, Fluids* |
+| The Total Prevention | $325 | maximum immune support | Vitamin C, B12, B-Complex, Zinc, Glutathione, Magnesium, Fluids* |
+| The Defender | $375 | cold, flu and virus | Vitamin C, Zinc, Glutathione, NAC, Fluids*, plus Vitamin D and NAD+ injection |
+| The GOAT | $375 | peak performance | Vitamin C, B12, Zinc, Taurine, NAC, B6, Fluids*, plus NAD+ injection |
+| The Skinny | $350 | weight loss support | B12, B-Complex, Glutathione, L-Carnitine, Amino Blend, Fluids* |
+
+*Fluids are included in every cocktail. Every infusion runs under a valid order
+from a licensed prescriber.
+
+---
+
 ## H2 — Trusted Mobile IV Therapy in Phoenix, Maricopa County
 
 The Drip IV Infusion has treated Maricopa County patients since Fall 2022, when
@@ -88,8 +118,14 @@ recovery and late-evening calls after a downtown event.
 
 ## H2 — IV Drips and Infusions We Offer in Phoenix
 
-Eight named drips and a set of $30 add-on ingredients make up the Phoenix menu.
-Choose a goal to see the matching treatments.
+We provide IV therapy in Phoenix for the symptoms people most often call about,
+including dehydration, hangovers, migraine, fatigue, cold and flu, pregnancy
+nausea, arthritis pain, anxiety and weight-loss support. As a nurse-owned
+provider Phoenix residents trust, The Drip IV Infusion reviews your symptoms at
+intake, matches them to a formulation the prescriber has ordered, and sends a
+registered nurse to your address for adults across the Valley, whether you are
+recovering at home, working through it at the office or travelling through Sky
+Harbor. Our IV therapy uses in Phoenix cover the treatments below.
 
 ### [TAB: Everyday Wellness]
 

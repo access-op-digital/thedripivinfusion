@@ -615,6 +615,153 @@ def step_images(html: str) -> str:
     return html
 
 
+
+
+# ---- 5i. the drip menu slider ---------------------------------------------
+# The client's own /menu page, as a horizontal slider straight after the
+# reviews. Name, price, what it is for, the full ingredient list and the
+# client's own description, verbatim. All eight bag renders exist on the site;
+# the media REST API only returned three of them, the same pagination gap that
+# hid the founder headshots, so these came from the menu page markup.
+_MENU_ITEMS = [
+    ("The Classic Myers", "$195", "rehydration and replenishment", "myers",
+     "Vitamin C, B12, B-Complex, Zinc, Glutathione, Magnesium, Fluids*",
+     "Rapid recovery from dehydration is just around the corner with this staple IV "
+     "cocktail. The Classic Myers swoops in to save the day when you're not feeling "
+     "your best, or simply searching for that extra replenishment."),
+    ("RE:VIVE", "$300", "stomach and headache relief", "revive",
+     "Vitamin C, B12, B-Complex, Zinc, Glutathione, Magnesium, Pepcid, Zofran, "
+     "Toradol, Fluids*",
+     "RE:VIVE combines everything from The Classic Myers with additional stomach and "
+     "headache relief for a truly transformative end-result."),
+    ("The Kitchen Sink", "$495", "ultimate sickness recovery", "kitchen",
+     "Vitamin C, B12, B-Complex, Zinc, Glutathione, Magnesium, Taurine, L-Carnitine, "
+     "Pepcid, Zofran, Toradol, Benadryl, Fluids*",
+     "For those that have gone the extra mile or are really not doing well and need "
+     "the ultimate recovery, The Kitchen Sink will get you back up and running most "
+     "quickly. This IV Cocktail has the highest dosage of the most impactful blend."),
+    ("The Mama Bear", "$250", "morning sickness relief", "mama",
+     "Vitamin C, B12, Glutathione, Magnesium, Zofran, Pepcid, Pyridoxine (B6), Fluids*",
+     "For expecting mothers out there carrying the next generation, all the while "
+     "dealing with fatigue and morning sickness, we are here to help. The Mama Bear "
+     "provides rapid relief and relaxation."),
+    ("The Total Prevention", "$325", "maximum immune support", "total",
+     "Vitamin C, B12, B-Complex, Zinc, Glutathione, Magnesium, Fluids*",
+     "Friends and family around you coming down with something? The Total Prevention "
+     "provides a max dose of vitamins to keep you on your feet so you can keep at it. "
+     "Recommended also by frequent flyers who need to stay healthy amidst a lifestyle "
+     "of travel."),
+    ("The Defender", "$375", "cold, flu and virus", "defender",
+     "Vitamin C, Zinc, Glutathione, NAC and Fluids* in the infusion cocktail, plus a "
+     "Vitamin D and NAD+ injection.",
+     "Whether it's the first time or you've lost count, The Defender is here for you "
+     "when you've been exposed to, or come down with, a cold, flu or any other "
+     "seasonal virus. It aims to lessen symptoms and reduce your downtime."),
+    ("The GOAT", "$375", "peak performance", "goat",
+     "Vitamin C, B12, Zinc, Taurine, NAC, Pyridoxine (B6) and Fluids* in the infusion "
+     "cocktail, plus an NAD+ injection.",
+     "Sometimes you need all the help you can get to prepare for your next event. The "
+     "GOAT is tailored for the athletes and performers out there doing big things with "
+     "their bodies, before or after the big event."),
+    ("The Skinny", "$350", "weight loss support", "skinny",
+     "B12, B-Complex, Glutathione, L-Carnitine, Amino Blend, Fluids*",
+     "As you continue to pursue a healthy and active lifestyle, The Skinny is an extra "
+     "tool to help support your weight loss journey. It complements the weight-loss "
+     "injections offered by The Drip, and is recommended weekly or bi-weekly."),
+]
+
+# Reference-page shape: what we provide, in which city, to address what; then
+# who we are to the reader, what we do about it, and for whom.
+_MENU_OVERVIEW = (
+    "We provide eight IV drip formulations in Phoenix to address dehydration, hangover "
+    "and stomach upset, seasonal illness, morning sickness, immune support, athletic "
+    "recovery and weight-loss support. As a nurse-owned IV provider Phoenix residents "
+    "trust, The Drip IV Infusion matches the bag to your intake, confirms it against "
+    "the prescriber's order, and delivers it at your home, office or hotel for adults "
+    "across the Valley, from expecting mothers and frequent flyers to athletes, shift "
+    "workers and anyone recovering from a long week. Prices run $195 to $495, with "
+    "add-on ingredients at a flat $30. Fluids* are included in every cocktail."
+)
+
+
+def _menu_html() -> str:
+    cards = []
+    for name, price, purpose, key, ingr, desc in _MENU_ITEMS:
+        cards.append(
+            '<div style="scroll-snap-align:start;flex:0 0 300px;background:#fff;'
+            'border:1px solid #e3e7ee;border-radius:12px;overflow:hidden;display:flex;'
+            'flex-direction:column">'
+            '<div style="height:190px;background:#F6F6F6;display:flex;align-items:center;'
+            'justify-content:center;padding:14px">'
+            '<image-slot id="menu-' + key + '" shape="rect" style="width:auto;height:100%;'
+            'max-width:100%" placeholder="' + name + ' IV bag"></image-slot></div>'
+            '<div style="padding:20px 22px 24px;display:flex;flex-direction:column;gap:8px">'
+            '<h3 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
+            'font-size:21px;color:#153060">' + name + '</h3>'
+            '<div style="font-family:Questrial,sans-serif;font-size:22px;color:#13646D">'
+            + price + '</div>'
+            '<div style="font-size:14px;font-weight:600;color:#5A79AD">For '
+            + purpose + '</div>'
+            '<p style="margin:0;font-size:13px;line-height:1.55;color:#5a6070">'
+            + ingr + '</p>'
+            '<p style="margin:0;font-size:15px;line-height:1.6;color:#3a4150">'
+            + desc + '</p>'
+            '</div></div>'
+        )
+    return (
+        '<section id="drip-menu" data-screen-label="02b Drip Menu" '
+        'style="padding:88px 24px">'
+        '<div style="max-width:1200px;margin:0 auto;display:flex;flex-direction:column;'
+        'gap:28px">'
+        '<div style="display:flex;flex-direction:column;gap:12px;max-width:900px">'
+        '<h2 style="margin:0;font-family:Questrial,sans-serif;font-weight:400;'
+        'font-size:clamp(28px,3.2vw,40px);color:#153060">'
+        'Our IV Drip Menu in <span style="color:#5A79AD">Phoenix</span></h2>'
+        '<p style="margin:0;font-size:18px;line-height:1.65;color:#2b3140">'
+        + _MENU_OVERVIEW + '</p></div>'
+        '<div style="display:flex;gap:20px;overflow-x:auto;padding-bottom:14px;'
+        'scroll-snap-type:x mandatory;scrollbar-width:thin;'
+        'scrollbar-color:#5A79AD #F6F6F6">' + "".join(cards) + '</div>'
+        '<p style="margin:0;font-size:14px;color:#5a6070">*Fluids are included in every '
+        'cocktail. Every infusion runs under a valid order from a licensed prescriber.'
+        '</p></div></section>'
+    )
+
+
+_MENU_ANCHOR_TPL = '<section data-screen-label="03 Trusted"'
+_MENU_ANCHOR_SNAP = '<section data-dc-tpl="130" data-screen-label="03 Trusted"'
+
+
+def rewrite_uses_intro(html: str) -> str:
+    return html.replace(_USES_OLD, _USES_NEW)
+
+
+def insert_menu(html: str) -> str:
+    """Place the menu slider between the reviews and the Trusted section."""
+    if 'id="drip-menu"' in html:
+        return html
+    block = _menu_html()
+    for anchor in (_MENU_ANCHOR_SNAP, _MENU_ANCHOR_TPL):
+        if anchor in html:
+            return html.replace(anchor, block + anchor, 1)
+    return html
+
+
+# ---- 5j. the IV uses intro, in the reference format ------------------------
+_USES_OLD = ("Eight named drips and a set of $30 add-on ingredients make up the Phoenix "
+             "menu. Choose a goal to see the matching treatments.")
+_USES_NEW = (
+    "We provide IV therapy in Phoenix for the symptoms people most often call about, "
+    "including dehydration, hangovers, migraine, fatigue, cold and flu, pregnancy "
+    "nausea, arthritis pain, anxiety and weight-loss support. As a nurse-owned provider "
+    "Phoenix residents trust, The Drip IV Infusion reviews your symptoms at intake, "
+    "matches them to a formulation the prescriber has ordered, and sends a registered "
+    "nurse to your address for adults across the Valley, whether you are recovering at "
+    "home, working through it at the office or travelling through Sky Harbor. Our IV "
+    "therapy uses in Phoenix cover the treatments below."
+)
+
+
 # ---- 6. real photography from the client's own media library ---------------
 # Every URL below was opened and looked at; the alt text says what the photo
 # ACTUALLY shows, not what the design slot wished for. A slot with no honest
@@ -643,6 +790,16 @@ PHOTOS = {
                     "The RE:VIVE IV bag"),
     "bag-defender": (f"{U}/2024/11/thedripivinfusion-ivbag-defender-@2X.webp",
                      "The Defender IV bag"),
+    "bag-kitchen": (f"{U}/2024/11/thedripivinfusion-ivbag-kitchen-retina.webp",
+                    "The Kitchen Sink IV bag"),
+    "bag-mama":    (f"{U}/2024/11/thedripivinfusion-ivbag-mama-retina.webp",
+                    "The Mama Bear IV bag"),
+    "bag-total":   (f"{U}/2024/11/thedripivinfusion-ivbag-total-retina.webp",
+                    "The Total Prevention IV bag"),
+    "bag-goat":    (f"{U}/2024/11/thedripivinfusion-ivbag-goat-retina.webp",
+                    "The GOAT IV bag"),
+    "bag-skinny":  (f"{U}/2024/11/thedripivinfusion-ivbag-skinny-retina.webp",
+                    "The Skinny IV bag"),
     "athlete-iv":  (f"{U}/2024/11/thedrip-strictvision-2-retina.webp",
                     "Drip IV Infusion nurse placing a recovery IV for an athlete at a Phoenix gym"),
     "athlete-gym": (f"{U}/2024/11/thedrip-strictvision-1-retina.webp",
@@ -674,6 +831,15 @@ SLOT_IMAGES = {
     "drip-energy": "injection",
     "drip-nad": "injection",
     "res-team": "team",
+    # the eight menu bag renders
+    "menu-myers": "bag-myers",
+    "menu-revive": "bag-revive",
+    "menu-kitchen": "bag-kitchen",
+    "menu-mama": "bag-mama",
+    "menu-total": "bag-total",
+    "menu-defender": "bag-defender",
+    "menu-goat": "bag-goat",
+    "menu-skinny": "bag-skinny",
     # One distinct photo per process step, no repeats across the eight. Book,
     # intake and follow-up have no literal match in the library, so they take
     # the people involved rather than the action, and the alt text says what
@@ -1015,6 +1181,8 @@ def clean_text(html, label):
     html = html.replace(_MAP_RENDERED, _MAP_EMBED).replace(_MAP_TEMPLATE, _MAP_EMBED)
     html = resources_to_info(html)
     html = insert_benefits(html)
+    html = insert_menu(html)
+    html = rewrite_uses_intro(html)
     html = why_choose_align(html)
     html = founder_headshots(html)
     html = fix_reasons(html)

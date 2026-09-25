@@ -1329,7 +1329,7 @@ h1,h2,h3,p{margin:0}
           </sc-if>
         </div>
       </div>
-      <div style="position:relative;height:400px;border-radius:10px;overflow:hidden"><figure class="img-slot" data-slot="{{ resSlot }}" style="margin:0;width:100%;height:100%;border-radius:10px;overflow:hidden;background:#F6F6F6;display:flex;align-items:center;justify-content:center"><img alt="{{ resAlt }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentNode.classList.add('is-empty')"><figcaption class="img-slot-note">{{ resAlt }}</figcaption></figure></div>
+      <sc-if value="{{ res0 }}" hint-placeholder-val="{{ true }}"><div style="position:relative;height:400px;border-radius:10px;overflow:hidden"><figure class="img-slot" data-slot="{{ resSlot }}" style="margin:0;width:100%;height:100%;border-radius:10px;overflow:hidden;background:#F6F6F6;display:flex;align-items:center;justify-content:center"><img alt="{{ resAlt }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;display:block" onerror="this.style.display='none';this.parentNode.classList.add('is-empty')"><figcaption class="img-slot-note">{{ resAlt }}</figcaption></figure></div></sc-if>
     </div>
     </sc-if>
     <sc-if value="{{ res3 }}" hint-placeholder-val="{{ false }}">
@@ -1408,6 +1408,7 @@ window.DRIP_IMAGES = {
   "drip-athletic": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedrip-strictvision-2-retina.webp", alt: "Drip IV Infusion nurse placing a recovery IV for an athlete at a Phoenix gym" },
   "drip-energy": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-needle-retina.webp", alt: "Gloved nurse holding a prepared intramuscular injection" },
   "drip-nad": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/thedripivinfusion-needle-retina.webp", alt: "Gloved nurse holding a prepared intramuscular injection" },
+  "res-team": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/04/IMG_0646-1-1-scaled.jpeg", alt: "The Drip IV Infusion nursing team in branded scrubs at the office" },
   "safety-kit": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01438-3-scaled.jpg", alt: "Nurse checking a sealed medication vial before preparing an infusion" },
   "process-visual": { src: "https://thedripivinfusion.com/wp-content/uploads/2026/05/DSC01489-1-scaled.jpg", alt: "Nurse assessing a vein before placing the line in the treatment room" },
   "reserve-img": { src: "https://thedripivinfusion.com/wp-content/uploads/2024/11/screen_JGP-TheDrip-Dec22_Corbin_009-1024x683.jpg", alt: "Client receiving an IV infusion in an armchair at home" },

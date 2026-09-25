@@ -100,7 +100,16 @@ _NEW_NOTICE = (
     "requires. Talk to your own physician before booking, particularly if you are "
     "pregnant or manage a kidney, heart or blood pressure condition."
 )
-CONTENT_FIXES = [(_OLD_NOTICE, _NEW_NOTICE)]
+# The FAQ tab shares a two-column layout, and its image slot, with About Us.
+# The client wants no image on FAQs. Gating the slot on the About tab leaves the
+# FAQ list alone in an auto-fit grid, so it takes the full width on its own.
+_FAQ_IMG_OLD = ('<div style="position:relative;height:400px;border-radius:10px;'
+                'overflow:hidden"><image-slot id="{{ resSlot }}" shape="rect" '
+                'placeholder="{{ resAlt }}"></image-slot></div>')
+_FAQ_IMG_NEW = ('<sc-if value="{{ res0 }}" hint-placeholder-val="{{ true }}">'
+                + _FAQ_IMG_OLD + '</sc-if>')
+
+CONTENT_FIXES = [(_OLD_NOTICE, _NEW_NOTICE), (_FAQ_IMG_OLD, _FAQ_IMG_NEW)]
 
 # ---- 5c. the map, and the resources block --------------------------------
 # The design leaves a dashed "Embedded Google map" box. The Phoenix office is a
@@ -243,6 +252,7 @@ SLOT_IMAGES = {
     "drip-athletic": "athlete-iv",
     "drip-energy": "injection",
     "drip-nad": "injection",
+    "res-team": "team",
     "safety-kit": "vial-check",
     "process-visual": "vein-check",
     "reserve-img": "at-home",

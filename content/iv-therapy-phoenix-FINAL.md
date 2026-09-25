@@ -369,7 +369,7 @@ Live Google Maps embed for 4531 N 16th St, Suite 102, Phoenix, AZ 85016.
 
 ### [TAB: About Us]
 
-**About The Drip IV Infusion**
+**About The Drip IV Infusion** (two columns, with the nursing team photo)
 
 Four Arizona offices and one mobile fleet make up The Drip IV Infusion, a
 nurse-owned IV therapy practice that opened in Fall 2022. Two registered nurses
@@ -384,7 +384,7 @@ story on the about page.
 
 ### [TAB: FAQs]
 
-Accordion, eight questions. Also shipped as FAQPage JSON-LD.
+Accordion, eight questions, full width with no image. Also shipped as FAQPage JSON-LD.
 
 1. **Is mobile IV therapy safe in Phoenix?** Mobile IV therapy is safe when a licensed registered nurse administers it under a valid prescriber's order, which is the model The Drip IV Infusion runs. 100% of administering clinicians are licensed RNs, and the practice is fully licensed and insured. The nurse stays for the full infusion and rechecks vitals before leaving.
 2. **How much should an IV drip cost in Phoenix?** Expect $195 to $495 per drip in Phoenix, with add-on ingredients at $30 each. The Classic Myers at $195 is the entry price and The Kitchen Sink at $495 is the top of the menu.

@@ -26,7 +26,7 @@ is the shape of the sample page.
 Pill on that row: Google · 5.0 · ★★★★★ · Google reviews.
 
 Under the row, as the big display line and NOT a heading: **The Drip IV
-Infusion** sends a registered nurse to your Phoenix address.
+Infusion** Brings Rehydration and Recovery to Your Door.
 
 Mobile: the rating moves above the keyword chip, the sticky header drops its
 nav and shrinks the phone link to its icon, the intro clamps to its first
@@ -36,13 +36,17 @@ six-card strip into a stat panel reading **60 Minutes** / "Most Phoenix
 addresses reached, from a confirmed booking", with a bar under it linking to
 the reviews. That card is hidden on mobile so it is not said twice.
 
-IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion
-to your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix
-addresses within 60 minutes of a confirmed booking. Eight drips make up the menu,
-priced from $195 to $495, and a nurse places every line. Mobile visits run 7:00AM
+The Drip IV Infusion delivers sterile, nurse-placed IV therapy in Phoenix to your
+home, office or hotel room. A licensed registered nurse reaches most addresses
+within 60 minutes of a confirmed booking. Two registered nurses have owned the
+practice since Fall 2022.
+
+Behind Read more on a phone, and continuous on desktop:
+
+Eight drips make up the menu, priced from $195 to $495. Mobile visits run 7:00AM
 to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, Desert
 Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber before
-any elective infusion, and that order is arranged as part of your intake.
+any elective infusion, and the intake call arranges it.
 
 CTAs: **BOOK A NURSE VISIT** · **CALL (602) 341-3511**
 

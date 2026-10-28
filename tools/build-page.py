@@ -1034,20 +1034,28 @@ def service_area(html: str) -> str:
 # of the six-card strip into a stat panel with a link bar under it. Desktop
 # keeps the six cards and never shows the panel.
 _HERO_H1_CHIP = '<h1 class="hero-kw">IV Therapy in Phoenix, AZ</h1>'
+# The display line follows the shape of the client's reference page: brand,
+# then the outcomes, then where. The keyword leaves the headline on purpose and
+# is carried by the H1 chip directly above it, which is what the reference does.
 _HERO_BRAND = ('<p class="hero-brand">The Drip IV Infusion '
-               '<span>sends a registered nurse to your Phoenix address</span></p>')
+               '<span>Brings Rehydration and Recovery to Your Door</span></p>')
 
+# The old opening sentence equated a treatment with a person: "IV therapy in
+# Phoenix IS a licensed registered nurse". Every sentence below is a triple with
+# its subject next to its verb, active and positive, and every attribute traces
+# to approved copy: sterile infusion, a nurse places every line, Fall 2022, two
+# registered nurse founders.
 _HERO_LEAD = (
-    "IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion "
-    "to your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix "
-    "addresses within 60 minutes of a confirmed booking."
+    "The Drip IV Infusion delivers sterile, nurse-placed IV therapy in Phoenix to "
+    "your home, office or hotel room. A licensed registered nurse reaches most "
+    "addresses within 60 minutes of a confirmed booking. Two registered nurses have "
+    "owned the practice since Fall 2022."
 )
 _HERO_REST = (
-    "Eight drips make up the menu, priced from $195 to $495, and a nurse places every "
-    "line. Mobile visits run 7:00AM to 9:00PM, seven days a week, across Central "
-    "Phoenix, Arcadia, Biltmore, Desert Ridge and Ahwatukee. Arizona law requires a "
-    "valid order from a prescriber before any elective infusion, and that order is "
-    "arranged as part of your intake."
+    "Eight drips make up the menu, priced from $195 to $495. Mobile visits run "
+    "7:00AM to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, "
+    "Desert Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber "
+    "before any elective infusion, and the intake call arranges it."
 )
 _HERO_INTRO = (
     '<div class="hero-intro-wrap">'

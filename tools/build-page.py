@@ -185,7 +185,13 @@ _TRUST_P2_NEW = ("A licensed registered nurse administers every infusion. The co
 
 _CTA_FIXES = [('Book a Phoenix nurse visit', 'Book a Nurse Visit'), ('Book a Phoenix Nurse Visit', 'Book a Nurse Visit'), ('BOOK A PHOENIX NURSE VISIT', 'Book a Nurse Visit'), ('Book a Phoenix IV appointment', 'Book a Nurse Visit'), ('Book a Phoenix IV Appointment', 'Book a Nurse Visit'), ('Reserve a slot online', 'Book a Nurse Visit'), ('Reserve Online', 'Book a Nurse Visit'), ('reserve a slot online', 'Book a Nurse Visit')]
 
+# The reviews H2 in question form. The section's first sentence is the
+# rating itself, so the heading now asks what the body answers.
+_REVIEWS_H2_OLD = "Phoenix Infusion Ratings and Verified Client Reviews"
+_REVIEWS_H2_NEW = "How Do Phoenix Clients Rate The Drip IV Infusion?"
+
 CONTENT_FIXES = _CTA_FIXES + [
+    (_REVIEWS_H2_OLD, _REVIEWS_H2_NEW),
     (_OLD_NOTICE, _NEW_NOTICE),
     (_FAQ_IMG_OLD, _FAQ_IMG_NEW),
     (_HERO_OLD, _HERO_NEW),

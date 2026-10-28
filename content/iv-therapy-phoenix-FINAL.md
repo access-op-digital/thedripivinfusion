@@ -23,7 +23,9 @@ The H1 is the keyword line, rendered as a chip in the same style as the rating.
 Both sit together at the top left above the display line, rating first, which
 is the shape of the sample page.
 
-Pill on that row: Google · 5.0 · ★★★★★ · Google reviews.
+Pill on that row, after the H1 chip: Google · 5.0 · ★★★★★ · 84 Google reviews.
+The count is the Phoenix profile's own, read off the Google Business Profile on
+29 October 2026. It will drift as reviews come in.
 
 Under the row, as the big display line and NOT a heading: **The Drip IV
 Infusion** Brings Mobile IV Therapy to Your Door in Phoenix.
@@ -558,7 +560,7 @@ THE DRIP iv infusion
 | ~~Medical reviewer~~ | Resolved: Brandon Lang, MSN, RN, reviewed 25 September 2026. Confirm the date matches his actual sign-off |
 | Medical director | Site claims MD-supervised protocols but names no director. Arizona expects one for a business outside a private medical office |
 | Nurse credentials | Surnames, Arizona licence numbers and headshots for Jenna, Karena and Kris |
-| Review sources | Star rating per reviewer and the Google Business Profile URL |
+| Review sources | Partly resolved 29 October 2026: the Phoenix profile (4531 N 16th St Ste 102) reads 5.0 from 84 Google reviews, 83 of them five star. Place CID 1762523168812274526. Still open: the star rating per named reviewer on the page |
 | Pricing gaps | Travel fee and group/party pricing are still unpublished. HSA/FSA is now resolved: the menu page states major credit cards, debit cards, HSA and FSA |
 | Images | 32 of 44 slots filled. 9 render as initial avatars, 3 are hidden. The rest need Phoenix outdoor, landmark, monsoon and hotel photography, plus individual headshots |
 | Links | Several placeholder `href="#"` targets still to be pointed at real URLs |

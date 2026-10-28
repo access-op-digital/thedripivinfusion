@@ -1097,8 +1097,11 @@ def hero_rebuild(html: str) -> str:
     # The display line goes in first: inserting the row first would put its own
     # H1 chip in front of the one being replaced, and the chip would be eaten.
     hero = re.sub(r'<h1[^>]*>.*?</h1>', _HERO_BRAND, hero, count=1, flags=re.S)
-    head = ('<div class="hero-top">' + (pill.group(0) if pill else "")
-            + _HERO_H1_CHIP + '</div>')
+    # The count is the Phoenix profile's own, read off the Google Business
+    # Profile for 4531 N 16th St Ste 102 on 29 Oct 2026: 5.0 from 84 reviews,
+    # 83 of them five star. It is a point in time figure and will drift.
+    rating = pill.group(0).replace(">Google reviews<", ">84 Google reviews<", 1) if pill else ""
+    head = '<div class="hero-top">' + _HERO_H1_CHIP + rating + '</div>'
     hero = re.sub(r'(<section[^>]*id="top"[^>]*>)', lambda g: g.group(1) + head,
                   hero, count=1)
     hero = re.sub(r'<p[^>]*>IV therapy in Phoenix is a licensed registered nurse'

@@ -1171,6 +1171,12 @@ color:#B5DEF5}
 .hero-brand{font-family:Questrial,sans-serif;font-weight:400;
 font-size:clamp(30px,3.4vw,46px);line-height:1.1;letter-spacing:-0.4px;margin:0;color:#fff}
 .hero-brand span{color:#B5DEF5}
+/* The photograph carried align-self:end inside a centre-aligned grid, so it
+   hung at the bottom of its column and left a block of empty navy above it,
+   beside the chip row. It fills its column now. */
+@media (min-width:769px){
+  .hero-figure{align-self:stretch!important;height:auto!important;min-height:340px}
+}
 .hero-intro-wrap{display:flex;flex-direction:column;gap:12px;max-width:560px}
 .hero-lead,.hero-rest{font-size:19px;line-height:1.6;font-weight:300;color:#fff;
 text-wrap:pretty;margin:0}

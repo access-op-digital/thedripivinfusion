@@ -1079,16 +1079,15 @@ def hero_rebuild(html: str) -> str:
     if pill:
         hero = hero.replace(pill.group(0), "", 1)
 
-    # The H1 takes the rating's own chip treatment, and the two sit on one row
-    # ABOVE the two-column grid rather than inside the copy column: the column
-    # is only ~450px wide, so a row inside it wraps and they end up stacked.
-    # Across the full 1200px the keyword sits hard left and the rating hard
-    # right, which is where the client asked for it.
-    # the display line goes in first: inserting the row first would put its own
-    # H1 chip in front of the one being replaced, and the chip would be eaten
+    # The H1 takes the rating's own chip treatment, and the two sit together at
+    # the top left above the display line, which is the reference's shape: the
+    # rating badge first, then the heading under it. Splitting them to opposite
+    # ends of the hero read as two unrelated things.
+    # The display line goes in first: inserting the row first would put its own
+    # H1 chip in front of the one being replaced, and the chip would be eaten.
     hero = re.sub(r'<h1[^>]*>.*?</h1>', _HERO_BRAND, hero, count=1, flags=re.S)
-    head = ('<div class="hero-top">' + _HERO_H1_CHIP
-            + (pill.group(0) if pill else "") + '</div>')
+    head = ('<div class="hero-top">' + (pill.group(0) if pill else "")
+            + _HERO_H1_CHIP + '</div>')
     hero = re.sub(r'(<section[^>]*id="top"[^>]*>)', lambda g: g.group(1) + head,
                   hero, count=1)
     hero = re.sub(r'<p[^>]*>IV therapy in Phoenix is a licensed registered nurse'
@@ -1096,6 +1095,20 @@ def hero_rebuild(html: str) -> str:
 
     hero = re.sub(r'(<div)([^>]*>\s*<a[^>]*href="#book")',
                   r'\1 class="hero-cta"\2', hero, count=1, flags=re.S)
+
+    # the copy column and the photograph, so the phone can tighten the stack
+    # and run the photograph edge to edge the way the reference does
+    hero = re.sub(r'(<div)((?=[^>]*flex-direction: ?column)[^>]*>\s*<div class="hero-top")',
+                  r'\1 class="hero-copy"\2', hero, count=1)
+    if 'class="hero-copy"' not in hero:
+        hero = re.sub(r'(<div)((?=[^>]*flex-direction: ?column)[^>]*>\s*<p class="hero-brand")',
+                      r'\1 class="hero-copy"\2', hero, count=1)
+    hero = re.sub(r'(<div)((?=[^>]*height: ?clamp\(320px)[^>]*>)',
+                  r'\1 class="hero-figure"\2', hero, count=1)
+    # the two-column grid carries a 56px gap, which on a phone becomes 56px of
+    # empty navy between the buttons and the photograph
+    hero = re.sub(r'(<div)((?=[^>]*gap: ?56px)[^>]*>)',
+                  r'\1 class="hero-grid"\2', hero, count=1)
 
     # the stat panel goes between the hero and the six USP cards
     hero = re.sub(r'(<div[^>]*border-top: ?1px solid rgba\(255, ?255, ?255, ?0\.15\)'
@@ -1135,10 +1148,12 @@ def header_fit(html: str) -> str:
 
 
 HERO_CSS = """
-.hero-top{max-width:1200px;margin:0 auto 30px;display:flex;align-items:center;
-justify-content:space-between;gap:14px;flex-wrap:wrap}
+.hero-top{max-width:1200px;margin:0 auto 22px;display:flex;align-items:center;
+justify-content:flex-start;gap:12px;flex-wrap:wrap}
 /* the H1 wears the rating's own chip, which is what the client asked for */
-.hero-kw{margin:0;align-self:center;background:rgba(255,255,255,0.08);
+/* no align-self here: in the column layout a centre would push the chip to
+   the middle of the phone, away from the rating above it */
+.hero-kw{margin:0;background:rgba(255,255,255,0.08);
 border:1px solid rgba(181,222,245,0.3);border-radius:9999px;padding:9px 18px;
 font:700 13px 'Source Sans 3',sans-serif;letter-spacing:2.2px;text-transform:uppercase;
 color:#B5DEF5}
@@ -1154,7 +1169,12 @@ text-wrap:pretty;margin:0}
 @media (max-width:768px){
   /* the inline padding on the section has to be beaten to pull the
      buttons up the phone screen */
-  #top{padding-top:36px!important}
+  /* the reference runs a tighter gutter and a full-bleed photograph */
+  #top{padding:30px 16px 0!important}
+  .hero-copy{gap:16px!important}
+  .hero-grid{gap:20px!important}
+  .hero-figure{margin:6px -16px 0!important;width:calc(100% + 32px)!important;
+  border-radius:0!important;height:clamp(300px,76vw,430px)!important}
   /* the header is nowrap at 461px wide, which scrolled the whole document
      sideways and cropped every section on the right */
   .hdr-bar{padding:10px 16px!important;gap:10px!important}
@@ -1163,9 +1183,7 @@ text-wrap:pretty;margin:0}
   .hdr-tel{font-size:0!important;gap:0!important;padding:10px;
   border:1px solid #dde3ed;border-radius:10px}
   .hdr-cta{padding:11px 16px!important;font-size:13px!important;letter-spacing:0.5px!important}
-  /* reference order: the rating sits above the keyword chip on a phone */
-  .hero-top{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:22px}
-  .hero-top a[href="#reviews"]{order:-1}
+  .hero-top{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:18px}
   .hero-brand{font-size:26px}
   .hero-lead,.hero-rest{font-size:17px}
   .hero-rest{display:none}

@@ -20,10 +20,10 @@ Phone: (602) 341-3511 · Button: BOOK NOW
 # H1 — IV Therapy in Phoenix, AZ
 
 The H1 is the keyword line, rendered as a chip in the same style as the rating.
-The two share one row across the full hero width, keyword hard left and rating
-hard right.
+Both sit together at the top left above the display line, rating first, which
+is the shape of the sample page.
 
-Pill on that row, right side: Google · 5.0 · ★★★★★ · Google reviews.
+Pill on that row: Google · 5.0 · ★★★★★ · Google reviews.
 
 Under the row, as the big display line and NOT a heading: **The Drip IV
 Infusion** sends a registered nurse to your Phoenix address.

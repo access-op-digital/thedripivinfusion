@@ -188,7 +188,7 @@ _CTA_FIXES = [('Book a Phoenix nurse visit', 'Book a Nurse Visit'), ('Book a Pho
 # The reviews H2 in question form. The section's first sentence is the
 # rating itself, so the heading now asks what the body answers.
 _REVIEWS_H2_OLD = "Phoenix Infusion Ratings and Verified Client Reviews"
-_REVIEWS_H2_NEW = "How Do Phoenix Clients Rate The Drip IV Infusion?"
+_REVIEWS_H2_NEW = "What Do Phoenix Clients Say About The Drip IV Infusion?"
 
 CONTENT_FIXES = _CTA_FIXES + [
     (_REVIEWS_H2_OLD, _REVIEWS_H2_NEW),

@@ -44,7 +44,7 @@ CTAs: **BOOK A NURSE VISIT** · **CALL (602) 341-3511**
 
 ---
 
-## H2 — How Do Phoenix Clients Rate The Drip IV Infusion?
+## H2 — What Do Phoenix Clients Say About The Drip IV Infusion?
 
 The Drip IV Infusion holds a 5-star client rating across its Arizona reviews. The
 strip aggregates every infusion visit, mobile and in-office; individual Phoenix

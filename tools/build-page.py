@@ -959,7 +959,7 @@ _BOOK_SECTION = (
     '<p style="font-size:18px;line-height:1.6;color:#e6f3f4">Call or text '
     '(602) 341-3511, or book online. A nurse reaches most Phoenix addresses within '
     '60 minutes, any day between 7:00AM and 9:00PM.</p></div>'
-    '<div style="display:flex;gap:12px;flex-wrap:wrap;flex:0 0 auto">'
+    '<div class="hero-cta" style="display:flex;gap:12px;flex-wrap:wrap;flex:0 0 auto">'
     + _BOOK_PRIMARY + _BOOK_SECONDARY + '</div></div></section>'
 )
 
@@ -1033,11 +1033,9 @@ def service_area(html: str) -> str:
 # fold, the buttons go full width, and the single strongest USP is promoted out
 # of the six-card strip into a stat panel with a link bar under it. Desktop
 # keeps the six cards and never shows the panel.
-_HERO_H1 = (
-    '<h1 class="hero-kw">IV Therapy in Phoenix, AZ</h1>'
-    '<p class="hero-brand">The Drip IV Infusion '
-    '<span>sends a registered nurse to your Phoenix address</span></p>'
-)
+_HERO_H1_CHIP = '<h1 class="hero-kw">IV Therapy in Phoenix, AZ</h1>'
+_HERO_BRAND = ('<p class="hero-brand">The Drip IV Infusion '
+               '<span>sends a registered nurse to your Phoenix address</span></p>')
 
 _HERO_LEAD = (
     "IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion "
@@ -1081,19 +1079,23 @@ def hero_rebuild(html: str) -> str:
     if pill:
         hero = hero.replace(pill.group(0), "", 1)
 
-    hero = re.sub(r'<h1[^>]*>.*?</h1>', _HERO_H1, hero, count=1, flags=re.S)
+    # The H1 takes the rating's own chip treatment, and the two sit on one row
+    # ABOVE the two-column grid rather than inside the copy column: the column
+    # is only ~450px wide, so a row inside it wraps and they end up stacked.
+    # Across the full 1200px the keyword sits hard left and the rating hard
+    # right, which is where the client asked for it.
+    # the display line goes in first: inserting the row first would put its own
+    # H1 chip in front of the one being replaced, and the chip would be eaten
+    hero = re.sub(r'<h1[^>]*>.*?</h1>', _HERO_BRAND, hero, count=1, flags=re.S)
+    head = ('<div class="hero-top">' + _HERO_H1_CHIP
+            + (pill.group(0) if pill else "") + '</div>')
+    hero = re.sub(r'(<section[^>]*id="top"[^>]*>)', lambda g: g.group(1) + head,
+                  hero, count=1)
     hero = re.sub(r'<p[^>]*>IV therapy in Phoenix is a licensed registered nurse'
                   r'.*?</p>', _HERO_INTRO, hero, count=1, flags=re.S)
 
-    # the rating now sits with the buttons
-    btn = re.search(r'<div[^>]*>\s*<a[^>]*href="#book"', hero, flags=re.S)
-    if btn and pill:
-        start = btn.start()
-        hero = (hero[:start] + '<div class="hero-proof">' + pill.group(0) + '</div>'
-                + hero[start:])
-    if btn:
-        hero = re.sub(r'(<div)([^>]*>\s*<a[^>]*href="#book")',
-                      r'\1 class="hero-cta"\2', hero, count=1, flags=re.S)
+    hero = re.sub(r'(<div)([^>]*>\s*<a[^>]*href="#book")',
+                  r'\1 class="hero-cta"\2', hero, count=1, flags=re.S)
 
     # the stat panel goes between the hero and the six USP cards
     hero = re.sub(r'(<div[^>]*border-top: ?1px solid rgba\(255, ?255, ?255, ?0\.15\)'
@@ -1111,9 +1113,35 @@ def hero_rebuild(html: str) -> str:
     return html[:m.start()] + hero + html[m.end():]
 
 
+def header_fit(html: str) -> str:
+    """Mark the sticky header so it fits a phone.
+
+    The design's header is flex-wrap:nowrap with the logo, the phone number and
+    the Book Now button on one line. That measures 461px, which is wider than
+    any phone, so the WHOLE document scrolled sideways and every section looked
+    cropped on the right. The classes let the media query shrink it.
+    """
+    m = re.search(r'<header[^>]*>.*?</header>', html, flags=re.S)
+    if not m or 'class="hdr-bar"' in html:
+        return html
+    hd = m.group(0)
+    hd = re.sub(r'(<div)((?=[^>]*flex-wrap: ?nowrap)[^>]*>)',
+                r'\1 class="hdr-bar"\2', hd, count=1)
+    hd = re.sub(r'(<a)((?=[^>]*href="tel:6023413511")[^>]*>)',
+                r'\1 class="hdr-tel"\2', hd, count=1)
+    hd = re.sub(r'(<a)((?=[^>]*href="#book")[^>]*>)',
+                r'\1 class="hdr-cta"\2', hd, count=1)
+    return html[:m.start()] + hd + html[m.end():]
+
+
 HERO_CSS = """
-.hero-kw{font:700 14px 'Source Sans 3',sans-serif;letter-spacing:2.4px;
-text-transform:uppercase;color:#B5DEF5;margin:0}
+.hero-top{max-width:1200px;margin:0 auto 30px;display:flex;align-items:center;
+justify-content:space-between;gap:14px;flex-wrap:wrap}
+/* the H1 wears the rating's own chip, which is what the client asked for */
+.hero-kw{margin:0;align-self:center;background:rgba(255,255,255,0.08);
+border:1px solid rgba(181,222,245,0.3);border-radius:9999px;padding:9px 18px;
+font:700 13px 'Source Sans 3',sans-serif;letter-spacing:2.2px;text-transform:uppercase;
+color:#B5DEF5}
 .hero-brand{font-family:Questrial,sans-serif;font-weight:400;
 font-size:clamp(30px,3.4vw,46px);line-height:1.1;letter-spacing:-0.4px;margin:0;color:#fff}
 .hero-brand span{color:#B5DEF5}
@@ -1126,8 +1154,19 @@ text-wrap:pretty;margin:0}
 @media (max-width:768px){
   /* the inline padding on the section has to be beaten to pull the
      buttons up the phone screen */
-  #top{padding-top:44px!important}
-  .hero-brand{font-size:28px}
+  #top{padding-top:36px!important}
+  /* the header is nowrap at 461px wide, which scrolled the whole document
+     sideways and cropped every section on the right */
+  .hdr-bar{padding:10px 16px!important;gap:10px!important}
+  /* the nav squeezes itself to a 27px sliver of one word rather than hiding */
+  .hdr-bar nav{display:none!important}
+  .hdr-tel{font-size:0!important;gap:0!important;padding:10px;
+  border:1px solid #dde3ed;border-radius:10px}
+  .hdr-cta{padding:11px 16px!important;font-size:13px!important;letter-spacing:0.5px!important}
+  /* reference order: the rating sits above the keyword chip on a phone */
+  .hero-top{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:22px}
+  .hero-top a[href="#reviews"]{order:-1}
+  .hero-brand{font-size:26px}
   .hero-lead,.hero-rest{font-size:17px}
   .hero-rest{display:none}
   .hero-more-t:checked~.hero-rest{display:block}
@@ -1609,6 +1648,7 @@ def clean_text(html, label):
     html = nurse_chips(html)
     html = service_area(html)
     html = hero_rebuild(html)
+    html = header_fit(html)
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
     html = html.replace("\u2013", "-")          # en dash -> hyphen

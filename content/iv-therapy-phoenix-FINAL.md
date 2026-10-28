@@ -19,14 +19,18 @@ Phone: (602) 341-3511 · Button: BOOK NOW
 
 # H1 — IV Therapy in Phoenix, AZ
 
-The H1 is the keyword line and it sits in the eyebrow slot, small and in caps.
-Under it, as the big display line and NOT a heading: **The Drip IV Infusion**
-sends a registered nurse to your Phoenix address.
+The H1 is the keyword line, rendered as a chip in the same style as the rating.
+The two share one row across the full hero width, keyword hard left and rating
+hard right.
 
-Pill: Google · 5.0 · ★★★★★ · Google reviews. It now sits directly above the two
-buttons rather than above the H1.
+Pill on that row, right side: Google · 5.0 · ★★★★★ · Google reviews.
 
-Mobile only: the intro clamps to its first sentence behind a Read more, the
+Under the row, as the big display line and NOT a heading: **The Drip IV
+Infusion** sends a registered nurse to your Phoenix address.
+
+Mobile: the rating moves above the keyword chip, the sticky header drops its
+nav and shrinks the phone link to its icon, the intro clamps to its first
+sentence behind a Read more, the
 buttons go full width, and the 1-Hour Response USP is promoted out of the
 six-card strip into a stat panel reading **60 Minutes** / "Most Phoenix
 addresses reached, from a confirmed booking", with a bar under it linking to

@@ -1038,7 +1038,7 @@ _HERO_H1_CHIP = '<h1 class="hero-kw">IV Therapy in Phoenix, AZ</h1>'
 # then the outcomes, then where. The keyword leaves the headline on purpose and
 # is carried by the H1 chip directly above it, which is what the reference does.
 _HERO_BRAND = ('<p class="hero-brand">The Drip IV Infusion '
-               '<span>Brings Rehydration and Recovery to Your Door</span></p>')
+               '<span>Brings Mobile IV Therapy to Your Door in Phoenix</span></p>')
 
 # The old opening sentence equated a treatment with a person: "IV therapy in
 # Phoenix IS a licensed registered nurse". Every sentence below is a triple with
@@ -1046,16 +1046,19 @@ _HERO_BRAND = ('<p class="hero-brand">The Drip IV Infusion '
 # to approved copy: sterile infusion, a nurse places every line, Fall 2022, two
 # registered nurse founders.
 _HERO_LEAD = (
-    "The Drip IV Infusion delivers sterile, nurse-placed IV therapy in Phoenix to "
-    "your home, office or hotel room. A licensed registered nurse reaches most "
-    "addresses within 60 minutes of a confirmed booking. Two registered nurses have "
-    "owned the practice since Fall 2022."
+    "The Drip IV Infusion provides mobile IV therapy in Phoenix, Arizona, bringing "
+    "nurse-administered infusion services to clients at their homes, offices, and "
+    "hotel rooms. A licensed registered nurse typically reaches most addresses within "
+    "the service area within 60 minutes of a confirmed booking. Founded by two "
+    "registered nurses, we have owned and operated the practice since fall 2022."
 )
 _HERO_REST = (
-    "Eight drips make up the menu, priced from $195 to $495. Mobile visits run "
-    "7:00AM to 9:00PM, seven days a week, across Central Phoenix, Arcadia, Biltmore, "
-    "Desert Ridge and Ahwatukee. Arizona law requires a valid order from a prescriber "
-    "before any elective infusion, and the intake call arranges it."
+    "We offer eight IV drip options, with prices ranging from $195 to $495, to help "
+    "eligible clients explore infusion services suited to their individual needs. We "
+    "provide mobile appointments daily from 7:00 AM to 9:00 PM across Central Phoenix, "
+    "Arcadia, Biltmore, Desert Ridge, and other areas within our service region. We "
+    "coordinate the intake process to help clients obtain the required order from an "
+    "authorized prescriber before an elective infusion and arrange their appointments."
 )
 _HERO_INTRO = (
     '<div class="hero-intro-wrap">'

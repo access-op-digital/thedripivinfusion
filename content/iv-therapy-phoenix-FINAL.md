@@ -19,7 +19,18 @@ Phone: (602) 341-3511 · Button: BOOK NOW
 
 # H1 — IV Therapy in Phoenix, AZ
 
-Pill: Google · 5.0 · ★★★★★ · Google reviews
+The H1 is the keyword line and it sits in the eyebrow slot, small and in caps.
+Under it, as the big display line and NOT a heading: **The Drip IV Infusion**
+sends a registered nurse to your Phoenix address.
+
+Pill: Google · 5.0 · ★★★★★ · Google reviews. It now sits directly above the two
+buttons rather than above the H1.
+
+Mobile only: the intro clamps to its first sentence behind a Read more, the
+buttons go full width, and the 1-Hour Response USP is promoted out of the
+six-card strip into a stat panel reading **60 Minutes** / "Most Phoenix
+addresses reached, from a confirmed booking", with a bar under it linking to
+the reviews. That card is hidden on mobile so it is not said twice.
 
 IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion
 to your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix

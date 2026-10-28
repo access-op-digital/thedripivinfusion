@@ -1021,6 +1021,136 @@ def service_area(html: str) -> str:
         _AREA_PARA, html, count=1, flags=re.S)
 
 
+# ---- 5m. the hero, rebuilt -------------------------------------------------
+# The client wants the keyword line where the rating pill used to sit, still as
+# the H1, and the big display line to lead with the brand and carry the page's
+# context. The rating is not dropped, it moves to sit directly above the two
+# buttons, where social proof is next to the action rather than three elements
+# above it.
+#
+# The mobile half follows the reference the client sent: the intro clamps to
+# its first sentence behind a CSS-only Read more so the buttons stay above the
+# fold, the buttons go full width, and the single strongest USP is promoted out
+# of the six-card strip into a stat panel with a link bar under it. Desktop
+# keeps the six cards and never shows the panel.
+_HERO_H1 = (
+    '<h1 class="hero-kw">IV Therapy in Phoenix, AZ</h1>'
+    '<p class="hero-brand">The Drip IV Infusion '
+    '<span>sends a registered nurse to your Phoenix address</span></p>'
+)
+
+_HERO_LEAD = (
+    "IV therapy in Phoenix is a licensed registered nurse bringing a sterile infusion "
+    "to your home, office or hotel room, and The Drip IV Infusion reaches most Phoenix "
+    "addresses within 60 minutes of a confirmed booking."
+)
+_HERO_REST = (
+    "Eight drips make up the menu, priced from $195 to $495, and a nurse places every "
+    "line. Mobile visits run 7:00AM to 9:00PM, seven days a week, across Central "
+    "Phoenix, Arcadia, Biltmore, Desert Ridge and Ahwatukee. Arizona law requires a "
+    "valid order from a prescriber before any elective infusion, and that order is "
+    "arranged as part of your intake."
+)
+_HERO_INTRO = (
+    '<div class="hero-intro-wrap">'
+    '<p class="hero-lead">' + _HERO_LEAD + '</p>'
+    '<input type="checkbox" id="hero-more" class="hero-more-t" aria-hidden="true" tabindex="-1">'
+    '<p class="hero-rest">' + _HERO_REST + '</p>'
+    '<label for="hero-more" class="hero-more-l">Read more</label>'
+    '</div>'
+)
+
+_HERO_STAT = (
+    '<div class="hero-stat">'
+    '<div class="hero-stat-main"><strong>60 Minutes</strong>'
+    '<span>Most Phoenix addresses reached, from a confirmed booking</span></div>'
+    '<a class="hero-stat-bar" href="#reviews">'
+    '<span>What Phoenix clients say</span><span>See all</span></a>'
+    '</div>'
+)
+
+
+def hero_rebuild(html: str) -> str:
+    m = re.search(r'<section[^>]*id="top"[^>]*>.*?</section>', html, flags=re.S)
+    if not m or 'class="hero-kw"' in html:
+        return html
+    hero = m.group(0)
+
+    # lift the rating pill out of the eyebrow slot and keep its markup
+    pill = re.search(r'<a[^>]*href="#reviews"[^>]*>.*?</a>', hero, flags=re.S)
+    if pill:
+        hero = hero.replace(pill.group(0), "", 1)
+
+    hero = re.sub(r'<h1[^>]*>.*?</h1>', _HERO_H1, hero, count=1, flags=re.S)
+    hero = re.sub(r'<p[^>]*>IV therapy in Phoenix is a licensed registered nurse'
+                  r'.*?</p>', _HERO_INTRO, hero, count=1, flags=re.S)
+
+    # the rating now sits with the buttons
+    btn = re.search(r'<div[^>]*>\s*<a[^>]*href="#book"', hero, flags=re.S)
+    if btn and pill:
+        start = btn.start()
+        hero = (hero[:start] + '<div class="hero-proof">' + pill.group(0) + '</div>'
+                + hero[start:])
+    if btn:
+        hero = re.sub(r'(<div)([^>]*>\s*<a[^>]*href="#book")',
+                      r'\1 class="hero-cta"\2', hero, count=1, flags=re.S)
+
+    # the stat panel goes between the hero and the six USP cards
+    hero = re.sub(r'(<div[^>]*border-top: ?1px solid rgba\(255, ?255, ?255, ?0\.15\)'
+                  r'[^>]*>)', _HERO_STAT + r'\1', hero, count=1)
+
+    # the panel IS the 1-Hour Response card, enlarged, so that card would say
+    # the same thing twice on a phone. Mark it and let the media query drop it.
+    cut = hero.find('1-Hour Response')
+    if cut != -1:
+        card = r'<div(?=[^>]*rgba\(181, ?222, ?245, ?0\.28\))'
+        opens = [c for c in re.finditer(card, hero) if c.start() < cut]
+        if opens:
+            at = opens[-1].end()
+            hero = hero[:at] + ' class="usp-promoted"' + hero[at:]
+    return html[:m.start()] + hero + html[m.end():]
+
+
+HERO_CSS = """
+.hero-kw{font:700 14px 'Source Sans 3',sans-serif;letter-spacing:2.4px;
+text-transform:uppercase;color:#B5DEF5;margin:0}
+.hero-brand{font-family:Questrial,sans-serif;font-weight:400;
+font-size:clamp(30px,3.4vw,46px);line-height:1.1;letter-spacing:-0.4px;margin:0;color:#fff}
+.hero-brand span{color:#B5DEF5}
+.hero-intro-wrap{display:flex;flex-direction:column;gap:12px;max-width:560px}
+.hero-lead,.hero-rest{font-size:19px;line-height:1.6;font-weight:300;color:#fff;
+text-wrap:pretty;margin:0}
+.hero-more-t{position:absolute;width:1px;height:1px;opacity:0;pointer-events:none}
+.hero-more-l{display:none}
+.hero-stat{display:none}
+@media (max-width:768px){
+  /* the inline padding on the section has to be beaten to pull the
+     buttons up the phone screen */
+  #top{padding-top:44px!important}
+  .hero-brand{font-size:28px}
+  .hero-lead,.hero-rest{font-size:17px}
+  .hero-rest{display:none}
+  .hero-more-t:checked~.hero-rest{display:block}
+  .hero-more-t:checked~.hero-more-l{display:none}
+  .hero-more-l{display:inline-block;cursor:pointer;font:700 15px 'Source Sans 3',sans-serif;
+  color:#B5DEF5;text-decoration:underline}
+  .hero-cta{flex-direction:column;align-items:stretch}
+  .hero-cta a{text-align:center}
+  .hero-stat{display:flex;flex-direction:column;margin-top:28px;border-radius:12px;
+  overflow:hidden}
+  .hero-stat-main{background:#13646D;padding:22px 20px;display:flex;flex-direction:column;gap:6px}
+  .hero-stat-main strong{font:400 40px Questrial,sans-serif;line-height:1;color:#fff}
+  .hero-stat-main span{font-size:15px;line-height:1.45;color:#d8eef0}
+  .hero-stat-bar{display:flex;justify-content:space-between;align-items:center;gap:12px;
+  background:rgba(255,255,255,0.08);padding:15px 20px;text-decoration:none}
+  .hero-stat-bar span:first-child{font:700 15px 'Source Sans 3',sans-serif;color:#fff}
+  .hero-stat-bar span:last-child{font-size:14px;color:#B5DEF5;text-decoration:underline}
+  /* the card carries an inline display:flex, so this has to shout */
+  .usp-promoted{display:none!important}
+}
+"""
+
+
 # ---- 6. real photography from the client's own media library ---------------
 # Every URL below was opened and looked at; the alt text says what the photo
 # ACTUALLY shows, not what the design slot wished for. A slot with no honest
@@ -1478,6 +1608,7 @@ def clean_text(html, label):
     html = drop_gallery_intro(html)
     html = nurse_chips(html)
     html = service_area(html)
+    html = hero_rebuild(html)
     for a, b in DASH_FIXES:
         html = html.replace(a, b)
     html = html.replace("\u2013", "-")          # en dash -> hyphen
@@ -1528,7 +1659,7 @@ def main() -> int:
 .img-slot.is-blank{display:none!important}
 .img-slot[data-slot="final-img"] img{object-position:center 72%}
 .img-slot[data-slot="drip-hydration"] img{object-position:center 12%}
-"""
+""" + HERO_CSS
 
     body = re.search(r'<body[^>]*>(.*?)</body>', html, flags=re.S).group(1)
     body = re.sub(r'<style>.*?</style>', '', body, flags=re.S)
